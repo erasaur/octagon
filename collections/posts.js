@@ -30,7 +30,7 @@ Posts.before.update(function (userId, doc, fields, modifier, options) {
   }
 });
 
-PostsModel.allow({
+Posts.allow({
   insert: isAdminById,
   update: isAdminById,
   remove: isAdminById
