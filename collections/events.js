@@ -45,7 +45,7 @@ Schema.Events = new SimpleSchema({
   finalized: {
     type: Boolean
   },
-  imageUrl: {
+  pictureId: {
     type: String
   }
 });
@@ -92,9 +92,22 @@ Meteor.methods({
       createdAt: new Date(),
       info: event.info,
       members: [],
-      finalized: false,
-      imageUrl: event.imageUrl
+      finalized: false
     };
+
+    if (!event.pictureId && !event.imageUrl) 
+      throw new Meteor.Error('no-picture', getError('no-picture'));
+    
+    if (event.imageUrl) {
+      var picture = {
+        imageUrl: event.imageUrl,
+        caption: event.name,
+        featured: false
+      };
+      picture._id = Meteor.call('createPicture', picture);
+    }
+    
+    eventObj.pictureId = event.pictureId || picture._id;
 
     // TODO: send notifications
     return Events.insert(eventObj);
@@ -105,6 +118,20 @@ Meteor.methods({
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    if (!event.pictureId && !event.imageUrl) 
+      throw new Meteor.Error('no-picture', getError('no-picture'));
+    
+    if (event.imageUrl) {
+      var picture = {
+        imageUrl: event.imageUrl,
+        caption: event.name,
+        featured: false
+      };
+      picture._id = Meteor.call('createPicture', picture);
+    }
+    
+    event.pictureId = event.pictureId || picture._id;
 
     Events.update(eventId, { $set: event });
   },
