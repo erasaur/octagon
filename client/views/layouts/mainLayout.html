@@ -1,0 +1,17 @@
+<template name="mainLayout">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="page-header">
+          {{> yield "pageHeader"}}
+        </div>
+        <div class="page-content">
+          {{> yield "pageContent"}}
+        </div>
+        <div class="page-footer">
+          {{> yield "pageFooter"}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

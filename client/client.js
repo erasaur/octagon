@@ -1,13 +1,11 @@
 //startup code, subscriptions
 
-Meteor.startup(function() {
-	Session.setDefault('eventsLimit', 5); //start with 5 events showing
-	Session.setDefault('currentPage', 'home');
-	
-	if(Accounts._resetPasswordToken) {
-		Session.set('resetPassword', Accounts._resetPasswordToken);
-	}
-});
+Session.setDefault('eventsLimit', 5); //start with 5 events showing
+Session.setDefault('currentPage', 'home');
+
+if(Accounts._resetPasswordToken) {
+	Session.set('resetPassword', Accounts._resetPasswordToken);
+}
 
 //automatically reruns when dependencies change
 Deps.autorun(function() {
