@@ -1,16 +1,69 @@
-Meteor.users.allow({
-  update: function (userId, user, fields, modifier) {
-      var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-      if(userId && officer) {
-        return true; //if logged in and officer, allow
-      } else {
-        if(userId === user._id) { //if the logged in user is editing his own account
-          var allowed = ["password"]; //fields allowed to be changed
-          if (_.difference(fields, allowed).length)
-            return false; //don't allow change to another field
+var Schema = {};
 
-          return true;
-        }
-    }
-    }
+Schema.UserProfile = new SimpleSchema({
+  name: {
+    type: String
+  },
+  events: {
+    type: [Object],
+    blackbox: true
+  },
+  carpool: {
+    type: Number
+  },
+  meetings: {
+    type: Number
+  },
+  mic: {
+    type: Number
+  },
+  points: {
+    type: Number
+  },
+  strikes: {
+    type: Number
+  },
+  suggests: {
+    type: Number
+  }
+});
+
+Schema.User = new SimpleSchema({
+  _id: {
+    type: String,
+    optional: true
+  },
+  emails: {
+    type: [Object],
+    optional: true
+  },
+  'emails.$.address': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  'emails.$.verified': {
+    type: Boolean
+  },
+  isAdmin: {
+    type: Boolean,
+    optional: true
+  },
+  profile: { // public and not editable
+    type: Schema.UserProfile
+  }
+});
+
+Meteor.users.attachSchema(Schema.User);
+
+Meteor.users.allow({
+  update: canEditById,
+  remove: canRemoveById
+});
+
+Meteor.users.deny({
+  update: function (userId, user, fields) {
+    if (isAdminById(userId)) return false;
+
+    return _.without(fields, 'password').length > 0;
+  }
 });
