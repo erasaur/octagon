@@ -14,7 +14,8 @@ PostSchema = new SimpleSchema({
   }
 });
 
-PostsModel = new Meteor.Collection("posts");
+Posts = new Meteor.Collection("posts");
+Posts.attachSchema(PostSchema);
 
 Posts.before.insert(function (userId, doc) {
   if (Meteor.isServer && doc.description)
