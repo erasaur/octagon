@@ -19,4 +19,5 @@ less
 iron:router@1.0.0-pre4
 mizzao:bootstrap-3
 meteorhacks:subs-manager
+matb33:collection-hooks
 
