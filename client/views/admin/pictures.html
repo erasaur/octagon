@@ -10,12 +10,11 @@
 		</div>
 
 		<div class="content">
-			{{#if hasPictures}}
+			{{#each pictures}}
 				<div class="thumbnails">
-				{{#each pictures}}
 					<div class="thumbnail well">
 						<div class="thumbnail-image">
-							<img class="flexible-image" src="{{source}}" alt>
+							<img class="flexible-image" src="{{source}}"/>
 						</div>
 						<div class="thumbnail-content">
 							<ul class="list">
@@ -28,91 +27,92 @@
 							</ul>
 						</div>
 					</div>
-					<div class="clear">
-					<br>
-				{{/each}}
+					<div class="clear"></div>
+					<br/>
 				</div>
-			{{else}}
+			{{/each}}
+
+			{{#unless hasPictures}}
 				<div class="post-content">
-					There currently are no pictures on the server. <br><br>
+					There currently are no pictures on the server. <br/><br/>
 					<strong>Note:</strong> Pictures uploaded on event creation are independent from pictures uploaded here.
 				</div>
-			{{/if}}
+			{{/unless}}
 		</div>
 		<!-- display all pictures, and currently selected as featured -->
-	</div>
 
-	<div id="addPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Add Picture</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="picture">Picture</label>
-					<div class="controls">
-						<input type="file" id="createPicture">
+		<div id="addPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalLabel">Add Picture</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="picture">Picture</label>
+						<div class="controls">
+							<input type="file" id="createPicture">
+						</div>
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="featured">Show on front page?</label>
-					<div class="controls">
-						<input type="checkbox" id="createFeatured">
+					<div class="control-group">
+						<label class="control-label" for="featured">Show on front page?</label>
+						<div class="controls">
+							<input type="checkbox" id="createFeatured">
+						</div>
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="caption">Caption</label>
-					<div class="controls">
-						<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+					<div class="control-group">
+						<label class="control-label" for="caption">Caption</label>
+						<div class="controls">
+							<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+				<button class="btn btn-primary" id="addPicture">Add</button>
+			</div>
 		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="addPicture">Add</button>
-		</div>
-	</div>
 
-	<div id="editPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Edit Picture</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="picture">Picture</label>
-					<div class="controls">
-						<input type="file" id="editPicture">
+		<div id="editPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalLabel">Edit Picture</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="picture">Picture</label>
+						<div class="controls">
+							<input type="file" id="editPicture">
+						</div>
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="featured">Show on front page?</label>
-					<div class="controls">
-						<input type="checkbox" id="editFeatured">
+					<div class="control-group">
+						<label class="control-label" for="featured">Show on front page?</label>
+						<div class="controls">
+							<input type="checkbox" id="editFeatured">
+						</div>
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="caption">Caption</label>
-					<div class="controls">
-						<textarea id="editCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+					<div class="control-group">
+						<label class="control-label" for="caption">Caption</label>
+						<div class="controls">
+							<textarea id="editCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+				<button class="btn btn-primary" id="savePicture">Save</button>
+			</div>
 		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="savePicture">Save</button>
-		</div>
-	{{else}}
-		<div class="page-header">
-			<h1><i class="icon-frown"></i></h1>
-		</div>
-		<div class="content">
-		You are not authorized to view this page. 
-		</div>
-	{{/if}}
+		{{else}}
+			<div class="page-header">
+				<h1><i class="icon-frown"></i></h1>
+			</div>
+			<div class="content">
+			You are not authorized to view this page. 
+			</div>
+		{{/if}}
 	</div>
 </template>

@@ -8,43 +8,35 @@
 					<li class="{{#if onPage 'members'}}active{{/if}}"><a href="{{pathFor 'members'}}">Members</a></li>
 					<li class="{{#if onPage 'contact'}}active{{/if}}"><a href="{{pathFor 'contact'}}">Contact</a></li>
 				
-				{{#if loggingIn}}
-					</ul>
-					
-					<p class="form-search navbar-form pull-right">
-						<span class="navbar-text nav-welcome"><i class="icon-refresh icon-spin"></i> Loading...</span>
-					</p>
-				{{else}}
 					{{#if currentUser}}
 						{{#if officer}}
 							<li class="{{#if onPage 'admin'}}active{{/if}}"><a href="{{pathFor 'admin'}}">Admin</a></li>
 						{{/if}}
 							<li class="{{#if onPage 'profile'}}active{{/if}}"><a href="{{pathFor 'profile'}}">Profile</a></li>
-						</ul> <!-- close ul tag for the nav -->
-
-						<p class="form-search navbar-form pull-right">
-							<input id="logout" class="btn btn-primary btn-mini" type="submit" value="Log Out">
-						</p>
-						<span class="navbar-text nav-welcome">Welcome, {{username}}!</span>
-					{{else}}
-						</ul> <!-- close nav ul tag -->
-						
-						<ul class="nav pull-right">
-		          <li><a href="#signUpModal" data-toggle="modal">Sign Up</a></li>
-		          <li class="dropdown">
-		            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In <i class="icon-caret-down"></i></a>
-		            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-		            	<form class="nav-form" id="loginForm">
-	              		<input id="username" class="input-medium" type="text" placeholder="Username">
-										<input id="password" class="input-medium" type="password" placeholder="Password">
-										<input class="btn btn-primary btn-mini" type="submit" value="Log In">
-										<li><a href="{{pathFor 'recovery'}}">Forgot?</a></li>
-									</form>
-		            </div>
-		          </li>
-						</ul>
+							<p class="form-search navbar-form pull-right">
+								<input id="logout" class="btn btn-primary btn-mini" type="submit" value="Log Out">
+							</p>
+							<span class="navbar-text nav-welcome">Welcome, {{username}}!</span>
 					{{/if}}
-				{{/if}}
+				</ul> <!-- close ul tag for the nav -->
+
+					
+				{{#unless currentUser}}
+					<ul class="nav pull-right">
+	          <li><a href="#signUpModal" data-toggle="modal">Sign Up</a></li>
+	          <li class="dropdown">
+	            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In <i class="icon-caret-down"></i></a>
+	            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+	            	<form class="nav-form" id="loginForm">
+              		<input id="username" class="input-medium" type="text" placeholder="Username">
+									<input id="password" class="input-medium" type="password" placeholder="Password">
+									<input class="btn btn-primary btn-mini" type="submit" value="Log In">
+									<li><a href="{{pathFor 'recovery'}}">Forgot?</a></li>
+								</form>
+	            </div>
+	          </li>
+					</ul>
+				{{/unless}}
 			</div>
 		</div>
 	</div>

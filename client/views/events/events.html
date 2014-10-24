@@ -29,9 +29,8 @@
 												<button class="btn btn-primary deleteEvent">Delete</button>
 												<a href="#editEventModal" role="button" class="btn btn-primary editEventButton" data-toggle="modal">Edit</a>
 												<a href="#addMemberModal" role="button" class="btn btn-primary modalAddMember" data-toggle="modal">Add Member</a>
-												<!--------------------------------------EDITED------------------------------------------------------------------------------------------>
 												<a href="#showEmailsModal" role = "button" class = "btn btn-primary modalShowEmails" data-toggle="modal">Show Emails</a>
-												<!--------------------------------------/EDITED------------------------------------------------------------------------------------------>
+
 												{{#unless finalized}}
 													{{#if tooLate}}
 													<a href="#finalizeEventModal" role="button" class="btn btn-primary finalizeEventButton" data-toggle="modal">Finalize</a>
@@ -113,9 +112,9 @@
 											{{/if}}
 										{{/if}}
 									</li>
-			     				</ul>
+			     			</ul>
 							</div>
-							<div class="clear">
+							<div class="clear"></div>
 							<br>
 						{{/each}}
 						{{#if moreEvents}}
@@ -338,11 +337,11 @@
 				<button class="btn btn-primary" id="editEvent">Save</button>
 			</div>
 		</div>
-		<!--------------------------------------EDITED------------------------------------------------------------------------------------------>
+		
 		<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			{{>showEmails}}
 		</div>
-		<!--------------------------------------/EDITED------------------------------------------------------------------------------------------>
+		
 		<div id="suggestEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
