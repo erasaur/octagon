@@ -1,3 +1,14 @@
+abstract club-specific things like settings, website name, style, etc
+
+trash inline styling...
+trash br's ... use clearfix not ninja divs
+don't use separate ids
+find a way to reduce the amount of modals
+easy search for members?
+set up permissions
+sanitation of inputs, markdown
+events page -- move all the if statements into a helper, and just render the text
+
 pictures added to events are handled by the events model
 pictures added to carousel are added to pictures model
 

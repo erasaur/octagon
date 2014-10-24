@@ -1,11 +1,9 @@
 <template name="notFound">
-	<div class="span12">
-		<div class="page-header">
-			<h1>What the f...our o' four</h1>
-		</div>
+	{{#contentFor "pageHeader"}}
+		<h1>What the f...our o' four</h1>
+  {{/contentFor}}
 
-		<div class="content">
-			Where are you trying to go? This page doesn't even exist. Go home, Sam.
-		</div>
+	<div class="content">
+		Where are you trying to go? This page doesn't even exist. Go home, Sam.
 	</div>
 </template>

@@ -1,11 +1,9 @@
 <template name="home">
-	<div class="span12">
-		<div class="page-header">
-			<h1>Home <small>Check here for news and updates!</small></h1>
-			{{#if officer}}
-				<a href="#addPostModal" role="button" class="btn btn-primary" data-toggle="modal">Add Post</a>
-			{{/if}}
-		</div>
+	{{#contentFor "pageHeader"}}
+		<h1>Home <small>Check here for news and updates!</small></h1>
+		{{#if officer}}
+			<a href="#addPostModal" role="button" class="btn btn-primary" data-toggle="modal">Add Post</a>
+		{{/if}}
 		{{#if hasPictures}}
 			<div id="homeCarousel" class="carousel slide">
 				<ol class="carousel-indicators">
@@ -29,49 +27,38 @@
 			  	<a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
 			</div>
 		{{/if}}
+	{{/contentFor}}
 
-		<div class="content">
-		
-			{{#if loggingIn}}
-				<i class="icon-refresh icon-spin"></i> Just a moment...
-			{{else}}
-				{{#if hasPosts}}
-					{{#each posts}}
-						<div class="post-header">
-							<h3>{{title}} <small>{{date}}</small>
-							{{#if officer}}
-							<div class="float-right">
-								<a href="#editPostModal" id="editPostButton" role="button" class="btn btn-primary" data-toggle="modal">Edit Post</a>
-								<a class="btn btn-primary deletePost">Delete</a>
-							</div>
-							{{/if}}
-							</h3>
-						</div>
-						<div class="post-content">
-							{{{content}}}
-						</div>
-					{{/each}}
-				{{else}}
-					<i class="icon-refresh icon-spin"></i> Just a moment...
-					<!--<div class="post-header">
-						<h3>Oops!</h3>
-
-					</div>
-					<div class="post-content">
-						There currently are no posts on the server.
-					</div>-->
-				{{/if}}
-			{{/if}}
-
-			<!-- TEMPORARY FIX -->
+	{{#if hasPosts}}
+		{{#each posts}}
 			<div class="post-header">
-				<h3>Forms</h3>
+				<h3>{{title}} <small>{{date}}</small>
+				{{#if officer}}
+				<div class="float-right">
+					<a href="#editPostModal" id="editPostButton" role="button" class="btn btn-primary" data-toggle="modal">Edit Post</a>
+					<a class="btn btn-primary deletePost">Delete</a>
+				</div>
+				{{/if}}
+				</h3>
 			</div>
-			<div class="post-content"> 
-				<a class = "btn" href = "https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target = "_blank">JOOI Membership & Liability Forms</a>
+			<div class="post-content">
+				{{{content}}}
 			</div>
-		<!-- END TEMPORARY FIX -->
+		{{/each}}
+	{{else}}
+		<div class="post-header">
+			<h3>Oops!</h3>
 		</div>
+		<div class="post-content">
+			There currently are no posts on the server.
+		</div>
+	{{/if}}
+
+	<div class="post-header">
+		<h3>Forms</h3>
+	</div>
+	<div class="post-content"> 
+		<a class = "btn" href = "https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target = "_blank">JOOI Membership &amp; Liability Forms</a>
 	</div>
 
 	<div id="addPostModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

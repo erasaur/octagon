@@ -1,5 +1,5 @@
 <template name="events">
-	<div class="span12">
+	{{#contentFor "pageHeader"}}
 		<div class="page-header">
 			<h1>Events <small>Come check out our events! <i class="icon-smile"></i></small></h1>
 			<ul class="inline">
@@ -13,410 +13,404 @@
 			{{/if}}
 			</ul>
 		</div>
+	{{/contentFor}}
 
-		<div class="content">
-			{{#if loggingIn}}
-				<i class="icon-refresh icon-spin"></i> Just a moment...
-			{{else}}
-				<div class="event">
-					{{#if hasEvents}}
-						{{#each eventsList}}
-							<div class="post-header">
-								<h3>{{name}} <small>{{date}}</small>
-									<div class="float-right">
-										{{#if currentUser}}
-											{{#if officer}}
-												<button class="btn btn-primary deleteEvent">Delete</button>
-												<a href="#editEventModal" role="button" class="btn btn-primary editEventButton" data-toggle="modal">Edit</a>
-												<a href="#addMemberModal" role="button" class="btn btn-primary modalAddMember" data-toggle="modal">Add Member</a>
-												<a href="#showEmailsModal" role = "button" class = "btn btn-primary modalShowEmails" data-toggle="modal">Show Emails</a>
+	<div class="event">
+		{{#if hasEvents}}
+			{{#each eventsList}}
+				<div class="post-header">
+					<h3>{{name}} <small>{{date}}</small>
+						<div class="float-right">
+							{{#if currentUser}}
+								{{#if officer}}
+									<button class="btn btn-primary deleteEvent">Delete</button>
+									<a href="#editEventModal" role="button" class="btn btn-primary editEventButton" data-toggle="modal">Edit</a>
+									<a href="#addMemberModal" role="button" class="btn btn-primary modalAddMember" data-toggle="modal">Add Member</a>
+									<a href="#showEmailsModal" role = "button" class = "btn btn-primary modalShowEmails" data-toggle="modal">Show Emails</a>
 
-												{{#unless finalized}}
-													{{#if tooLate}}
-													<a href="#finalizeEventModal" role="button" class="btn btn-primary finalizeEventButton" data-toggle="modal">Finalize</a>
-													{{/if}}
-												{{else}}
-													<small>(Finalized)</small>
-												{{/unless}}
-											{{/if}}
+									{{#unless finalized}}
+										{{#if tooLate}}
+										<a href="#finalizeEventModal" role="button" class="btn btn-primary finalizeEventButton" data-toggle="modal">Finalize</a>
+										{{/if}}
+									{{else}}
+										<small>(Finalized)</small>
+									{{/unless}}
+								{{/if}}
 
-											{{#if attendingEvent}}
-												{{#unless tooLate}}
-													<small>You are attending.</small>
-													<button class="btn btn-primary cancelAttend">Cancel</button>
-												{{else}}
-													{{#unless finalized}}
-														<small>Sit tight while we distribute your points :)</small>
-													{{else}}
-														<small>This event has been completed.</small>
-													{{/unless}}
-													<!-- todo add ratings -->
-												{{/unless}}
+								{{#if attendingEvent}}
+									{{#unless tooLate}}
+										<small>You are attending.</small>
+										<button class="btn btn-primary cancelAttend">Cancel</button>
+									{{else}}
+										{{#unless finalized}}
+											<small>Sit tight while we distribute your points :)</small>
+										{{else}}
+											<small>This event has been completed.</small>
+										{{/unless}}
+										<!-- todo add ratings -->
+									{{/unless}}
+								{{else}}
+									{{#unless finalized}}
+										{{#unless tooLate}}
+											{{#if slotsLeft}}
+												<button class="btn btn-primary attendEvent">I'm Going!</button>
 											{{else}}
-												{{#unless finalized}}
-													{{#unless tooLate}}
-														{{#if slotsLeft}}
-															<button class="btn btn-primary attendEvent">I'm Going!</button>
-														{{else}}
-															<small>Sorry, no more slots available!</small>
-														{{/if}}
-													{{else}}
-														<small>This event is in process/has been completed.</small>
-													{{/unless}}
-												{{else}}
-													<small>This event has been completed</small>
-												{{/unless}}
+												<small>Sorry, no more slots available!</small>
 											{{/if}}
 										{{else}}
-											{{#if tooLate}}
-												{{#if finalized}}
-													<small class="text-success">Completed</small>
-												{{else}}
-													<small class="text-warning">In Progress</small>
-												{{/if}}
-											{{else}}
-												<small class="text-info">Not Started</small>
-											{{/if}}
-										{{/if}}
-									</div>
-								</h3>
-							</div>
-							<div class="event-image">
-								<img class="flexible-image" src="{{image}}">
-							</div>
-							<div class="event-info">
-								<ul class="list">
-									<li><strong>Information:</strong> <p class="well">{{{description}}}</p></li>
-									{{#if paid}}
-										<li><strong>Money:</strong> ${{money}}.00. Bring to one of the officers at school or at the door.</li>
+											<small>This event is in process/has been completed.</small>
+										{{/unless}}
+									{{else}}
+										<small>This event has been completed</small>
+									{{/unless}}
+								{{/if}}
+							{{else}}
+								{{#if tooLate}}
+									{{#if finalized}}
+										<small class="text-success">Completed</small>
+									{{else}}
+										<small class="text-warning">In Progress</small>
 									{{/if}}
-									<li><strong>Date:</strong> {{date}}</li>
-									<li><strong>Time:</strong> {{time}}</li>
-									<li><strong>Where:</strong> {{location}}</li>
-									<li><strong>Slots left:</strong> <strong>{{slots}}</strong></li>
-									<li>{{#if tooLate}}
-											<strong>Who went: </strong>
-										{{else}}
-											<strong>Who's going: </strong>
-										{{/if}}
-										{{#if members}}
-											<br>
-											{{#each members}}
-												<span class="label label-important">{{name}}</span>
-											{{/each}}
-										{{else}}
-											{{#if tooLate}}
-												Nobody :( shame on y'all
-											{{else}}
-											Nobody yet! It's your chance to sign up!
-											{{/if}}
-										{{/if}}
-									</li>
-			     			</ul>
-							</div>
-							<div class="clear"></div>
-							<br>
-						{{/each}}
-						{{#if moreEvents}}
-					    <div id="showMoreEvents" class="center">
-					    	<span class="alert alert-info"><i class="icon-refresh icon-spin"></i> Loading more...</span>
-					    </div>
-						{{/if}}
-					{{else}}
-						<i class="icon-refresh icon-spin"></i> Just a moment...
-					{{/if}}
+								{{else}}
+									<small class="text-info">Not Started</small>
+								{{/if}}
+							{{/if}}
+						</div>
+					</h3>
 				</div>
+				<div class="event-image">
+					<img class="flexible-image" src="{{image}}">
+				</div>
+				<div class="event-info">
+					<ul class="list">
+						<li><strong>Information:</strong> <p class="well">{{{description}}}</p></li>
+						{{#if paid}}
+							<li><strong>Money:</strong> ${{money}}.00. Bring to one of the officers at school or at the door.</li>
+						{{/if}}
+						<li><strong>Date:</strong> {{date}}</li>
+						<li><strong>Time:</strong> {{time}}</li>
+						<li><strong>Where:</strong> {{location}}</li>
+						<li><strong>Slots left:</strong> <strong>{{slots}}</strong></li>
+						<li>{{#if tooLate}}
+								<strong>Who went: </strong>
+							{{else}}
+								<strong>Who's going: </strong>
+							{{/if}}
+							{{#if members}}
+								<br>
+								{{#each members}}
+									<span class="label label-important">{{name}}</span>
+								{{/each}}
+							{{else}}
+								{{#if tooLate}}
+									Nobody :( shame on y'all
+								{{else}}
+								Nobody yet! It's your chance to sign up!
+								{{/if}}
+							{{/if}}
+						</li>
+     			</ul>
+				</div>
+				<div class="clear"></div>
+				<br>
+			{{/each}}
+			{{#if moreEvents}}
+		    <div id="showMoreEvents" class="center">
+		    	<span class="alert alert-info"><i class="icon-refresh icon-spin"></i> Loading more...</span>
+		    </div>
 			{{/if}}
-		</div>
+		{{else}}
+			Looks like your lazy officers haven't put up a single comment. Wow.
+		{{/if}}
+	</div>		
 		
-		<div id="addEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Add New Event</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-
-					<div class="control-group">
-						<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
-						<div class="controls">
-							<input id="createID" type="text" style="width: 94px;" placeholder="coolEvent">
-							<input id="createEventName" type="text" style="width: 94px;" placeholder="Cool Event">
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="date">Event Date</label>
-						<div class="controls">
-							<input id="createMonth" type="text" style="width: 56px;" placeholder="7">
-							<input id="createDay" type="text" style="width: 56px;" placeholder="31">
-							<input id="createYear" type="text" style="width: 58px;" placeholder="2013">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="time">Event Time</label>
-						<div class="controls">
-							<div class="input-append">
-								<input id="createBeginTime" type="text" style="width: 43px;" placeholder="3:00">
-								<div class="btn-group">
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
-								    	<span id="createBegin">am</span>
-								    	<span class="caret"></span>
-								    </button>
-								    <ul class="dropdown-menu">
-								    	<li><a href="#" onclick="
-								    	$('#createBegin').html('am');
-								    	">am</a></li>
-								    	<li><a href="#" onclick="
-								    	$('#createBegin').html('pm');
-								    	">pm</a></li>
-								    </ul>
-							    </div>
-							</div> to 
-							<div class="input-append">
-								<input id="createEndTime" type="text" style="width: 43px;" placeholder="6:00">
-								<div class="btn-group">
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
-								    	<span id="createEnd">am</span>
-								    	<span class="caret"></span>
-								    </button>
-								    <ul class="dropdown-menu">
-								    	<li><a href="#" onclick="
-								    	$('#createEnd').html('am');
-								    	">am</a></li>
-								    	<li><a href="#" onclick="
-								    	$('#createEnd').html('pm');
-								    	">pm</a></li>
-								    </ul>
-							    </div>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="description">Event Description</label>
-						<div class="controls">
-							<textarea id="createDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="location">Event Location</label>
-						<div class="controls">
-							<input id="createLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="money">Cost</label>
-						<div class="controls">
-							<div class="input-prepend input-append">
-								<span class="add-on">$</span>
-							  	<input style="width: 150px;" id="createMoney" type="text" placeholder="10">
-							  	<span class="add-on">.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
-						<div class="controls">
-							<input id="createSlots" type="text" placeholder="10">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="slots">Picture</label>
-						<div class="controls">
-							<input type="file" id="createPicture">
-						</div>
-					</div>
-					
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="createEvent">Create</button>
-			</div>
+	<div id="addEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Add New Event</h3>
 		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
 
-		<div id="editEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Edit Event</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
-						<div class="controls">
-							<input id="editID" type="text" style="width: 94px;" placeholder="coolEvent">
-							<input id="editName" type="text" style="width: 94px;" placeholder="Cool Event">
+				<div class="control-group">
+					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
+					<div class="controls">
+						<input id="createID" type="text" style="width: 94px;" placeholder="coolEvent">
+						<input id="createEventName" type="text" style="width: 94px;" placeholder="Cool Event">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="date">Event Date</label>
+					<div class="controls">
+						<input id="createMonth" type="text" style="width: 56px;" placeholder="7">
+						<input id="createDay" type="text" style="width: 56px;" placeholder="31">
+						<input id="createYear" type="text" style="width: 58px;" placeholder="2013">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="time">Event Time</label>
+					<div class="controls">
+						<div class="input-append">
+							<input id="createBeginTime" type="text" style="width: 43px;" placeholder="3:00">
+							<div class="btn-group">
+								<button class="btn dropdown-toggle" data-toggle="dropdown">
+							    	<span id="createBegin">am</span>
+							    	<span class="caret"></span>
+							    </button>
+							    <ul class="dropdown-menu">
+							    	<li><a href="#" onclick="
+							    	$('#createBegin').html('am');
+							    	">am</a></li>
+							    	<li><a href="#" onclick="
+							    	$('#createBegin').html('pm');
+							    	">pm</a></li>
+							    </ul>
+						    </div>
+						</div> to 
+						<div class="input-append">
+							<input id="createEndTime" type="text" style="width: 43px;" placeholder="6:00">
+							<div class="btn-group">
+								<button class="btn dropdown-toggle" data-toggle="dropdown">
+							    	<span id="createEnd">am</span>
+							    	<span class="caret"></span>
+							    </button>
+							    <ul class="dropdown-menu">
+							    	<li><a href="#" onclick="
+							    	$('#createEnd').html('am');
+							    	">am</a></li>
+							    	<li><a href="#" onclick="
+							    	$('#createEnd').html('pm');
+							    	">pm</a></li>
+							    </ul>
+						    </div>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="date">Event Date</label>
-						<div class="controls">
-							<input id="editMonth" type="text" style="width: 56px;" placeholder="7">
-							<input id="editDay" type="text" style="width: 56px;" placeholder="31">
-							<input id="editYear" type="text" style="width: 58px;" placeholder="2013">
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="description">Event Description</label>
+					<div class="controls">
+						<textarea id="createDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="location">Event Location</label>
+					<div class="controls">
+						<input id="createLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="money">Cost</label>
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on">$</span>
+						  	<input style="width: 150px;" id="createMoney" type="text" placeholder="10">
+						  	<span class="add-on">.00</span>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="time">Event Time</label>
-						<div class="controls">
-							<div class="input-append">
-								<input id="editBeginTime" type="text" style="width: 43px;" placeholder="3:00">
-								<div class="btn-group">
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
-								    	<span id="editBegin">am</span>
-								    	<span class="caret"></span>
-								    </button>
-								    <ul class="dropdown-menu">
-								    	<li><a href="#" onclick="
-								    	$('#editBegin').html('am');
-								    	">am</a></li>
-								    	<li><a href="#" onclick="
-								    	$('#editBegin').html('pm');
-								    	">pm</a></li>
-								    </ul>
-							    </div>
-							</div> to 
-							<div class="input-append">
-								<input id="editEndTime" type="text" style="width: 43px;" placeholder="6:00">
-								<div class="btn-group">
-									<button class="btn dropdown-toggle" data-toggle="dropdown">
-								    	<span id="editEnd">am</span>
-								    	<span class="caret"></span>
-								    </button>
-								    <ul class="dropdown-menu">
-								    	<li><a href="#" onclick="
-								    	$('#editEnd').html('am');
-								    	">am</a></li>
-								    	<li><a href="#" onclick="
-								    	$('#editEnd').html('pm');
-								    	">pm</a></li>
-								    </ul>
-							    </div>
-							</div>
-						</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
+					<div class="controls">
+						<input id="createSlots" type="text" placeholder="10">
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="description">Event Description</label>
-						<div class="controls">
-							<textarea id="editDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
-						</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slots">Picture</label>
+					<div class="controls">
+						<input type="file" id="createPicture">
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="location">Event Location</label>
-						<div class="controls">
-							<input id="editLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="money">Cost</label>
-						<div class="controls">
-							<div class="input-prepend input-append">
-								<span class="add-on">$</span>
-							  	<input style="width: 150px;" id="editMoney" type="text" placeholder="10">
-							  	<span class="add-on">.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
-						<div class="controls">
-							<input id="editSlots" type="text" placeholder="10">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="slots">Picture</label>
-						<div class="controls">
-							<input type="file" id="editPicture">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="editEvent">Save</button>
-			</div>
+				</div>
+				
+			</form>
 		</div>
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="createEvent">Create</button>
+		</div>
+	</div>
+
+	<div id="editEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Edit Event</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
+					<div class="controls">
+						<input id="editID" type="text" style="width: 94px;" placeholder="coolEvent">
+						<input id="editName" type="text" style="width: 94px;" placeholder="Cool Event">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="date">Event Date</label>
+					<div class="controls">
+						<input id="editMonth" type="text" style="width: 56px;" placeholder="7">
+						<input id="editDay" type="text" style="width: 56px;" placeholder="31">
+						<input id="editYear" type="text" style="width: 58px;" placeholder="2013">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="time">Event Time</label>
+					<div class="controls">
+						<div class="input-append">
+							<input id="editBeginTime" type="text" style="width: 43px;" placeholder="3:00">
+							<div class="btn-group">
+								<button class="btn dropdown-toggle" data-toggle="dropdown">
+							    	<span id="editBegin">am</span>
+							    	<span class="caret"></span>
+							    </button>
+							    <ul class="dropdown-menu">
+							    	<li><a href="#" onclick="
+							    	$('#editBegin').html('am');
+							    	">am</a></li>
+							    	<li><a href="#" onclick="
+							    	$('#editBegin').html('pm');
+							    	">pm</a></li>
+							    </ul>
+						    </div>
+						</div> to 
+						<div class="input-append">
+							<input id="editEndTime" type="text" style="width: 43px;" placeholder="6:00">
+							<div class="btn-group">
+								<button class="btn dropdown-toggle" data-toggle="dropdown">
+							    	<span id="editEnd">am</span>
+							    	<span class="caret"></span>
+							    </button>
+							    <ul class="dropdown-menu">
+							    	<li><a href="#" onclick="
+							    	$('#editEnd').html('am');
+							    	">am</a></li>
+							    	<li><a href="#" onclick="
+							    	$('#editEnd').html('pm');
+							    	">pm</a></li>
+							    </ul>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="description">Event Description</label>
+					<div class="controls">
+						<textarea id="editDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="location">Event Location</label>
+					<div class="controls">
+						<input id="editLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="money">Cost</label>
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on">$</span>
+						  	<input style="width: 150px;" id="editMoney" type="text" placeholder="10">
+						  	<span class="add-on">.00</span>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
+					<div class="controls">
+						<input id="editSlots" type="text" placeholder="10">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slots">Picture</label>
+					<div class="controls">
+						<input type="file" id="editPicture">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="editEvent">Save</button>
+		</div>
+	</div>
 		
-		<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			{{>showEmails}}
+	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		{{>showEmails}}
+	</div>
+	
+	<div id="suggestEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Suggest An Event</h3>
 		</div>
-		
-		<div id="suggestEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Suggest An Event</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="name">Event Name</label>
-						<div class="controls">
-							<input id="suggestName" type="text" placeholder="Cool Event">
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="name">Event Name</label>
+					<div class="controls">
+						<input id="suggestName" type="text" placeholder="Cool Event">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="description">Event Description</label>
+					<div class="controls">
+						<textarea id="suggestDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="location">Event Location</label>
+					<div class="controls">
+						<input id="suggestLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="money">Cost</label>
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on">$</span>
+						  	<input style="width: 150px;" id="suggestMoney" type="text" placeholder="10">
+						  	<span class="add-on">.00</span>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="description">Event Description</label>
-						<div class="controls">
-							<textarea id="suggestDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
-						</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="contact">Contact Information</label>
+					<div class="controls">
+						<input id="suggestContact" type="text" placeholder="Email, Phone Number, Website...">
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="location">Event Location</label>
-						<div class="controls">
-							<input id="suggestLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="money">Cost</label>
-						<div class="controls">
-							<div class="input-prepend input-append">
-								<span class="add-on">$</span>
-							  	<input style="width: 150px;" id="suggestMoney" type="text" placeholder="10">
-							  	<span class="add-on">.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="contact">Contact Information</label>
-						<div class="controls">
-							<input id="suggestContact" type="text" placeholder="Email, Phone Number, Website...">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="suggestEvent">Suggest</button>
-			</div>
+				</div>
+			</form>
 		</div>
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="suggestEvent">Suggest</button>
+		</div>
+	</div>
 
-		<div id="finalizeEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div id="finalizeMemberList">
-				{{> finalizeTemplate}}
-			</div>
+	<div id="finalizeEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div id="finalizeMemberList">
+			{{> finalizeTemplate}}
 		</div>
+	</div>
 
-		<div id="addMemberModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Add Member</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="findMember">Member</label>
-						<div class="controls">
-							<input type="text" id="eventMemberToAdd" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{allNames}}]" data-items="6">
-						</div>
-						<br><br>
+	<div id="addMemberModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Add Member</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="findMember">Member</label>
+					<div class="controls">
+						<input type="text" id="eventMemberToAdd" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{allNames}}]" data-items="6">
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="addEventMember">Add</button>
-			</div>
+					<br><br>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="addEventMember">Add</button>
 		</div>
 	</div>
 </template>
@@ -465,7 +459,7 @@
 	</div>
 </template>
 
-<template name = "showEmails">
+<template name="showEmails">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="modalLabel">Attending Member Emails</h3>
@@ -476,10 +470,10 @@
 				{{#each getMembers}}
 					{{this}}, 
 				{{/each}}
-				{{else}}
-					No members have signed up.
-				{{/if}}
-			</form>
+			{{else}}
+				No members have signed up.
+			{{/if}}
+		</form>
 		</div>
 		<div class="modal-footer">
 			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>

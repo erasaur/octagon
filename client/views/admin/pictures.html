@@ -1,118 +1,107 @@
 <template name="pictures">
-	<div class="span12">
-	{{#if officer}}
-		<div class="page-header">
-			<h1>Manage Pictures <small>at an exhibition</small></h1>
-			<ul class="inline">
-				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
-				<li><a href="#addPictureModal" role="button" class="btn btn-primary" data-toggle="modal">Add Picture</a></li>
-			</ul>
-		</div>
+	{{#contentFor "pageHeader"}}	
+		<h1>Manage Pictures <small>at an exhibition</small></h1>
+		<ul class="inline">
+			<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
+			<li><a href="#addPictureModal" role="button" class="btn btn-primary" data-toggle="modal">Add Picture</a></li>
+		</ul>
+	{{/contentFor}}
 
-		<div class="content">
-			{{#each pictures}}
-				<div class="thumbnails">
-					<div class="thumbnail well">
-						<div class="thumbnail-image">
-							<img class="flexible-image" src="{{source}}"/>
-						</div>
-						<div class="thumbnail-content">
-							<ul class="list">
-								<li><strong>Caption: </strong>{{caption}}</li>
-								<li><strong>Featured: </strong>{{featured}}</li>
-								<li>
-									<a href="#editPictureModal" role="button" class="btn btn-primary editPictureButton" data-toggle="modal">Edit</a>
-									<button class="btn btn-primary deletePicture">Delete</button>
-								</li>
-							</ul>
-						</div>
+	<div class="content">
+		{{#each pictures}}
+			<div class="thumbnails">
+				<div class="thumbnail well">
+					<div class="thumbnail-image">
+						<img class="flexible-image" src="{{source}}"/>
 					</div>
-					<div class="clear"></div>
-					<br/>
+					<div class="thumbnail-content">
+						<ul class="list">
+							<li><strong>Caption: </strong>{{caption}}</li>
+							<li><strong>Featured: </strong>{{featured}}</li>
+							<li>
+								<a href="#editPictureModal" role="button" class="btn btn-primary editPictureButton" data-toggle="modal">Edit</a>
+								<button class="btn btn-primary deletePicture">Delete</button>
+							</li>
+						</ul>
+					</div>
 				</div>
-			{{/each}}
+				<div class="clear"></div>
+				<br/>
+			</div>
+		{{/each}}
 
-			{{#unless hasPictures}}
-				<div class="post-content">
-					There currently are no pictures on the server. <br/><br/>
-					<strong>Note:</strong> Pictures uploaded on event creation are independent from pictures uploaded here.
+		{{#unless hasPictures}}
+			<div class="post-content">
+				There currently are no pictures on the server. <br/><br/>
+				<strong>Note:</strong> Pictures uploaded on event creation are independent from pictures uploaded here.
+			</div>
+		{{/unless}}
+	</div>
+	<!-- display all pictures, and currently selected as featured -->
+
+	<div id="addPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Add Picture</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="picture">Picture</label>
+					<div class="controls">
+						<input type="file" id="createPicture">
+					</div>
 				</div>
-			{{/unless}}
+				<div class="control-group">
+					<label class="control-label" for="featured">Show on front page?</label>
+					<div class="controls">
+						<input type="checkbox" id="createFeatured">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="caption">Caption</label>
+					<div class="controls">
+						<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+					</div>
+				</div>
+			</form>
 		</div>
-		<!-- display all pictures, and currently selected as featured -->
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="addPicture">Add</button>
+		</div>
+	</div>
 
-		<div id="addPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Add Picture</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="picture">Picture</label>
-						<div class="controls">
-							<input type="file" id="createPicture">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="featured">Show on front page?</label>
-						<div class="controls">
-							<input type="checkbox" id="createFeatured">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="caption">Caption</label>
-						<div class="controls">
-							<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="addPicture">Add</button>
-			</div>
+	<div id="editPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Edit Picture</h3>
 		</div>
-
-		<div id="editPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Edit Picture</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="picture">Picture</label>
-						<div class="controls">
-							<input type="file" id="editPicture">
-						</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="picture">Picture</label>
+					<div class="controls">
+						<input type="file" id="editPicture">
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="featured">Show on front page?</label>
-						<div class="controls">
-							<input type="checkbox" id="editFeatured">
-						</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="featured">Show on front page?</label>
+					<div class="controls">
+						<input type="checkbox" id="editFeatured">
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="caption">Caption</label>
-						<div class="controls">
-							<textarea id="editCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-						</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="caption">Caption</label>
+					<div class="controls">
+						<textarea id="editCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button class="btn btn-primary" id="savePicture">Save</button>
-			</div>
+				</div>
+			</form>
 		</div>
-		{{else}}
-			<div class="page-header">
-				<h1><i class="icon-frown"></i></h1>
-			</div>
-			<div class="content">
-			You are not authorized to view this page. 
-			</div>
-		{{/if}}
+		<div class="modal-footer">
+			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			<button class="btn btn-primary" id="savePicture">Save</button>
+		</div>
 	</div>
 </template>

@@ -1,65 +1,53 @@
 <template name="admin">
-	<div class="span12">
-	{{#if officer}}
-		<div class="page-header">
-			<h1>Admin <small>Administrative Menus</small></h1>
-		</div>
-		<div class="content">
-			<div class="post-header">
-				<h3>Manage Members 
-					<div class="float-right">
-						<a class="btn btn-primary" href="{{pathFor 'members'}}" id="managePictures">Manage Members</a>
-					</div>
-				</h3>
-			</div>
-			<div class="post-content">
-				<p>
-				 This administrative panel is used for adding an arbitrary amount of points to members.
-				</p>
-				<p>
-				Use this for adding points for meeting attendance, social attendance, etc.
-				</p>
-			</div>
+	{{#contentFor "pageHeader"}}
+		<h1>Admin <small>Administrative Menus</small></h1>
+	{{/contentFor}}
 
-			<div class="post-header">
-				<h3>Manage Pictures 
-					<div class="float-right">
-						<a class="btn btn-primary" href="{{pathFor 'pictures'}}" id="managePictures">Manage Pictures</a>
-					</div>
-				</h3>
+	<div class="post-header">
+		<h3>Manage Members 
+			<div class="float-right">
+				<a class="btn btn-primary" href="{{pathFor 'members'}}" id="managePictures">Manage Members</a>
 			</div>
-			<div class="post-content">
-				<p>
-				 Clicking the button above will access the administrative panel in which you can view all pictures uploaded to the system, as well as set certain pictures to be "featured" images on the front page carousel.
-				</p>
-				<p>
-				Keep in mind that the pictures do NOT include the pictures uploaded via event creation.
-				</p>
+		</h3>
+	</div>
+	<div class="post-content">
+		<p>
+		 This administrative panel is used for adding an arbitrary amount of points to members.
+		</p>
+		<p>
+		Use this for adding points for meeting attendance, social attendance, etc.
+		</p>
+	</div>
+
+	<div class="post-header">
+		<h3>Manage Pictures 
+			<div class="float-right">
+				<a class="btn btn-primary" href="{{pathFor 'pictures'}}" id="managePictures">Manage Pictures</a>
 			</div>
-			
-			<div class="post-header">
-				<h3>Manage Suggestions 
-					<div class="float-right">
-						<a class="btn btn-primary" href="{{pathFor 'suggestions'}}" id="eventSuggestions">Event Suggestions</a>
-					</div>
-				</h3>
+		</h3>
+	</div>
+	<div class="post-content">
+		<p>
+		 Clicking the button above will access the administrative panel in which you can view all pictures uploaded to the system, as well as set certain pictures to be "featured" images on the front page carousel.
+		</p>
+		<p>
+		Keep in mind that the pictures do NOT include the pictures uploaded via event creation.
+		</p>
+	</div>
+	
+	<div class="post-header">
+		<h3>Manage Suggestions 
+			<div class="float-right">
+				<a class="btn btn-primary" href="{{pathFor 'suggestions'}}" id="eventSuggestions">Event Suggestions</a>
 			</div>
-			<div class="post-content">
-				<p>
-				Clicking the button above will access the administrative panel in which you can view pending event suggestions, approve pending suggestions, reject pending suggestions, and delete suggestions from the server.
-				</p>
-				<p>
-				Approving suggestions will automatically grant the suggesting user points, but rejecting suggestions will NOT subtract from their points. Additionally, all actions made on this page are reversable.
-				</p>
-			</div>
-		</div>
-	{{else}}
-		<div class="page-header">
-			<h1><i class="icon-frown"></i></h1>
-		</div>
-		<div class="content">
-		You are not authorized to view this page. 
-		</div>
-	{{/if}}
+		</h3>
+	</div>
+	<div class="post-content">
+		<p>
+		Clicking the button above will access the administrative panel in which you can view pending event suggestions, approve pending suggestions, reject pending suggestions, and delete suggestions from the server.
+		</p>
+		<p>
+		Approving suggestions will automatically grant the suggesting user points, but rejecting suggestions will NOT subtract from their points. Additionally, all actions made on this page are reversable.
+		</p>
 	</div>
 </template>

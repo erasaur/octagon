@@ -1,90 +1,86 @@
 <template name="profile">
-	<div class="span12">
-		<div class="page-header">
-			<h1>{{username}} <small>Checkin' out your own profile</small></h1>
-			<a href="#changePassModal" class="btn btn-primary" data-toggle="modal">Change Password</a>
-			<button class="btn btn-primary" id="deleteAccount">Delete Account</button>
-		</div>
+	{{#contentFor "pageHeader"}}
+		<h1>{{username}} <small>Checkin' out your own profile</small></h1>
+		<a href="#changePassModal" class="btn btn-primary" data-toggle="modal">Change Password</a>
+		<button class="btn btn-primary" id="deleteAccount">Delete Account</button>
+	{{/contentFor}}
 
-		<div class="content">
-			<ul class="list">
-				<div class="post-header">
-					<h3>Account Information</h3>
-				</div>
-				<div class="post-content">
-					<li><strong>Username:</strong> {{username}}</li>
-					<li><strong>Name:</strong> {{profile.name}}</li>
-					<li><strong>Email:</strong> {{email}}</li>
-				</div>
-				
-				<div class="post-header">
-					<h3>Club Stats</h3>
-				</div>
-				<div class="post-content">
-					<li><strong>Events Log: </strong></li>
-					<li>
-						<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
-							<ul class="list">
-							{{#if profile.events}}
-								{{#each profile.events}}
-									<li><strong>{{date}}</strong> - Attended <strong>"{{name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.</li>
-								{{/each}}
-							{{else}}
-								<li>You have not attended any events yet.</li>
-							{{/if}}
-							</ul>
-						</div>
-					</li>
-					<li><strong>Points:</strong> {{profile.points}}</li>
-					<li><strong>Meetings attended:</strong> {{profile.meetings}}</li>
-					<li><strong>Member in Charge:</strong> {{profile.mic}} time(s)</li>
-					<li><strong>Carpooled:</strong> {{profile.carpool}} time(s)</li>
-					<li><strong>Strikes:</strong> {{profile.strikes}}</li>
-					<li><strong>Suggested:</strong> {{profile.suggests}} event(s)</li>
-					<li>
-						<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
-							<ul class="list">
-							{{#if hasSuggested}}
-								{{#each suggestedEvents}}
-									<li>{{date}} - {{name}} (Status: <strong>{{status}}</strong>)</li>
-								{{/each}}
-							{{else}}
-								<li>You have not suggested any events yet. Go suggest one in the events page! (Now!)</li>
-							{{/if}}
-							</ul>
-						</div>
-					</li>
-				</div>
-			</ul>
+	<ul class="list">
+		<div class="post-header">
+			<h3>Account Information</h3>
 		</div>
+		<div class="post-content">
+			<li><strong>Username:</strong> {{username}}</li>
+			<li><strong>Name:</strong> {{profile.name}}</li>
+			<li><strong>Email:</strong> {{email}}</li>
+		</div>
+		
+		<div class="post-header">
+			<h3>Club Stats</h3>
+		</div>
+		<div class="post-content">
+			<li><strong>Events Log: </strong></li>
+			<li>
+				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
+					<ul class="list">
+					{{#if profile.events}}
+						{{#each profile.events}}
+							<li><strong>{{date}}</strong> - Attended <strong>"{{name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.</li>
+						{{/each}}
+					{{else}}
+						<li>You have not attended any events yet.</li>
+					{{/if}}
+					</ul>
+				</div>
+			</li>
+			<li><strong>Points:</strong> {{profile.points}}</li>
+			<li><strong>Meetings attended:</strong> {{profile.meetings}}</li>
+			<li><strong>Member in Charge:</strong> {{profile.mic}} time(s)</li>
+			<li><strong>Carpooled:</strong> {{profile.carpool}} time(s)</li>
+			<li><strong>Strikes:</strong> {{profile.strikes}}</li>
+			<li><strong>Suggested:</strong> {{profile.suggests}} event(s)</li>
+			<li>
+				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
+					<ul class="list">
+					{{#if hasSuggested}}
+						{{#each suggestedEvents}}
+							<li>{{date}} - {{name}} (Status: <strong>{{status}}</strong>)</li>
+						{{/each}}
+					{{else}}
+						<li>You have not suggested any events yet. Go suggest one in the events page! (Now!)</li>
+					{{/if}}
+					</ul>
+				</div>
+			</li>
+		</div>
+	</ul>
 
-		<div id="changePassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modalLabel">Change Password</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="newPassword">New Password</label>
-						<div class="controls">
-							<input id="newPassword" type="password">
-						</div>
+	<div id="changePassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalLabel">Change Password</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="newPassword">New Password</label>
+					<div class="controls">
+						<input id="newPassword" type="password">
 					</div>
-				</form>
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="newPasswordVerify">Retype Password</label>
-						<div class="controls">
-							<input id="newPasswordVerify" type="password">
-						</div>
+				</div>
+			</form>
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="newPasswordVerify">Retype Password</label>
+					<div class="controls">
+						<input id="newPasswordVerify" type="password">
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button class="btn btn-primary" id="changePass">Change is Reform!</button>
-			</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button class="btn btn-primary" id="changePass">Change is Reform!</button>
 		</div>
 	</div>
 </template>

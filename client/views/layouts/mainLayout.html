@@ -1,4 +1,6 @@
 <template name="mainLayout">
+  {{> nav}}
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -6,10 +8,10 @@
           {{> yield "pageHeader"}}
         </div>
         <div class="page-content">
-          {{> yield "pageContent"}}
+          {{> yield}}
         </div>
         <div class="page-footer">
-          {{> yield "pageFooter"}}
+          {{> footer}}
         </div>
       </div>
     </div>
