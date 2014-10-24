@@ -1,4 +1,4 @@
-SuggestsSchema = new SimpleSchema({
+SuggestSchema = new SimpleSchema({
   userId: { // _id of user who suggested
     type: String
   },
@@ -32,12 +32,25 @@ SuggestsSchema = new SimpleSchema({
 });
 
 Suggests = new Mongo.Collection('suggests');
-Suggests.attachSchema(SuggestsSchema);
+Suggests.attachSchema(SuggestSchema);
 
 Suggests.allow({
   insert: canSuggestEventById,
   update: isAdminById,
   remove: isAdminById
+});
+
+Suggests.before.insert(function (userId, doc) {
+  if (Meteor.isServer && doc.description)
+    doc.description = sanitize(marked(doc.description));
+});
+
+Suggests.before.update(function (userId, doc, fields, modifier, options) {
+  // sanitize before update
+  if (Meteor.isServer && modifier.$set && modifier.$set.description) {
+    modifier.$set = modifier.$set || {};
+    modifier.$set.description = sanitize(marked(modifier.$set.description));
+  }
 });
 
 Meteor.methods({
@@ -54,11 +67,8 @@ Meteor.methods({
       status: 'pending'
     });
 
-    suggestion._id = Suggests.insert(suggestion);
-
     // TODO: send notifications
-
-    return suggestion._id;
+    return Suggests.insert(suggestion);
   },
   approveSuggestion: function (suggestId) {
     var user = Meteor.user();

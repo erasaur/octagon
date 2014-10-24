@@ -1,34 +1,48 @@
-PicturesModel = new Meteor.Collection("pictures");
-
-Octagon.Pictures = {
-  create: function (url, caption, featured) {
-    PicturesModel.insert({"source": url, "caption": caption, "featured": featured});
+PictureSchema = new SimpleSchema({
+  imageUrl: {
+    type: String
   },
-  update: function (url, new_url, caption, featured) {
-    PicturesModel.update({"_id": PicturesModel.findOne({"source": url})._id}, {$set: {"source": new_url, "caption": caption, "featured": featured}});
+  caption: {
+    type: String
   },
-  delete: function (url) {
-    PicturesModel.remove({"_id": PicturesModel.findOne({"source": url})._id});
+  featured: {
+    type: Boolean
   }
-}
+});
 
-PicturesModel.allow({
-  insert: function (userId, doc) {
-    if(!userId) return false;
+Pictures = new Mongo.Collection('pictures');
+Pictures.attachSchema(PictureSchema);
 
-    var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-    return (userId && officer); //only if officer & logged in, allow
+Pictures.allow({
+  insert: isAdminById,
+  update: isAdminById,
+  remove: isAdminById
+});
+
+Meteor.methods({
+  createPicture: function (picture) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    return Pictures.insert(picture);
   },
-  update: function (userId, doc, fields, modifier) {
-    if(!userId) return false;
+  updatePicture: function (picture) {
+    var user = Meteor.user();
+    var pictureId = picture._id;
 
-    var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-    return (userId && officer); //only if officer & logged in, allow
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Pictures.update(pictureId, { $set: picture });
   },
-  remove: function (userId, doc) {
-    if(!userId) return false;
+  deletePicture: function (pictureId) {
+    var user = Meteor.user();
 
-    var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-    return (userId && officer); //only if officer & logged in, allow
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Pictures.remove(pictureId);
   }
 });

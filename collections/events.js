@@ -96,11 +96,8 @@ Meteor.methods({
       imageUrl: event.imageUrl
     };
 
-    eventObj._id = Events.insert(eventObj);
-
     // TODO: send notifications
-
-    return eventObj._id;
+    return Events.insert(eventObj);
   },
   updateEvent: function (event) {
     var user = Meteor.user();
