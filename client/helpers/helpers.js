@@ -1,20 +1,20 @@
-Handlebars.registerHelper('onPage', function (path) {
+Template.registerHelper('onPage', function (path) {
   var pathname = window.location.pathname.split('/')[1];
   return pathname === path;
 });
-Handlebars.registerHelper('username', function() {
+Template.registerHelper('username', function() {
   if(Meteor.user()) return Meteor.user().username;
 });
-Handlebars.registerHelper('email', function() {
+Template.registerHelper('email', function() {
   if(Meteor.user() && Meteor.user().emails) return Meteor.user().emails[0].address;
 });
-Handlebars.registerHelper('profile', function() {
+Template.registerHelper('profile', function() {
   if(Meteor.user()) return Meteor.user().profile;
 });
-Handlebars.registerHelper('officer', function() {
+Template.registerHelper('officer', function() {
   if(Meteor.user()) return Meteor.users.find({$and: [{"_id": Meteor.userId()}, {"profile.officer": true}]}).count() > 0 ? true : false;
 });
-Handlebars.registerHelper('allMembers', function () {
+Template.registerHelper('allMembers', function () {
   var users = new Array();
 
   for (var i=0; i<Meteor.users.find().count(); i++) {
@@ -23,7 +23,7 @@ Handlebars.registerHelper('allMembers', function () {
   
   return users;
 });
-Handlebars.registerHelper('allNames', function() {
+Template.registerHelper('allNames', function() {
   var users = new Array();
 
   for (var i=0; i<Meteor.users.find().count(); i++) {
@@ -32,7 +32,7 @@ Handlebars.registerHelper('allNames', function() {
   
   return users;
 });
-Handlebars.registerHelper('')
+Template.registerHelper('')
 
 Template.members.helpers({
   hasMembers: function () {
