@@ -1,41 +1,101 @@
-SuggestsModel = new Meteor.Collection("suggests");
-
-Octagon.Suggests = {
-  create: function (name, date, description, location, cost, contact, uname, user, userid) {
-    SuggestsModel.insert({"name": name, "date": date, "description": description, "location": location, "cost": cost, "contact": contact, "uname": uname, "user": user, "userid": userid, "status": "pending"});
+SuggestsSchema = new SimpleSchema({
+  userId: { // _id of user who suggested
+    type: String
   },
-  approve: function (name) {
-    SuggestsModel.update({_id: SuggestsModel.findOne({"name": name})['_id']}, {$set: {"status": "approved"}});
+  createdAt: {
+    type: Date
   },
-  unApprove: function (name) {
-    SuggestsModel.update({_id: SuggestsModel.findOne({"name": name})['_id']}, {$set: {"status": "pending"}});
+  name: {
+    type: String
   },
-  reject: function (name) {
-    SuggestsModel.update({_id: SuggestsModel.findOne({"name": name})['_id']}, {$set: {"status": "rejected"}});
+  date: { // date of the event
+    type: Date
   },
-  unReject: function (name) {
-    SuggestsModel.update({_id: SuggestsModel.findOne({"name": name})['_id']}, {$set: {"status": "pending"}});
+  description: {
+    type: String
   },
-  delete: function (name) {
-    SuggestsModel.remove({_id: SuggestsModel.findOne({"name": name})['_id']});
-  }
-}
-
-SuggestsModel.allow({
-  insert: function (userId, doc) {
-    //if logged in, allow
-    if (userId) return true;
+  location: {
+    type: String
   },
-  update: function (userId, doc, fields, modifier) {
-    if(!userId) return false;
-
-    var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-    return (userId && officer); //only if officer & logged in, allow
+  cost: {
+    type: Number,
+    min: 0,
+    optional: true
   },
-  remove: function (userId, doc) {
-    if(!userId) return false;
-
-    var officer = Meteor.users.findOne({"_id": userId}).profile.officer;
-    return (userId && officer); //only if officer & logged in, allow
+  contact: {
+    type: String
+  },
+  status: {
+    type: String,
+    defaultValue: 'pending'
   }
 });
+
+Suggests = new Mongo.Collection('suggests');
+Suggests.attachSchema(SuggestsSchema);
+
+Suggests.allow({
+  insert: canSuggestEventById,
+  update: isAdminById,
+  remove: isAdminById
+});
+
+Meteor.methods({
+  suggestEvent: function (suggestion) {
+    var user = Meteor.user();
+    var userId = this.userId;
+
+    if (!user || !canSuggestEvent(user))
+      throw new Meteor.Error('logged-out', getError('logged-out'));
+
+    _.extend(suggestion, {
+      userId: userId,
+      createdAt: new Date(),
+      status: 'pending'
+    });
+
+    suggestion._id = Suggests.insert(suggestion);
+
+    // TODO: send notifications
+
+    return suggestion._id;
+  },
+  approveSuggestion: function (suggestId) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Suggests.update(suggestId, { $set: { 'status': 'approved' } });
+  },
+  rejectSuggestion: function (suggestId) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Suggests.update(suggestId, { $set: { 'status': 'rejected' } });
+  },
+  resetSuggestion: function (suggestId) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Suggests.update(suggestId, { $set: { 'status': 'pending' } });
+  },
+  deleteSuggestion: function (suggestId) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Suggests.remove(suggestId);
+  }
+});
+
+
+
+
+
+

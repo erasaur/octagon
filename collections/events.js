@@ -15,6 +15,7 @@ Schema.EventInfo = new SimpleSchema({
   },
   cost: { // omitted if zero
     type: Number,
+    min: 0,
     optional: true
   }
 });
