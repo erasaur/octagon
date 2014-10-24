@@ -9,7 +9,6 @@ standard-app-packages
 jquery
 mizzao:bootstrap-3
 mrt:moment
-iron:router
 aldeed:collection2
 alethes:pages
 cfs:standard-packages
@@ -18,4 +17,5 @@ underscore
 djedi:sanitize-html
 chuangbo:marked
 less
+iron:router@1.0.0-pre4
 
