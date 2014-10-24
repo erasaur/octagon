@@ -1,3 +1,15 @@
+Template.members.helpers({
+  hasMembers: function () {
+    return Meteor.users.find();
+  },
+  hasAssigned: function () {
+    return PointsModel.find().count();
+  },
+  pointsLog: function () {
+    return PointsModel.find();
+  }
+});
+
 Template.members.events({
   'click #appendName': function () {
     var users = $('#membersToAdd');
