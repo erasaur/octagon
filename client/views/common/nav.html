@@ -26,7 +26,7 @@
 							<p class="form-search navbar-form pull-right">
 								<input id="logout" class="btn btn-primary btn-mini" type="submit" value="Log Out">
 							</p>
-							<span class="navbar-text nav-welcome">Welcome, {{username}}!</span>
+							<span class="navbar-text nav-welcome">Welcome, {{formatName currentUser._id}}!</span>
 					{{/if}}
 				</ul>
 				{{#unless currentUser}}
@@ -36,8 +36,8 @@
 	            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In <span class="caret"></span></a>
 	            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;" role="menu">
 	            	<form class="nav-form" id="loginForm">
-	            		<input id="username" class="input-medium" type="text" placeholder="Username">
-									<input id="password" class="input-medium" type="password" placeholder="Password">
+	            		<input id="js-email" class="input-medium" type="text" placeholder="Email">
+									<input id="js-password" class="input-medium" type="password" placeholder="Password">
 									<input class="btn btn-primary btn-mini" type="submit" value="Log In">
 									<li><a href="{{pathFor 'recovery'}}">Forgot?</a></li>
 								</form>
@@ -49,7 +49,7 @@
 	  </div>
 	</nav>
 
-	<div id="signUpModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div id="signUpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-dialog">
     	<div class="modal-content">
 				<div class="modal-header">
@@ -59,40 +59,34 @@
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="control-group">
-							<label class="control-label" for="username">Username</label>
-							<div class="controls">
-								<input id="createUsername" type="text" placeholder="theross">
-							</div>
-						</div>
-						<div class="control-group">
 							<label class="control-label" for="name">Name</label>
 							<div class="controls">
-								<input id="createName" type="text" placeholder="Bob Ross">
+								<input id="js-create-name" type="text" placeholder="Bob Ross">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="username">Email</label>
 							<div class="controls">
-								<input id="createEmail" type="text" placeholder="joy@painting.com">
+								<input id="js-create-email" type="text" placeholder="joy@painting.com">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="password">Password</label>
 							<div class="controls">
-								<input id="createPassword" type="password" placeholder="Password">
+								<input id="js-create-password" type="password" placeholder="Password">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="password">Repeat</label>
 							<div class="controls">
-								<input id="repeatPassword" type="password" placeholder="Password">
+								<input id="js-create-rpassword" type="password" placeholder="Password">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" id="create">Create</button>
 					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+					<button class="btn btn-primary" id="create">Create</button>
 				</div>
 			</div>
 		</div>

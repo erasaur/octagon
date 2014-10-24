@@ -44,12 +44,19 @@ Schema.User = new SimpleSchema({
   'emails.$.verified': {
     type: Boolean
   },
+  password: {
+    type: String
+  },
   isAdmin: {
     type: Boolean,
     optional: true
   },
   profile: { // public and not editable
     type: Schema.UserProfile
+  },
+  services: {
+    type: Object,
+    blackbox: true
   }
 });
 
