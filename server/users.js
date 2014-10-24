@@ -19,9 +19,13 @@ Accounts.onCreateUser(function (options, user) {
 Meteor.methods({
   signup: function (name, email, password, rpassword) {
     var name = stripHTML(name);
+    var email = stripHTML(email);
 
     if (!name.trim())
       throw new Meteor.Error('invalid-name', getError('invalid-name'));
+
+    if (!email.trim())
+      throw new Meteor.Error('invalid-email', getError('invalid-email'));
 
     if (Meteor.users.find({ 'profile.name': name }).count() > 0)
       throw new Meteor.Error('duplicate-name', getError('duplicate-name'));

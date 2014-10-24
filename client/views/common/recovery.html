@@ -6,9 +6,9 @@
 	{{#if resetPassword}}
 		<form id="newPass" class="form-horizontal">
 			<div class="control-group">
-		    <label class="control-label" for="inputPass">New Password</label>
+		    <label class="control-label" for="js-password">New Password</label>
 		    <div class="controls">
-		      <input type="text" id="inputPass" placeholder="Password">
+		      <input type="password" id="js-password" placeholder="Password">
 		    </div>
 		  </div>
 		  <div class="control-group">
@@ -23,9 +23,9 @@
 	{{else}}
 		<form id="recoverPass" class="form-horizontal">
 			<div class="control-group">
-				<label class="control-label" for="inputEmail">Recovery Email</label>
+				<label class="control-label" for="js-email">Recovery Email</label>
 				<div class="controls">
-					<input type="text" id="inputEmail" placeholder="Email">
+					<input type="text" id="js-email" placeholder="Email">
 					<button id="recoverPassword" type="submit" class="btn btn-primary btn-small">Recover Password!</button>
 				</div>
 			</div>

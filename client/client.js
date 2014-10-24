@@ -3,9 +3,10 @@
 Session.setDefault('eventsLimit', 5); //start with 5 events showing
 Session.setDefault('currentPage', 'home');
 
-if(Accounts._resetPasswordToken) {
-	Session.set('resetPassword', Accounts._resetPasswordToken);
-}
+Accounts.onResetPasswordLink(function (token, done) {
+  Session.set('resetPassword', token);
+  done();
+});
 
 //automatically reruns when dependencies change
 Deps.autorun(function() {
