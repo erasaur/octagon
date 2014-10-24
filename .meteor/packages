@@ -3,10 +3,19 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-preserve-inputs
 accounts-base
 accounts-password
-jquery
-bootstrap
 standard-app-packages
-iron-router
+jquery
+mizzao:bootstrap-3
+mrt:moment
+iron:router
+aldeed:collection2
+alethes:pages
+cfs:standard-packages
+cfs:filesystem
+underscore
+djedi:sanitize-html
+chuangbo:marked
+less
+
