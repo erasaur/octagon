@@ -1,0 +1,17 @@
+pictures added to events are handled by the events model
+pictures added to carousel are added to pictures model
+
+implement window effect
+implement email (on contact page)
+referrals, pictures & events, etc
+adding pictures to posts
+event cancellation
+style pictures page
+
+ensure that all number inputs are actually numbers
+
+replace error messages with constants
+
+
+fix the whitespace issue
+fix dates (consider toDateString(), but will have to change getDate(), editing events, adding events, displaying events, etc)

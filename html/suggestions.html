@@ -1,0 +1,61 @@
+<template name="suggestions">
+	<div class="span12">
+	{{#if officer}}
+		<div class="page-header">
+			<h1>Pending Events <small>Events suggested by members</small></h1>
+			<a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a>
+		</div>
+		<div class="content">
+			{{#if hasPending}}
+				{{#each pending}}
+					<div class="post-header">
+						<h3>{{name}} <small>Suggested on {{date}}</small>
+							<div class="float-right">
+								{{#if approved}}
+									<small class="text-success">Approved!</small>
+									<button class="btn btn-primary unApproveEvent">Un-Approve</button>
+									<button class="btn btn-primary deleteEvent">Delete</button>
+								{{else}}
+									{{#if rejected}}
+										<small class="text-error">Rejected...</small>
+										<button class="btn btn-primary unRejectEvent">Un-Reject</button>
+										<button class="btn btn-primary deleteEvent">Delete</button>
+									{{else}}
+										<button class="btn btn-primary approveEvent">Approve</button>
+										<button class="btn btn-primary rejectEvent">Reject</button>
+										<button class="btn btn-primary deleteEvent">Delete</button>
+									{{/if}}
+								{{/if}}
+							</div>
+						</h3>
+					</div>
+					<div class="post-content">
+						<ul class="list">
+							<li><strong>Description:</strong> {{description}}</li>
+							<li><strong>Location:</strong> {{location}}</li>
+							<li><strong>Cost:</strong> ${{cost}}.00</li>
+							<li><strong>Contact:</strong> {{contact}}</li>
+							<li><strong>Suggested by:</strong> {{user}} ({{uname}})</li>
+	     				</ul>
+					</div>
+				{{/each}}
+			{{else}}
+				<div class="post-header">
+					<h3>Oops!</h3>
+
+				</div>
+				<div class="post-content">
+					There currently are no suggested events on the server.
+				</div>
+			{{/if}}
+		</div>
+	{{else}}
+		<div class="page-header">
+			<h1><i class="icon-frown"></i></h1>
+		</div>
+		<div class="content">
+		You are not authorized to view this page. 
+		</div>
+	{{/if}}
+	</div>
+</template>

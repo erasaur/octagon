@@ -1,0 +1,184 @@
+<!--page for adding points to members for meetings and socials (only officers can add, all can view)-->
+<template name="members">
+	<div class="span12">
+		<div class="page-header">
+			<h1>Members <small>List of Lynbrook's coolest people</small></h1>
+			<ul class="inline">
+			<!-- TODO: finish search
+			<input id="searchMember" type="text" placeholder="Search Member" style="height: 24px; margin-top: 10px; margin-left: 5px;">
+			<button class="btn btn-primary" id="submitSearch"><i class="icon-search"></i></button>
+			-->
+			{{#if officer}}
+				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
+				<li><a href="#addPointsModal" role="button" class="btn btn-primary" data-toggle="modal">Assign Points</a></li>
+				<li><a href="#addStrikesModal" role="button" class="btn btn-primary" data-toggle="modal">Assign Strikes</a></li>
+				<li><a href="#showEmailsModal" role="button" class="btn btn-primary" data-toggle="modal">Show Emails</a></li>
+			{{/if}}
+			</ul>
+		</div>
+		<div class="content">
+			<div class="post-header">
+				<h3>Points Log
+				{{#if officer}}
+					<div class="float-right">
+						<button class="btn btn-primary" id="clearLog">Clear Log</button>
+					</div>
+				{{/if}}
+				</h3>
+			</div>
+			<div class="post-content">
+				<div class="alert alert-info">
+					<ul class="list">
+					{{#if hasAssigned}}
+						{{#each pointsLog}}
+							<li><strong>{{date}}</strong> - {{name}} assigned {{points}} points for "{{occasion}}" to:
+								<p>{{members}}</p>
+							</li>
+						{{/each}}
+					{{else}}
+						<li><i class="icon-refresh icon-spin"></i> Just a moment...</li>
+					{{/if}}
+					</ul>
+				</div>
+			</div>
+			<div class = "post-header">
+				<h3>Points from Past Years</h3>
+			</div>
+			<div class = "post-content">
+				<a class = "btn" href = "https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target = "_blank">2013-2014</a>
+				<a class = "btn" href = "https://docs.google.com/spreadsheet/ccc?key=0Aof8QQOBP6MCdDRKT0Y3RXVjcnVjdzlPdjdyRUI1ZVE&usp=sharing" target = "_blank">2012-2013</a>
+			</div>
+			<div class="post-header">
+				<h3>Members</h3>
+			</div>
+			<ul class="list">
+				{{#if loggingIn}}
+					<i class="icon-refresh icon-spin"></i> Just a moment...
+				{{else}}
+					{{#if hasMembers}}
+						<table class="table member-list">
+							{{#each allMembers}}
+        	    				<tbody>
+        	        				<tr class="member-head">
+        	        					{{#if officer}}<th>User</th>{{/if}}
+        	        					<th>Name</th>
+        	        					<th>Points</th>
+        	        					<th>Strikes</th>
+        	        					<th>Email</th>
+        	        					{{#if officer}}
+        	        						<th><button class="btn btn-primary btn-mini delUser float-right">Delete User</button></th>
+        	        					{{/if}}
+        	        				</tr>
+        	      					<tr>
+        	      						{{#if officer}}<td>{{this.username}}</td>{{/if}}
+	    	            				<td>{{this.profile.name}}</td>
+	    	            				<td>{{this.profile.points}}</td>
+	    	            				<td>{{this.profile.strikes}}</td>
+	    	            				<td>{{this.emails.[0].address}}</td>
+	    	            				{{#if officer}}
+	    	            					<td></td>
+	    	         					{{/if}}
+           	   					</tr>
+          						</tbody>
+        					{{/each}}
+        				</table>	
+					{{else}}
+					<i class="icon-refresh icon-spin"></i> Just a moment...
+					{{/if}}
+				{{/if}}
+			</ul>
+		</div>
+		<div id="addPointsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalLabel">Assign Points</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="inputUsers">Members (Separated by commas)</label>
+						<div class="controls">
+							<textarea type="text" id="membersToAdd" placeholder="If you repeat the name, the member will gain double the points specified, if entered thrice, triple points, etc."></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="findUsers">Add Members</label>
+						<div class="controls">
+							<div class="input-append">
+								<input type="text" id="addToMembers" style="width: 156px;" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{allNames}}]" data-items="6">
+								<button class="btn" type="button" id="appendName">Add</button>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="points">Points</label>
+						<div class="controls">
+							<input id="pointsToAdd" type="text" placeholder="10">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="event">Occasion</label>
+						<div class="controls">
+							<input id="occasion" type="text" placeholder="Regular Meeting [9/26/2013]">
+						</div>
+					</div>
+					<div class="control-group">
+					<label class="control-label" for="event"><abbr title="Is the occasion a normal meeting?"><i class="icon-info-sign"></i></abbr> Normal meeting?</label>
+						<div class="controls">
+							<input type="checkbox" id="isMeeting">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+				<button class="btn btn-primary" id="addPoints">Add</button>
+			</div>
+		</div>
+	</div>
+	<div id="addStrikesModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalLabel">Assign Strikes</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="inputUsers">Member</label>
+						<div class="controls">
+							<textarea type="text" id="memberToStrike"></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputStrikes">Strikes</label>
+						<div class="controls">
+							<input id="strikesToAdd" type="text" placeholder="1">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+				<button class="btn btn-primary" id="addStrikes">Add</button>
+			</div>
+		</div>
+	</div>
+	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalLabel">Member Emails</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					{{#if hasMembers}}
+						{{#each allMembers}}
+							{{this.emails.0.address}},
+						{{/each}}
+					{{/if}}
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+			</div>
+		</div>
+	</div>
+</template>
