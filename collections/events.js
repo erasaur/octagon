@@ -141,6 +141,8 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    // TODO: update points log here
+
     Events.update(eventId, { $set: { 'finalized': true } });
   },
   deleteEvent: function (eventId) {

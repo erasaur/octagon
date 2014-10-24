@@ -1,5 +1,11 @@
-abstract club-specific things like settings, website name, style, etc
+dates -> createdAt
+name/owner/etc -> userId
+member usernames -> use ids
+occasion -> description
+officer -> admin
 
+abstract club-specific things like settings, website name, style, etc
+use collectionfs instead of managing pictures manually
 trash inline styling...
 trash br's ... use clearfix not ninja divs
 don't use separate ids
@@ -8,22 +14,22 @@ easy search for members?
 set up permissions
 sanitation of inputs, markdown
 events page -- move all the if statements into a helper, and just render the text
-"" -> ''
-collection schemas
-pictures added to events are handled by the events model
-pictures added to carousel are added to pictures model
 
+progress:
+replace error messages with constants
+handle pictures in events/pictures collections together
+"" -> ''
+
+done:
+fix dates (consider toDateString(), but will have to change getDate(), editing events, adding events, displaying, etc) (moment)
+fix the whitespace issue
+ensure that all number inputs are actually numbers (schema)
+collection schemas
+
+future:
 implement window effect
-implement email (on contact page)
+implement email (on contact page, and for notifications)
 referrals, pictures & events, etc
 adding pictures to posts
 event cancellation
 style pictures page
-
-ensure that all number inputs are actually numbers
-
-replace error messages with constants
-
-
-fix the whitespace issue
-fix dates (consider toDateString(), but will have to change getDate(), editing events, adding events, displaying events, etc)

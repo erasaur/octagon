@@ -42,6 +42,8 @@ Meteor.methods({
     if (!user || !isAdminById(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    _.extend(post, { createdAt: new Date() });
+
     return Posts.insert(post);
   },
   updatePost: function (post) {
