@@ -23,7 +23,7 @@ LogSchema = new SimpleSchema({
 Logs = new Mongo.Collection('logs');
 Logs.attachSchema(LogSchema);
 
-PointsModel.allow({
+Logs.allow({
   insert: isAdminById,
   remove: isAdminById
 });
