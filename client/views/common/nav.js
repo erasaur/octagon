@@ -9,9 +9,9 @@ Template.nav.events({
     var email = template.find('#js-email').value;
     var password = template.find('#js-password').value;
     
-    Meteor.loginWithPassword(email, userPass, function (error) {
+    Meteor.loginWithPassword(email, password, function (error) {
       if (error)
-        alert(error); 
+        alert(error);
     });
   },
   'click #create': function (event, template) {
@@ -25,6 +25,7 @@ Template.nav.events({
         alert(error.reason);
       else {
         alert(getError('account-success'));
+        template.$('#signUpModal').modal('hide');
 
         Meteor.loginWithPassword(email, password, function (error) {
           if (error)
