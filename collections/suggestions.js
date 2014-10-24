@@ -1,4 +1,8 @@
 SuggestSchema = new SimpleSchema({
+  _id: {
+    type: String,
+    optional: true
+  },
   userId: { // _id of user who suggested
     type: String
   },

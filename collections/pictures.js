@@ -1,4 +1,8 @@
 PictureSchema = new SimpleSchema({
+  _id: {
+    type: String,
+    optional: true
+  },
   imageUrl: {
     type: String
   },

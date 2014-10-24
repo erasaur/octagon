@@ -1,4 +1,8 @@
 SettingsSchema = new SimpleSchema({
+  _id: {
+    type: String,
+    optional: true
+  },
   name: { // name of the club
     type: String,
     optional: true
