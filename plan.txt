@@ -8,7 +8,8 @@ easy search for members?
 set up permissions
 sanitation of inputs, markdown
 events page -- move all the if statements into a helper, and just render the text
-
+"" -> ''
+collection schemas
 pictures added to events are handled by the events model
 pictures added to carousel are added to pictures model
 
