@@ -1,3 +1,3 @@
-Meteor.publish("suggests", function () {
-  return SuggestsModel.find();
+Meteor.publish('suggests', function () {
+  return Suggests.find();
 });

@@ -1,3 +1,3 @@
-Meteor.publish("pictures", function () {
-  return PicturesModel.find(); 
+Meteor.publish('pictures', function () {
+  return Pictures.find(); 
 });
