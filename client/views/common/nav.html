@@ -14,15 +14,15 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-					<li class="{{#if onPage 'events'}}active{{/if}}"><a href="{{pathFor 'events'}}">Events</a></li>
-					<li class="{{#if onPage 'members'}}active{{/if}}"><a href="{{pathFor 'members'}}">Members</a></li>
-					<li class="{{#if onPage 'contact'}}active{{/if}}"><a href="{{pathFor 'contact'}}">Contact</a></li>
+					<li class="{{#if currentPage 'events'}}active{{/if}}"><a href="{{pathFor 'events'}}">Events</a></li>
+					<li class="{{#if currentPage 'members'}}active{{/if}}"><a href="{{pathFor 'members'}}">Members</a></li>
+					<li class="{{#if currentPage 'contact'}}active{{/if}}"><a href="{{pathFor 'contact'}}">Contact</a></li>
 
 					{{#if currentUser}}
 						{{#if officer}}
-							<li class="{{#if onPage 'admin'}}active{{/if}}"><a href="{{pathFor 'admin'}}">Admin</a></li>
+							<li class="{{#if currentPage 'admin'}}active{{/if}}"><a href="{{pathFor 'admin'}}">Admin</a></li>
 						{{/if}}
-							<li class="{{#if onPage 'profile'}}active{{/if}}"><a href="{{pathFor 'profile'}}">Profile</a></li>
+							<li class="{{#if currentPage 'profile'}}active{{/if}}"><a href="{{pathFor 'profile'}}">Profile</a></li>
 							<p class="form-search navbar-form pull-right">
 								<input id="logout" class="btn btn-primary btn-mini" type="submit" value="Log Out">
 							</p>
