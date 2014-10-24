@@ -1,11 +1,8 @@
 var currentPicture;
 
 Template.pictures.helpers({
-  hasPictures: function () {
-    return PicturesModel.find().count();
-  },
   pictures: function () {
-    return PicturesModel.find({});
+    return Pictures.find({});
   }
 });
 

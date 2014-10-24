@@ -8,5 +8,5 @@ Template.registerHelper('formatName', function (userId) {
   return getDisplayNameById(userId);
 });
 Template.registerHelper('isAdmin', function () {
-  return isAdmin(Meteor.user());
+  return Meteor.user() && isAdmin(Meteor.user());
 });
