@@ -26,3 +26,10 @@ Settings.allow({
     return (_.without(fields, 'likes').length === 0);
   }
 });
+
+Meteor.methods({
+  like: function () {
+    var setting = Settings.findOne();
+    Settings.update(setting._id, { $inc: { 'likes': 1 } });
+  }
+});

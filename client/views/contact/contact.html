@@ -1,14 +1,23 @@
 <template name="contact">
-	{{#contentFor "pageHeader"}}
-		<h1>Contact Us <small>We're here for you.</small></h1>
-		<ul class="inline">
-			<li><button class="btn btn-primary" id="like"><i class="icon-thumbs-up"></i> You're awesome! ({{likes}})</button></li>
-		</ul>
-	{{/contentFor}}
+	{{> contentFor region="pageHeader" template="contactHeader"}}
+		
+	<p id="test">
+		<i class="icon-envelope icon-5x pull-left icon-border"></i>
+		Have any questions or concerns? Feel free to reach us at lhs8octagon@gmail.com! 
+		Better yet, post a comment on our 
+		<a href="https://www.facebook.com/groups/140021596038905/">
+			<i class="icon-facebook-sign"> facebook page</i>
+		</a>.
+	</p>
 
-	<i class="icon-envelope icon-5x pull-left icon-border"></i>
-	Have any questions or concerns? Feel free to reach us at lhs8octagon@gmail.com! Better yet, post a comment on our <a href="https://www.facebook.com/groups/140021596038905/"><i class="icon-facebook-sign"> facebook page</i></a>.
-	<br>
-	<br>
-	If you're coming here simply to let us know you love us and what we do, save yourself some time and hit the button above! <i class="icon-smile"></i>
+	<p>
+		If you're coming here simply to let us know you love us and what we do, save yourself some time and hit the button above! <i class="icon-smile"></i>
+	</p>
+</template>
+
+<template name="contactHeader">
+	<h1>Contact Us <small>We're here for you.</small></h1>
+	<ul class="inline">
+		<li><button class="btn btn-primary" id="js-like"><i class="icon-thumbs-up"></i> You're awesome! ({{likes}})</button></li>
+	</ul>
 </template>
