@@ -10,7 +10,7 @@
 	<div class="content">
 		{{#each pictures}}
 			<div class="thumbnails">
-				<div class="thumbnail well">
+				<div class="thumbnail well clearfix">
 					<div class="thumbnail-image">
 						<img class="flexible-image" src="{{source}}"/>
 					</div>
@@ -25,50 +25,51 @@
 						</ul>
 					</div>
 				</div>
-				<div class="clear"></div>
-				<br/>
 			</div>
 		{{/each}}
 
 		{{#unless hasPictures}}
 			<div class="post-content">
-				There currently are no pictures on the server. <br/><br/>
-				<strong>Note:</strong> Pictures uploaded on event creation are independent from pictures uploaded here.
+				There currently are no pictures on the server.
 			</div>
 		{{/unless}}
 	</div>
 	<!-- display all pictures, and currently selected as featured -->
 
-	<div id="addPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Add Picture</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="picture">Picture</label>
-					<div class="controls">
-						<input type="file" id="createPicture">
-					</div>
+	<div id="addPictureModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalLabel">Add Picture</h3>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="featured">Show on front page?</label>
-					<div class="controls">
-						<input type="checkbox" id="createFeatured">
-					</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label" for="picture">Picture</label>
+							<div class="controls">
+								<input type="file" id="createPicture">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="featured">Show on front page?</label>
+							<div class="controls">
+								<input type="checkbox" id="createFeatured">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="caption">Caption</label>
+							<div class="controls">
+								<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="caption">Caption</label>
-					<div class="controls">
-						<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-					</div>
+				<div class="modal-footer">
+					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+					<button class="btn btn-primary" id="addPicture">Add</button>
 				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="addPicture">Add</button>
+			</div>
 		</div>
 	</div>
 

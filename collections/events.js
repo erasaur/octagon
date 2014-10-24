@@ -2,21 +2,31 @@ var Schema = {};
 
 Schema.EventInfo = new SimpleSchema({
   name: {
-    type: String
+    type: String,
+    label: 'Name'
   },
   date: {
-    type: Date
+    type: Date,
+    label: 'Date'
   },
   description: {
-    type: String
+    type: String,
+    label: 'Brief description of the event'
   },
   location: {
-    type: String
+    type: String,
+    label: 'Location'
   },
   cost: { // omitted if zero
     type: Number,
     min: 0,
-    optional: true
+    optional: true,
+    label: 'Cost (omit if zero)'
+  },
+  slots: { // omitted if unlimited
+    type: Number,
+    optional: true,
+    label: 'Slots available (omit if unlimited)'
   }
 });
 
@@ -38,10 +48,6 @@ Schema.Events = new SimpleSchema({
     type: [String],
     optional: true
   },
-  slots: { // omitted if unlimited
-    type: Number,
-    optional: true
-  },
   finalized: {
     type: Boolean
   },
@@ -60,8 +66,7 @@ Events.allow({
     if (isAdminById(userId))
       return true;
   
-    var allowed = ["members", "slots"]; //fields allowed to be changed
-    return (_.difference(fields, allowed).length === 0);
+    return (_.without(fields, 'members').length === 0);
   },
   remove: isAdminById
 });
@@ -173,7 +178,7 @@ Meteor.methods({
     if (eventObj.slots <= 0)
       throw new Meteor.Error('already-full', getError('already-full'));
 
-    Events.update(eventId, { $addToSet: { 'members': userId }, $inc: { 'slots': -1 } });
+    Events.update(eventId, { $addToSet: { 'members': userId } });
   },
   unattendEvent: function (eventId) {
     var user = Meteor.user();
@@ -192,7 +197,7 @@ Meteor.methods({
     if (!_.contains(eventObj.members, userId))
       throw new Meteor.Error('not-attending', getError('not-attending'));
 
-    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'slots': 1 } });
+    Events.update(eventId, { $pull: { 'members': userId } });
   }
 });
 
