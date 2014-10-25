@@ -37,8 +37,9 @@ Template.eventItem.helpers({
 });
 
 Template.eventItem.events({
-  'click .js-event-modal': function () {
+  'click .js-event-modal': function (event, template) {
     Session.set('currentEvent', this);
+    displayModal(event.target.getAttribute('data-toggle'));
   },
   'click .js-cancel-attend': function () {
 

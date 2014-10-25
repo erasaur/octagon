@@ -1,58 +1,19 @@
-Template.finalizeTemplate.helpers({
-  memberList: function () {
-    //need the if because without it the template can't render the modal on startup
-    if(Session.get('currentEvent')) {
-      if(Events.findOne({"id": Session.get('currentEvent').id})) {
-        var members = Events.findOne({"id": Session.get('currentEvent').id}).members;
-        if(members) {
-          var names = new Array();
-          for(var i=0; i< members.length; i++) {
-            names.push(members[i].name);
-          }
-          return names;
-        }
-      }
-    }
-  },
-  memberID: function () {
-    return formatID(this);
-  }
-});
-
-// Template.showEmails.helpers({
-//   presMembers: function () {
-//     return Session.get('currentEvent') && Session.get('currentEvent').members.length;
-//   },
-//   getMembers: function () {
-//     var users = new Array();
-
-//     for (var i=0; i < Session.get('currentEvent').members.length; i++){
-//       users.push(Meteor.users.findOne({"_id": Session.get('currentEvent').members[i].id}).emails[0].address);
-//     }
-//     console.log(users);
-//     return users;
-//   },
-//   getEvent: function () {
-//     return Session.get('currentEvent').name;
-//   }
-// });
-
 Template.events.helpers({
   moreEvents: function () {
     return !(Events.find().count() < Session.get('eventsLimit'));
   },
   eventsList: function () {
     return Events.find();
-  },
-  currentEvent: function () {
-    return Session.get('currentEvent');
+  }
+});
+
+Template.eventsHeader.events({
+  'click .js-event-modal': function (event, template) {
+    displayModal(event.target.getAttribute('data-toggle'));
   }
 });
 
 Template.events.events({
-  'submit form': function () {
-    $('.modal').modal('hide');
-  },
   // 'click #addEventMember': function (event, template) {
   //   var member = template.find('#eventMemberToAdd').value;
 
@@ -76,33 +37,6 @@ Template.events.events({
   //     alert("Please fill in all the fields!");
   //   }
   // },
-  'click #suggestEvent': function (event, template) {
-    var eventName = template.find('#suggestName').value,
-      eventDescription = template.find('#suggestDescription').value,
-      eventLocation = template.find('#suggestLocation').value,
-      eventCost = template.find('#suggestMoney').value,
-      eventContact = template.find('#suggestContact').value,
-      errors = [];
-
-    if(eventName && eventDescription && eventLocation && eventContact) {
-      if(Suggests.find({"contact": eventContact}).count() > 0 || Suggests.find({"name": eventName}).count() > 0 || Suggests.find({"location": eventLocation}).count() > 0) {
-        errors.push("Oops! We believe the event has already been suggested.")
-      }
-    } else {
-      errors.push("Please fill in all fields!");
-    }
-
-    if(errors.length > 0) {
-      for(var i=0; i<errors.length; i++) {
-        alert(errors[i]);
-      }
-      errors = [];
-    } else {
-      Octagon.Suggests.create(eventName, getDate(), convertNewLines(eventDescription), eventLocation, eventCost, eventContact, Meteor.user().username, Meteor.user().profile.name, Meteor.userId());
-      alert("Thanks for your input! \n\nYour event will be taken into consideration; upon approval, you will receive 5 points.\n\nDon't get your hopes too high though.");
-      $('#suggestEventModal').modal('hide');
-    }
-  },
   'click .attendEvent': function () {
     Octagon.Events.addMember(this.id, Meteor.user().profile.name, Meteor.userId());
   },

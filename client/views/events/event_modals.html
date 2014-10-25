@@ -1,0 +1,105 @@
+<template name="addEventModal">
+  {{#autoForm collection="Events" id="newEventForm"}}
+    <div class="modal-body">
+      {{> afQuickField name='info.name'}}
+      {{> afQuickField name='info.date' type='datetime-local'}}
+      {{> afQuickField name='info.description' rows=5}}
+      {{> afQuickField name='info.location'}}
+      {{> afQuickField name='info.cost'}}
+      {{> afQuickField name='info.slots'}}
+      <input type="file" id="js-create-picture">
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  {{/autoForm}}
+</template>
+
+<template name="suggestEventModal">
+  {{#autoForm schema="SuggestSchema" id="suggestEventForm" type="method" meteormethod="suggestEvent"}}
+    <div class="modal-body">
+      {{> afQuickField name='name'}}
+      {{> afQuickField name='date' type='datetime-local'}}
+      {{> afQuickField name='description' rows='5'}}
+      {{> afQuickField name='location'}}
+      {{> afQuickField name='cost'}}
+      {{> afQuickField name='contact'}}
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Suggest</button>
+    </div>
+  {{/autoForm}}
+</template>
+
+<template name="editEventModal">
+  {{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
+    <div class="modal-body">
+      {{> afQuickField name='info.name'}}
+      {{> afQuickField name='info.date' type='datetime-local'}}
+      {{> afQuickField name='info.description' rows='5'}}
+      {{> afQuickField name='info.location'}}
+      {{> afQuickField name='info.cost'}}
+      {{> afQuickField name='info.slots'}}
+      <input type="file" id="js-edit-picture">
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  {{/autoForm}}
+</template>
+
+<template name="finalizeEventModal">
+  <div class="modal-body">
+    <div class="alert">
+      Make sure to check that the members shown below match with the members listed under the corresponding event in the event page!
+    </div>
+    <form class="form-horizontal">
+      {{#if members.length}}
+        {{#each members}}
+          <div class="control-group">
+            <label class="control-label" for="name">{{formatName this}}</label>
+            <div class="controls">
+              <div class="input-append">
+                <input id="{{memberID}}" type="text" placeholder="Hours?">
+                <span class="add-on">
+                  Carpool? <input type="checkbox" id="{{memberID}}c">
+                </span>
+                <span class="add-on">
+                  Mic? <input type="checkbox" id="{{memberID}}m">
+                </span>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        No members have signed up yet!
+      {{/if}}
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    {{#if members.length}}
+      <button class="btn btn-primary" id="finalizeEvent">Save</button>
+    {{else}}
+      <button class="btn btn-primary" id="finalizeAnyway">Finalize Anyway</button>
+    {{/if}}
+  </div>
+</template>
+
+<template name="showEmailsModal">
+  <div class="modal-body">
+    <form class="form-horizontal">
+      {{#if members.length}}
+        {{formatName this}}, 
+      {{else}}
+        No members have signed up yet!
+      {{/if}}
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+  </div>
+</template>
