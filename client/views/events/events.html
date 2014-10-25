@@ -37,8 +37,8 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="modalLabel">Add New Event</h3>
 				</div>
-				<div class="modal-body">
-					{{#autoForm collection="Events" id="newEventForm"}}
+				{{#autoForm collection="Events" id="newEventForm"}}
+					<div class="modal-body">
 						{{> afQuickField name='info.name'}}
 						{{> afQuickField name='info.date' type='datetime-local'}}
 						{{> afQuickField name='info.description' rows=5}}
@@ -46,34 +46,40 @@
 						{{> afQuickField name='info.cost'}}
 						{{> afQuickField name='info.slots'}}
 						<input type="file" id="js-create-picture">
-
+					</div>
+					<div class="modal-footer">
+						<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
 						<button type="submit" class="btn btn-primary">Create</button>
-					{{/autoForm}}
-				</div>
+					</div>
+				{{/autoForm}}
 			</div>
 		</div>
 	</div>
 
 	<div id="editEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Edit Event</h3>
+		<div class="modal-dialog">
+    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalLabel">Edit Event</h3>
+				</div>
+				{{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
+					<div class="modal-body">
+						{{> afQuickField name='info.name'}}
+						{{> afQuickField name='info.date' type='datetime-local'}}
+						{{> afQuickField name='info.description' rows='5'}}
+						{{> afQuickField name='info.location'}}
+						{{> afQuickField name='info.cost'}}
+						{{> afQuickField name='info.slots'}}
+						<input type="file" id="js-edit-picture">
+					</div>
+					<div class="modal-footer">
+						<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+						<button type="submit" class="btn btn-primary">Update</button>
+					</div>
+				{{/autoForm}}
+			</div>
 		</div>
-		{{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
-			<div class="modal-body">
-				{{> afQuickField name='info.name'}}
-				{{> afQuickField name='info.date' type='datetime-local'}}
-				{{> afQuickField name='info.description' rows='5'}}
-				{{> afQuickField name='info.location'}}
-				{{> afQuickField name='info.cost'}}
-				{{> afQuickField name='info.slots'}}
-				<input type="file" id="js-edit-picture">
-			</div>
-			<div class="modal-footer">
-				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-				<button type="submit" class="btn btn-primary">Update</button>
-			</div>
-		{{/autoForm}}
 	</div>
 		
 	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
