@@ -32,6 +32,7 @@ cfs:worker@0.0.0
 check@1.0.2
 chuangbo:marked@0.3.5
 coffeescript@1.0.4
+cottz:publish-with-relations@1.6.3
 ctl-helper@1.0.4
 ctl@1.0.2
 ddp@1.0.10
@@ -71,7 +72,6 @@ mobile-status-bar@1.0.1
 mongo-livedata@1.0.6
 mongo@1.0.7
 mrt:moment@2.8.1
-mrt:publish-with-relations@0.1.5
 npm-bcrypt@0.7.7
 observe-sequence@1.0.3
 ordered-dict@1.0.1
