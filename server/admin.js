@@ -49,9 +49,9 @@ Meteor.methods({
 
     Events.remove(eventId);      
   },
-  addEventMember: function (eventId, userId) {
+  addEventMember: function (eventId, memberName) {
     var currentUser = Meteor.user();
-    var user = Meteor.users.findOne(userId);
+    var user = Meteor.users.findOne({ 'profile.name': memberName });
     var eventObj = Events.findOne(eventId);
 
     if (!currentUser || !isAdmin(currentUser))
@@ -63,12 +63,12 @@ Meteor.methods({
     if (!user)
       throw new Meteor.Error('invalid-user', getError('invalid-user'));
 
-    if (eventObj.members && _.contains(eventObj.members, userId))
+    if (eventObj.members && _.contains(eventObj.members, user._id))
       throw new Meteor.Error('user-attending', getError('user-attending'));
 
     if (eventObj.slots <= 0)
       throw new Meteor.Error('event-full', getError('event-full'));
 
-    Events.update(eventId, { $addToSet: { 'members': userId }, $inc: { 'slots': -1 } });
+    Events.update(eventId, { $addToSet: { 'members': user._id }, $inc: { 'info.slots': -1 } });
   }
 });
