@@ -12,14 +12,21 @@
 			<div class="thumbnails">
 				<div class="thumbnail well clearfix">
 					<div class="thumbnail-image">
-						<img class="flexible-image" src="{{source}}"/>
+						<img class="flexible-image" src="{{url}}"/>
 					</div>
 					<div class="thumbnail-content">
 						<ul class="list">
-							<li><strong>Caption: </strong>{{caption}}</li>
-							<li><strong>Featured: </strong>{{featured}}</li>
+							<li><strong>Caption: </strong>{{metadata.caption}}</li>
 							<li>
-								<a href="#editPictureModal" role="button" class="btn btn-primary editPictureButton" data-toggle="modal">Edit</a>
+								<strong>Featured: </strong>
+								{{#if metadata.featured}} 
+									Yup.
+								{{else}} 
+									Nope.
+								{{/if}}
+							</li>
+							<li>
+								<a href="#editPictureModal" role="button" class="btn btn-primary js-btn-edit-picture" data-toggle="modal">Edit</a>
 								<button class="btn btn-primary deletePicture">Delete</button>
 							</li>
 						</ul>
@@ -48,61 +55,59 @@
 						<div class="control-group">
 							<label class="control-label" for="picture">Picture</label>
 							<div class="controls">
-								<input type="file" id="createPicture">
+								<input type="file" id="js-create-picture">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="featured">Show on front page?</label>
 							<div class="controls">
-								<input type="checkbox" id="createFeatured">
+								<input type="checkbox" id="js-create-featured">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="caption">Caption</label>
 							<div class="controls">
-								<textarea id="createCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+								<textarea id="js-create-caption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-					<button class="btn btn-primary" id="addPicture">Add</button>
+					<button class="btn btn-primary" id="js-create">Add</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="editPictureModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Edit Picture</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="picture">Picture</label>
-					<div class="controls">
-						<input type="file" id="editPicture">
-					</div>
+	<div id="editPictureModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalLabel">Edit Picture</h3>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="featured">Show on front page?</label>
-					<div class="controls">
-						<input type="checkbox" id="editFeatured">
-					</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label" for="featured">Show on front page?</label>
+							<div class="controls">
+								<input type="checkbox" id="js-edit-featured">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="caption">Caption</label>
+							<div class="controls">
+								<textarea id="js-edit-caption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="caption">Caption</label>
-					<div class="controls">
-						<textarea id="editCaption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-					</div>
+				<div class="modal-footer">
+					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+					<button class="btn btn-primary" id="js-edit">Save</button>
 				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="savePicture">Save</button>
+			</div>
 		</div>
 	</div>
 </template>
