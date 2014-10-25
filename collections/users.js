@@ -33,6 +33,10 @@ Schema.User = new SimpleSchema({
     type: String,
     optional: true
   },
+  createdAt: {
+    type: Date,
+    optional: true
+  },
   emails: {
     type: [Object],
     optional: true
