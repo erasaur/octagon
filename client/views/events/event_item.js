@@ -21,14 +21,10 @@ Template.eventItem.helpers({
   // slotsLeft: function () {
   //   return Events.findOne({"id": this.id}).slots > 0 ? true : false;
   // },
-  // tooLate: function () {
-  //   console.log(getDate());
-  //   console.log(this.date);
-  //   return getDate() >= this.date ? true : false;
-  // },
-  // finalized: function () {
-  //   return this.finalized;
-  // },
+  tooLate: function () {
+    var now = new Date();
+    return now > this.info.date;
+  },
   image: function () {
     console.log(this.pictureId);
     var picture = Pictures.findOne(this.pictureId);

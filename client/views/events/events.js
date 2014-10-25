@@ -14,29 +14,6 @@ Template.eventsHeader.events({
 });
 
 Template.events.events({
-  // 'click #addEventMember': function (event, template) {
-  //   var member = template.find('#eventMemberToAdd').value;
-
-  //   if(member) {
-  //     if(Session.get('currentEvent').slots > 0) {
-  //       if(Meteor.users.find({"profile.name": member}).count() > 0) {
-  //         if(Events.find({$and: [{"name": Session.get('currentEvent').name}, {"members.name": member}]}).count() > 0) {
-  //           alert("The user is already attending the event!");
-  //         } else {
-  //           Octagon.Events.addMember(Session.get('currentEvent').id, member, Meteor.users.findOne({"profile.name": member})['_id']);
-  //           alert("Success! '" + member + "' has been added.");
-  //           $('#addMemberModal').modal('hide');
-  //         }
-  //       } else {
-  //         alert("The user does not exist!");
-  //       }
-  //     } else {
-  //       alert("There are no more slots. Edit the event and try again.");
-  //     }
-  //   } else {
-  //     alert("Please fill in all the fields!");
-  //   }
-  // },
   'click .attendEvent': function () {
     Octagon.Events.addMember(this.id, Meteor.user().profile.name, Meteor.userId());
   },

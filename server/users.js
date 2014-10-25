@@ -54,5 +54,46 @@ Meteor.methods({
   },
   changePass: function (id, password) {
     Accounts.setPassword(id, password);
+  },
+  attendEvent: function (eventId) {
+    var user = Meteor.user();
+    var userId = this.userId;
+
+    if (!user || !canAttendEvent(user))
+      throw new Meteor.Error('logged-out', getError('logged-out'));
+
+    var eventObj = Events.findOne(eventId);
+    if (typeof eventObj === 'undefined')
+      throw new Meteor.Error('not-exists', getError('not-exists'));
+
+    if (eventObj.finalized)
+      throw new Meteor.Error('already-finalized', getError('already-finalized'));
+
+    if (_.contains(eventObj.members, userId))
+      throw new Meteor.Error('already-attending', getError('already-attending'));
+
+    if (eventObj.slots <= 0)
+      throw new Meteor.Error('already-full', getError('already-full'));
+
+    Events.update(eventId, { $addToSet: { 'members': userId }, $inc: { 'slots': -1 } });
+  },
+  unattendEvent: function (eventId) {
+    var user = Meteor.user();
+    var userId = this.userId;
+
+    if (!user || !canAttendEvent(user))
+      throw new Meteor.Error('logged-out', getError('logged-out'));
+
+    var eventObj = Events.findOne(eventId);
+    if (typeof eventObj === 'undefined')
+      throw new Meteor.Error('not-exists', getError('not-exists'));
+
+    if (eventObj.finalized)
+      throw new Meteor.Error('already-finalized', getError('already-finalized'));
+
+    if (!_.contains(eventObj.members, userId))
+      throw new Meteor.Error('not-attending', getError('not-attending'));
+
+    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'slots': -1 } });
   }
 });

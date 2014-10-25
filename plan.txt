@@ -4,6 +4,7 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+use pagination package and easy search
 use autoform for login/change pass/register
 autovalue instead of optional in schema
 allow selecting images from gallery for creating event

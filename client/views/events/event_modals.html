@@ -103,3 +103,20 @@
     <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
   </div>
 </template>
+
+<template name="addMemberModal">
+  <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="js-member">Member</label>
+        <div class="controls">
+          <input type="text" id="js-member" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{members}}]" data-items="6">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    <button class="btn btn-primary" id="js-add-member">Add</button>
+  </div>
+</template>
