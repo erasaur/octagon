@@ -82,56 +82,32 @@
 		</div>
 	</div>
 		
-	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		{{>showEmails}}
+	<div id="showEmailsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		{{> showEmails}}
 	</div>
 	
-	<div id="suggestEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Suggest An Event</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="name">Event Name</label>
-					<div class="controls">
-						<input id="suggestName" type="text" placeholder="Cool Event">
-					</div>
+	<div id="suggestEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalLabel">Suggest An Event</h3>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="description">Event Description</label>
-					<div class="controls">
-						<textarea id="suggestDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
+				{{#autoForm schema="SuggestSchema" id="suggestEventForm" type="method" meteormethod="suggestEvent"}}
+					<div class="modal-body">
+						{{> afQuickField name='name'}}
+						{{> afQuickField name='date' type='datetime-local'}}
+						{{> afQuickField name='description' rows='5'}}
+						{{> afQuickField name='location'}}
+						{{> afQuickField name='cost'}}
+						{{> afQuickField name='contact'}}
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="location">Event Location</label>
-					<div class="controls">
-						<input id="suggestLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
+					<div class="modal-footer">
+						<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+						<button type="submit" class="btn btn-primary">Suggest</button>
 					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="money">Cost</label>
-					<div class="controls">
-						<div class="input-prepend input-append">
-							<span class="add-on">$</span>
-						  	<input style="width: 150px;" id="suggestMoney" type="text" placeholder="10">
-						  	<span class="add-on">.00</span>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="contact">Contact Information</label>
-					<div class="controls">
-						<input id="suggestContact" type="text" placeholder="Email, Phone Number, Website...">
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="suggestEvent">Suggest</button>
+				{{/autoForm}}
+			</div>
 		</div>
 	</div>
 

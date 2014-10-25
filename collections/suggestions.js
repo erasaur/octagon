@@ -4,33 +4,49 @@ SuggestSchema = new SimpleSchema({
     optional: true
   },
   userId: { // _id of user who suggested
-    type: String
+    type: String,
+    optional: true
   },
   createdAt: {
-    type: Date
+    type: Date,
+    autoValue: function () {
+      if (this.isInsert) {
+        return new Date;
+      } else {
+        this.unset();
+      }
+    }
   },
   name: {
-    type: String
+    type: String,
+    label: 'Name'
   },
   date: { // date of the event
-    type: Date
+    type: Date,
+    label: 'Date'
   },
   description: {
-    type: String
+    type: String,
+    label: 'Brief description of the event'
   },
   location: {
-    type: String
+    type: String,
+    label: 'Location'
   },
   cost: {
     type: Number,
     min: 0,
-    optional: true
+    defaultValue: 0,
+    optional: true,
+    label: 'Cost'
   },
   contact: {
-    type: String
+    type: String,
+    label: 'Event contact info'
   },
   status: {
     type: String,
+    optional: true,
     defaultValue: 'pending'
   }
 });
@@ -70,6 +86,9 @@ Meteor.methods({
       createdAt: new Date(),
       status: 'pending'
     });
+
+    if (!this.isSimulation)
+      check(suggestion, SuggestSchema);
 
     // TODO: send notifications
     return Suggests.insert(suggestion);

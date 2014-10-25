@@ -112,10 +112,8 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
-    if (!this.isSimulation) {
-      Schema.Events.clean(event);
+    if (!this.isSimulation)
       check(event, Schema.Events);
-    }
 
     var eventObj = {
       userId: userId,
@@ -136,10 +134,8 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
-    if (!this.isSimulation) {
-      Schema.Events.clean(event);
+    if (!this.isSimulation)
       check(event, Schema.Events);
-    }
 
     Events.update(eventId, { $set: { 'info': event.info } });
   },
