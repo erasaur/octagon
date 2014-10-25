@@ -59,23 +59,21 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="modalLabel">Edit Event</h3>
 		</div>
-		<div class="modal-body">
-			{{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
+		{{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
+			<div class="modal-body">
 				{{> afQuickField name='info.name'}}
 				{{> afQuickField name='info.date' type='datetime-local'}}
 				{{> afQuickField name='info.description' rows='5'}}
 				{{> afQuickField name='info.location'}}
 				{{> afQuickField name='info.cost'}}
 				{{> afQuickField name='info.slots'}}
-				<!-- <input type="file" class="js-create-picture"> -->
-
-				<button type="submit" class="btn btn-primary">Insert</button>
-			{{/autoForm}}
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="editEvent">Save</button>
-		</div>
+				<input type="file" id="js-edit-picture">
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+				<button type="submit" class="btn btn-primary">Update</button>
+			</div>
+		{{/autoForm}}
 	</div>
 		
 	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

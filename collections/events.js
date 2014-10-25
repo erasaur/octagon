@@ -129,24 +129,12 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
-    if (!this.isSimulation)
+    if (!this.isSimulation) {
+      Schema.Events.clean(event);
       check(event, Schema.Events);
-
-    if (!event.pictureId && !event.imageUrl) 
-      throw new Meteor.Error('no-picture', getError('no-picture'));
-    
-    if (event.imageUrl) {
-      var picture = {
-        imageUrl: event.imageUrl,
-        caption: event.name,
-        featured: false
-      };
-      picture._id = Meteor.call('createPicture', picture);
     }
-    
-    event.pictureId = event.pictureId || picture._id;
 
-    Events.update(eventId, { $set: event });
+    Events.update(eventId, { $set: { 'info': event.info } });
   },
   finalizeEvent: function (eventId) {
     var user = Meteor.user();
