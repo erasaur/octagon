@@ -105,18 +105,18 @@
 </template>
 
 <template name="addMemberModal">
-  <div class="modal-body">
-    <form class="form-horizontal">
+  <form class="form-horizontal">
+    <div class="modal-body">
       <div class="control-group">
-        <label class="control-label" for="js-member">Member</label>
+        <label class="control-label" for="js-member">Member (Case sensitive!)</label>
         <div class="controls">
-          <input type="text" id="js-member" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{members}}]" data-items="6">
+          <input type="text" id="js-member" class="form-control typeahead" placeholder="Type Name Here" data-source="members">
         </div>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-    <button class="btn btn-primary" id="js-add-member">Add</button>
-  </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  </form>
 </template>

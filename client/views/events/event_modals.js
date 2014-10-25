@@ -36,8 +36,12 @@ Template.showEmailsModal.helpers({
 
 // add member modal ----------------------------------
 
+Template.addMemberModal.rendered = function () {
+  Meteor.typeahead($('#js-member'));
+};
+
 Template.addMemberModal.helpers({
-  members: function () { // TODO: use easy search instead
+  members: function () {
     var members = Meteor.users.find().fetch();
     return _.map(members, function (member) {
       return member.profile && member.profile.name;
@@ -46,11 +50,15 @@ Template.addMemberModal.helpers({
 });
 
 Template.addMemberModal.events({
-  'click #js-add-member': function (event, template) {
+  'submit form': function (event, template) {
+    event.preventDefault();
     var eventId = Session.get('currentEvent')._id;
     var member = template.find('#js-member').value;
 
-    Meteor.call('addEventMember', eventId, member);
+    Meteor.call('addEventMember', eventId, member, function (error) {
+      if (error)
+        alert(error.reason);
+    });
   }
 });
 

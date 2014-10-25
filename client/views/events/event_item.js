@@ -26,7 +26,6 @@ Template.eventItem.helpers({
     return now > this.info.date;
   },
   image: function () {
-    console.log(this.pictureId);
     var picture = Pictures.findOne(this.pictureId);
     return picture && picture.url;
   }

@@ -6,7 +6,8 @@ Template.mainLayout.helpers({
 });
 
 Template.mainLayout.events({
-  'submit form': function () {
+  'submit form': function (event, template) {
+    event.preventDefault();
     $('.modal').modal('hide');
   }
 });
