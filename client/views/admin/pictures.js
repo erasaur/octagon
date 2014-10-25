@@ -65,9 +65,12 @@ Template.pictures.events({
     template.$('#editPictureModal').modal('hide');
   },
   'click .deletePicture': function () {
-    var confirm = confirm(getError('confirm-delete'));
+    var user = Meteor.user();
+    
+    if (!user || !isAdmin(user))
+      return alert(getError('no-permission'));
 
-    if (confirm)
-      Meteor.call('deletePicture', this._id);
+    if (confirm(getError('confirm-delete')))
+      Pictures.remove(this._id);
   }
 });

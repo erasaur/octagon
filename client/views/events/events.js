@@ -2,8 +2,8 @@ Template.finalizeTemplate.helpers({
   memberList: function () {
     //need the if because without it the template can't render the modal on startup
     if(Session.get('currentEvent')) {
-      if(EventsModel.findOne({"id": Session.get('currentEvent').id})) {
-        var members = EventsModel.findOne({"id": Session.get('currentEvent').id}).members;
+      if(Events.findOne({"id": Session.get('currentEvent').id})) {
+        var members = Events.findOne({"id": Session.get('currentEvent').id}).members;
         if(members) {
           var names = new Array();
           for(var i=0; i< members.length; i++) {
@@ -38,85 +38,20 @@ Template.showEmails.helpers({
 });
 
 Template.events.helpers({
-  hasEvents: function () {
-    return EventsModel.find().count() > 0 ? true: false;
-  },
   moreEvents: function () {
-    return !(EventsModel.find().count() < Session.get('eventsLimit'));
+    return !(Events.find().count() < Session.get('eventsLimit'));
   },
   eventsList: function () {
-    return EventsModel.find();
+    return Events.find();
   },
-  paid: function () {
-    return EventsModel.findOne({"id": this.id}).money > 0 ? true : false;
-  },
-  attendingEvent: function () {
-    return EventsModel.find({$and: [{"id": this.id}, {"members.name": Meteor.user().profile.name}]}).count() > 0 ? true : false;
-  },
-  slotsLeft: function () {
-    return EventsModel.findOne({"id": this.id}).slots > 0 ? true : false;
-  },
-  tooLate: function () {
-    console.log(getDate());
-    console.log(this.date);
-    return getDate() >= this.date ? true : false;
-  },
-  finalized: function () {
-    return this.finalized;
+  currentEvent: function () {
+    return Session.get('currentEvent');
   }
 });
 
 Template.events.events({
-  //todo format all ids
-  'click #createEvent': function (event, template) {
-    var eventID = template.find('#createID').value,
-      eventName = template.find('#createEventName').value,
-      eventMonth = template.find('#createMonth').value,
-      eventDay = template.find('#createDay').value,
-      eventYear = template.find('#createYear').value,
-      eventDate,
-      eventTime = template.find('#createBeginTime').value + ' ' + template.find('#createBegin').innerHTML + ' - ' + template.find('#createEndTime').value + ' ' + template.find('#createEnd').innerHTML,
-      eventDescription = template.find('#createDescription').value,
-      eventLocation = template.find('#createLocation').value,
-      eventMoney = template.find('#createMoney').value,
-      eventSlots = parseInt(template.find('#createSlots').value),
-      file = template.find('#createPicture').files[0],
-      errors = [];
-
-    if(eventID && eventName && eventMonth && eventDay && eventYear && eventTime && eventDescription && eventLocation && eventMoney && eventSlots && file) {
-      if(EventsModel.find({"id": eventID}).count() != 0) {
-        errors.push("The event ID '" + eventID + "' already exists.");
-      }
-    } else {
-      errors.push("Please fill in all fields!");
-    }
-
-    if(errors.length > 0) {
-      for(var i=0; i<errors.length; i++) {
-        alert(errors[i]);
-      }
-      errors = [];
-    } else {
-      if(eventDay < 10 && eventDay.toString().length < 2) {
-        eventDay = '0' + eventDay;
-      }
-      if(eventMonth < 10 && eventMonth.toString().length >= 2) {
-        eventMonth = parseInt(eventMonth.toString().replace(/^0+/, ''));
-        eventMonth = '0' + eventMonth;
-      }
-
-      eventDate = eventYear + '/' + eventMonth + '/' + eventDay;
-
-      Octagon.Events.create(eventID, eventName, eventDate, eventTime, convertNewLines(eventDescription), eventLocation, eventMoney, eventSlots);
-        
-      reader.onload = function (event) {
-        Octagon.Events.addUrl(eventID, event.target.result);
-      }
-      reader.readAsDataURL(file);
-
-      alert("Success! Your event '" + eventName + "' has been created.");
-      $('#addEventModal').modal('hide');
-    }
+  'submit #newEventForm': function () {
+    $('.modal').modal('hide');
   },
   'click .modalAddMember': function (event, template) {
     Session.set('currentEvent', this);
@@ -133,7 +68,7 @@ Template.events.events({
     if(member) {
       if(Session.get('currentEvent').slots > 0) {
         if(Meteor.users.find({"profile.name": member}).count() > 0) {
-          if(EventsModel.find({$and: [{"name": Session.get('currentEvent').name}, {"members.name": member}]}).count() > 0) {
+          if(Events.find({$and: [{"name": Session.get('currentEvent').name}, {"members.name": member}]}).count() > 0) {
             alert("The user is already attending the event!");
           } else {
             Octagon.Events.addMember(Session.get('currentEvent').id, member, Meteor.users.findOne({"profile.name": member})['_id']);
@@ -193,7 +128,7 @@ Template.events.events({
 
     if(eventID && eventName && eventMonth && eventDay && eventYear && eventTime && eventDescription && eventLocation && eventMoney && eventSlots != null) {
       if(eventID != Session.get('currentEvent').id) {
-        if(EventsModel.find({"id": eventID}).count() > 0) {
+        if(Events.find({"id": eventID}).count() > 0) {
           errors.push("The event ID '" + eventID + "' already exists.");
         }
       }
@@ -239,7 +174,7 @@ Template.events.events({
       errors = [];
 
     if(eventName && eventDescription && eventLocation && eventContact) {
-      if(SuggestsModel.find({"contact": eventContact}).count() > 0 || SuggestsModel.find({"name": eventName}).count() > 0 || SuggestsModel.find({"location": eventLocation}).count() > 0) {
+      if(Suggests.find({"contact": eventContact}).count() > 0 || Suggests.find({"name": eventName}).count() > 0 || Suggests.find({"location": eventLocation}).count() > 0) {
         errors.push("Oops! We believe the event has already been suggested.")
       }
     } else {
@@ -268,7 +203,7 @@ Template.events.events({
     $('#finalizeMemberList').html(Meteor.render(Template.finalizeTemplate));
   },
   'click #finalizeEvent': function (event, template)  {
-    var members = EventsModel.findOne({"id": Session.get('currentEvent').id}).members,
+    var members = Events.findOne({"id": Session.get('currentEvent').id}).members,
     points, hours, mic = false, carpool = false, membersArray = new Array(), errors = [];
 
     if(members) {

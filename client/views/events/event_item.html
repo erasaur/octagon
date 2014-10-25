@@ -1,0 +1,63 @@
+<template name="eventItem">
+  <div class="post-header">
+    <h3>{{name}} <small>{{date}}</small></h3>
+    <div class="float-right">      
+      {{#if isAdmin}}
+        <button class="btn btn-primary deleteEvent">Delete</button>
+        <a href="#editEventModal" role="button" class="btn btn-primary js-event-modal" data-toggle="modal">Edit</a>
+        <a href="#addMemberModal" role="button" class="btn btn-primary js-event-modal" data-toggle="modal">Add Member</a>
+        <a href="#showEmailsModal" role = "button" class = "btn btn-primary js-event-modal" data-toggle="modal">Show Emails</a>
+
+        {{#unless finalized}}
+          {{#if tooLate}}
+          <a href="#finalizeEventModal" role="button" class="btn btn-primary js-event-modal" data-toggle="modal">Finalize</a>
+          {{/if}}
+        {{else}}
+          <small>(Finalized)</small>
+        {{/unless}}
+      {{/if}}
+
+      <small>{{status}}</small>
+      
+      {{#if attending}}
+        <button class="btn btn-primary js-cancel-attend">Cancel</button>
+      {{/if}}
+      {{#if canAttend}}
+        <button class="btn btn-primary js-attend">I'm Going!</button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="event-image">
+    <img class="flexible-image" src="{{image}}">
+  </div>
+  <div class="event-info clearfix">
+    <ul class="list">
+      <li><strong>Information:</strong> <p class="well">{{{description}}}</p></li>
+      {{#if cost}}
+        <li><strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.</li>
+      {{/if}}
+      <li><strong>Date:</strong> {{formatDate date}}</li>
+      <li><strong>Time:</strong> {{time}}</li>
+      <li><strong>Where:</strong> {{location}}</li>
+      <li><strong>Slots left:</strong> <strong>{{slots}}</strong></li>
+      <li>{{#if tooLate}}
+          <strong>Who went: </strong>
+        {{else}}
+          <strong>Who's going: </strong>
+        {{/if}}
+        {{#if members}}
+          <br>
+          {{#each members}}
+            <span class="label label-important">{{name}}</span>
+          {{/each}}
+        {{else}}
+          {{#if tooLate}}
+            Nobody :( shame on y'all
+          {{else}}
+          Nobody yet! It's your chance to sign up!
+          {{/if}}
+        {{/if}}
+      </li>
+    </ul>
+  </div>
+</template>

@@ -1,118 +1,24 @@
+<template name="eventsHeader">
+	<div class="page-header">
+		<h1>Events <small>Come check out our events! <i class="icon-smile"></i></small></h1>
+		<ul class="inline">
+		{{#if isAdmin}}
+			<li><a href="#addEventModal" role="button" class="btn btn-primary" data-toggle="modal">Add Event</a></li>
+		{{/if}}
+		{{#if currentUser}}
+			<li><a href="#suggestEventModal" role="button" class="btn btn-primary" data-toggle="modal">Suggest Event</a></li>
+		{{/if}}
+		</ul>
+	</div>
+</template>
+
 <template name="events">
-	{{#contentFor "pageHeader"}}
-		<div class="page-header">
-			<h1>Events <small>Come check out our events! <i class="icon-smile"></i></small></h1>
-			<ul class="inline">
-			{{#if officer}}
-				<li><a href="#addEventModal" role="button" class="btn btn-primary" data-toggle="modal">Add Event</a></li>
-				<li><a href="#suggestEventModal" role="button" class="btn btn-primary" data-toggle="modal">Suggest Event</a></li>
-			{{else}}
-				{{#if currentUser}}
-				<li><a href="#suggestEventModal" role="button" class="btn btn-primary" data-toggle="modal">Suggest Event</a></li>
-				{{/if}}
-			{{/if}}
-			</ul>
-		</div>
-	{{/contentFor}}
+	{{> contentFor region="pageHeader" template="eventsHeader"}}
 
 	<div class="event">
-		{{#if hasEvents}}
+		{{#if eventsList.count}}
 			{{#each eventsList}}
-				<div class="post-header">
-					<h3>{{name}} <small>{{date}}</small>
-						<div class="float-right">
-							{{#if currentUser}}
-								{{#if officer}}
-									<button class="btn btn-primary deleteEvent">Delete</button>
-									<a href="#editEventModal" role="button" class="btn btn-primary editEventButton" data-toggle="modal">Edit</a>
-									<a href="#addMemberModal" role="button" class="btn btn-primary modalAddMember" data-toggle="modal">Add Member</a>
-									<a href="#showEmailsModal" role = "button" class = "btn btn-primary modalShowEmails" data-toggle="modal">Show Emails</a>
-
-									{{#unless finalized}}
-										{{#if tooLate}}
-										<a href="#finalizeEventModal" role="button" class="btn btn-primary finalizeEventButton" data-toggle="modal">Finalize</a>
-										{{/if}}
-									{{else}}
-										<small>(Finalized)</small>
-									{{/unless}}
-								{{/if}}
-
-								{{#if attendingEvent}}
-									{{#unless tooLate}}
-										<small>You are attending.</small>
-										<button class="btn btn-primary cancelAttend">Cancel</button>
-									{{else}}
-										{{#unless finalized}}
-											<small>Sit tight while we distribute your points :)</small>
-										{{else}}
-											<small>This event has been completed.</small>
-										{{/unless}}
-										<!-- todo add ratings -->
-									{{/unless}}
-								{{else}}
-									{{#unless finalized}}
-										{{#unless tooLate}}
-											{{#if slotsLeft}}
-												<button class="btn btn-primary attendEvent">I'm Going!</button>
-											{{else}}
-												<small>Sorry, no more slots available!</small>
-											{{/if}}
-										{{else}}
-											<small>This event is in process/has been completed.</small>
-										{{/unless}}
-									{{else}}
-										<small>This event has been completed</small>
-									{{/unless}}
-								{{/if}}
-							{{else}}
-								{{#if tooLate}}
-									{{#if finalized}}
-										<small class="text-success">Completed</small>
-									{{else}}
-										<small class="text-warning">In Progress</small>
-									{{/if}}
-								{{else}}
-									<small class="text-info">Not Started</small>
-								{{/if}}
-							{{/if}}
-						</div>
-					</h3>
-				</div>
-				<div class="event-image">
-					<img class="flexible-image" src="{{image}}">
-				</div>
-				<div class="event-info">
-					<ul class="list">
-						<li><strong>Information:</strong> <p class="well">{{{description}}}</p></li>
-						{{#if paid}}
-							<li><strong>Money:</strong> ${{money}}.00. Bring to one of the officers at school or at the door.</li>
-						{{/if}}
-						<li><strong>Date:</strong> {{date}}</li>
-						<li><strong>Time:</strong> {{time}}</li>
-						<li><strong>Where:</strong> {{location}}</li>
-						<li><strong>Slots left:</strong> <strong>{{slots}}</strong></li>
-						<li>{{#if tooLate}}
-								<strong>Who went: </strong>
-							{{else}}
-								<strong>Who's going: </strong>
-							{{/if}}
-							{{#if members}}
-								<br>
-								{{#each members}}
-									<span class="label label-important">{{name}}</span>
-								{{/each}}
-							{{else}}
-								{{#if tooLate}}
-									Nobody :( shame on y'all
-								{{else}}
-								Nobody yet! It's your chance to sign up!
-								{{/if}}
-							{{/if}}
-						</li>
-     			</ul>
-				</div>
-				<div class="clear"></div>
-				<br>
+				{{> eventItem}}
 			{{/each}}
 			{{#if moreEvents}}
 		    <div id="showMoreEvents" class="center">
@@ -120,212 +26,51 @@
 		    </div>
 			{{/if}}
 		{{else}}
-			Looks like your lazy officers haven't put up a single comment. Wow.
+			Looks like your lazy officers haven't put up a single event. Wow.
 		{{/if}}
-	</div>		
-		
-	<div id="addEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Add New Event</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
+	</div>
+	
+	<div id="addEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+    	<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalLabel">Add New Event</h3>
+				</div>
+				<div class="modal-body">
+					{{#autoForm collection="Events" id="newEventForm"}}
+						{{> afQuickField name='info.name'}}
+						{{> afQuickField name='info.date' type='datetime-local'}}
+						{{> afQuickField name='info.description' rows=5}}
+						{{> afQuickField name='info.location'}}
+						{{> afQuickField name='info.cost'}}
+						{{> afQuickField name='info.slots'}}
+						<input type="file" id="js-create-picture">
 
-				<div class="control-group">
-					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
-					<div class="controls">
-						<input id="createID" type="text" style="width: 94px;" placeholder="coolEvent">
-						<input id="createEventName" type="text" style="width: 94px;" placeholder="Cool Event">
-					</div>
+						<button type="submit" class="btn btn-primary">Create</button>
+					{{/autoForm}}
 				</div>
-				
-				<div class="control-group">
-					<label class="control-label" for="date">Event Date</label>
-					<div class="controls">
-						<input id="createMonth" type="text" style="width: 56px;" placeholder="7">
-						<input id="createDay" type="text" style="width: 56px;" placeholder="31">
-						<input id="createYear" type="text" style="width: 58px;" placeholder="2013">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="time">Event Time</label>
-					<div class="controls">
-						<div class="input-append">
-							<input id="createBeginTime" type="text" style="width: 43px;" placeholder="3:00">
-							<div class="btn-group">
-								<button class="btn dropdown-toggle" data-toggle="dropdown">
-							    	<span id="createBegin">am</span>
-							    	<span class="caret"></span>
-							    </button>
-							    <ul class="dropdown-menu">
-							    	<li><a href="#" onclick="
-							    	$('#createBegin').html('am');
-							    	">am</a></li>
-							    	<li><a href="#" onclick="
-							    	$('#createBegin').html('pm');
-							    	">pm</a></li>
-							    </ul>
-						    </div>
-						</div> to 
-						<div class="input-append">
-							<input id="createEndTime" type="text" style="width: 43px;" placeholder="6:00">
-							<div class="btn-group">
-								<button class="btn dropdown-toggle" data-toggle="dropdown">
-							    	<span id="createEnd">am</span>
-							    	<span class="caret"></span>
-							    </button>
-							    <ul class="dropdown-menu">
-							    	<li><a href="#" onclick="
-							    	$('#createEnd').html('am');
-							    	">am</a></li>
-							    	<li><a href="#" onclick="
-							    	$('#createEnd').html('pm');
-							    	">pm</a></li>
-							    </ul>
-						    </div>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="description">Event Description</label>
-					<div class="controls">
-						<textarea id="createDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="location">Event Location</label>
-					<div class="controls">
-						<input id="createLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="money">Cost</label>
-					<div class="controls">
-						<div class="input-prepend input-append">
-							<span class="add-on">$</span>
-						  	<input style="width: 150px;" id="createMoney" type="text" placeholder="10">
-						  	<span class="add-on">.00</span>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
-					<div class="controls">
-						<input id="createSlots" type="text" placeholder="10">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="slots">Picture</label>
-					<div class="controls">
-						<input type="file" id="createPicture">
-					</div>
-				</div>
-				
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="createEvent">Create</button>
+			</div>
 		</div>
 	</div>
 
-	<div id="editEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div id="editEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="modalLabel">Edit Event</h3>
 		</div>
 		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Event ID</abbr> and Name</label>
-					<div class="controls">
-						<input id="editID" type="text" style="width: 94px;" placeholder="coolEvent">
-						<input id="editName" type="text" style="width: 94px;" placeholder="Cool Event">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="date">Event Date</label>
-					<div class="controls">
-						<input id="editMonth" type="text" style="width: 56px;" placeholder="7">
-						<input id="editDay" type="text" style="width: 56px;" placeholder="31">
-						<input id="editYear" type="text" style="width: 58px;" placeholder="2013">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="time">Event Time</label>
-					<div class="controls">
-						<div class="input-append">
-							<input id="editBeginTime" type="text" style="width: 43px;" placeholder="3:00">
-							<div class="btn-group">
-								<button class="btn dropdown-toggle" data-toggle="dropdown">
-							    	<span id="editBegin">am</span>
-							    	<span class="caret"></span>
-							    </button>
-							    <ul class="dropdown-menu">
-							    	<li><a href="#" onclick="
-							    	$('#editBegin').html('am');
-							    	">am</a></li>
-							    	<li><a href="#" onclick="
-							    	$('#editBegin').html('pm');
-							    	">pm</a></li>
-							    </ul>
-						    </div>
-						</div> to 
-						<div class="input-append">
-							<input id="editEndTime" type="text" style="width: 43px;" placeholder="6:00">
-							<div class="btn-group">
-								<button class="btn dropdown-toggle" data-toggle="dropdown">
-							    	<span id="editEnd">am</span>
-							    	<span class="caret"></span>
-							    </button>
-							    <ul class="dropdown-menu">
-							    	<li><a href="#" onclick="
-							    	$('#editEnd').html('am');
-							    	">am</a></li>
-							    	<li><a href="#" onclick="
-							    	$('#editEnd').html('pm');
-							    	">pm</a></li>
-							    </ul>
-						    </div>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="description">Event Description</label>
-					<div class="controls">
-						<textarea id="editDescription" placeholder="Come to this cool event, where you can do some cool stuff. Dress is casual."></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="location">Event Location</label>
-					<div class="controls">
-						<input id="editLocation" type="text" placeholder="1234 Cool Avenue, San Jose, CA 95129">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="money">Cost</label>
-					<div class="controls">
-						<div class="input-prepend input-append">
-							<span class="add-on">$</span>
-						  	<input style="width: 150px;" id="editMoney" type="text" placeholder="10">
-						  	<span class="add-on">.00</span>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="slots"><abbr title="How many people can go?">Number of Slots</abbr></label>
-					<div class="controls">
-						<input id="editSlots" type="text" placeholder="10">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="slots">Picture</label>
-					<div class="controls">
-						<input type="file" id="editPicture">
-					</div>
-				</div>
-			</form>
+			{{#autoForm collection="Events" doc=currentEvent id="editEventForm"}}
+				{{> afQuickField name='info.name'}}
+				{{> afQuickField name='info.date' type='datetime-local'}}
+				{{> afQuickField name='info.description' rows='5'}}
+				{{> afQuickField name='info.location'}}
+				{{> afQuickField name='info.cost'}}
+				{{> afQuickField name='info.slots'}}
+				<!-- <input type="file" class="js-create-picture"> -->
+
+				<button type="submit" class="btn btn-primary">Insert</button>
+			{{/autoForm}}
 		</div>
 		<div class="modal-footer">
 			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>

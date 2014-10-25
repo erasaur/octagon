@@ -20,13 +20,14 @@ Schema.EventInfo = new SimpleSchema({
   cost: { // omitted if zero
     type: Number,
     min: 0,
+    defaultValue: 0,
     optional: true,
-    label: 'Cost (omit if zero)'
+    label: 'Cost'
   },
-  slots: { // omitted if unlimited
+  slots: {
     type: Number,
     optional: true,
-    label: 'Slots available (omit if unlimited)'
+    label: 'Slots available'
   }
 });
 
@@ -36,10 +37,19 @@ Schema.Events = new SimpleSchema({
     optional: true
   },
   userId: {
-    type: String
+    type: String,
+    optional: true
   },
   createdAt: {
-    type: Date
+    type: Date,
+    optional: true
+    // , autoValue: function () {
+    //   if (this.isInsert) {
+    //     return new Date;
+    //   } else {
+    //     this.unset();
+    //   }
+    // }
   },
   info: {
     type: Schema.EventInfo
@@ -49,10 +59,12 @@ Schema.Events = new SimpleSchema({
     optional: true
   },
   finalized: {
-    type: Boolean
+    type: Boolean,
+    optional: true
   },
   pictureId: {
-    type: String
+    type: String,
+    optional: true
   }
 });
 
@@ -60,6 +72,7 @@ Events = new Mongo.Collection("events");
 Events.attachSchema(Schema.Events);
 
 Events.allow({
+  insert: isAdminById,
   update: function (userId, event, fields) {
     if (!userId) return false;
 
@@ -92,30 +105,22 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    if (!this.isSimulation) {
+      Schema.Events.clean(event);
+      check(event, Schema.Events);
+    }
+
     var eventObj = {
       userId: userId,
       createdAt: new Date(),
       info: event.info,
       members: [],
-      finalized: false
+      finalized: false,
+      pictureId: event.pictureId
     };
 
-    if (!event.pictureId && !event.imageUrl) 
-      throw new Meteor.Error('no-picture', getError('no-picture'));
-    
-    if (event.imageUrl) {
-      var picture = {
-        imageUrl: event.imageUrl,
-        caption: event.name,
-        featured: false
-      };
-      picture._id = Meteor.call('createPicture', picture);
-    }
-    
-    eventObj.pictureId = event.pictureId || picture._id;
-
     // TODO: send notifications
-    return Events.insert(eventObj);
+    return Events.insert(eventObj);  
   },
   updateEvent: function (event) {
     var user = Meteor.user();
@@ -123,6 +128,9 @@ Meteor.methods({
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    if (!this.isSimulation)
+      check(event, Schema.Events);
 
     if (!event.pictureId && !event.imageUrl) 
       throw new Meteor.Error('no-picture', getError('no-picture'));

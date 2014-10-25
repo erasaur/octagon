@@ -4,6 +4,8 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+allow selecting images from gallery for creating event
+move picture creation to common method
 abstract club-specific things like settings, website name, style, etc
 use collectionfs instead of managing pictures manually
 trash inline styling...

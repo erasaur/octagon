@@ -3,14 +3,16 @@ PostSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  title: {
-    type: String
-  },
   createdAt: {
-    type: Date
+    type: Date,
+  },
+  title: {
+    type: String,
+    label: 'Post title'
   },
   content: {
-    type: String
+    type: String,
+    label: 'Post content'
   }
 });
 
