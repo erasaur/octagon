@@ -1,3 +1,9 @@
 Meteor.publish('members', function () {
-  return Meteor.users.find({}, { fields: { 'emails': 1, 'profile': 1 } });
+  var fields = {
+    'profile': 1
+  };
+  if (isAdminById(this.userId))
+    fields.emails = 1;
+
+  return Meteor.users.find({}, { fields: fields });
 });
