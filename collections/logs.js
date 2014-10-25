@@ -39,9 +39,15 @@ Meteor.methods({
     _.extend(log, { userId: userId, createdAt: new Date() });
 
     return Logs.insert(log);
-  }
-  // , TODO:
-  // removeLog: function (log) {
+  },
+  clearLog: function (log) {
+    var user = Meteor.user();
+    var userId = this.userId;
 
-  // }
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    if (!this.isSimulation)
+      Logs.remove();
+  }
 });

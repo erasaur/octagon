@@ -4,6 +4,8 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+use autoform for login/change pass/register
+autovalue instead of optional in schema
 allow selecting images from gallery for creating event
 move picture creation to common method
 abstract club-specific things like settings, website name, style, etc
@@ -18,7 +20,7 @@ sanitation of inputs, markdown
 events page -- move all the if statements into a helper, and just render the text
 
 progress:
-replace error messages with constants
+replace error messages with constants (also labels for schema)
 handle pictures in events/pictures collections together
 "" -> ''
 

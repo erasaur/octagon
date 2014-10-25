@@ -6,5 +6,7 @@ Pictures.allow({
   insert: isAdminById,
   update: isAdminById,
   remove: isAdminById,
-  download: canViewById
+  download: function () {
+    return true;
+  }
 });

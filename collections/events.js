@@ -43,7 +43,7 @@ Schema.Events = new SimpleSchema({
   createdAt: {
     type: Date,
     optional: true
-    // , autoValue: function () {
+    // autoValue: function () {
     //   if (this.isInsert) {
     //     return new Date;
     //   } else {
@@ -57,6 +57,13 @@ Schema.Events = new SimpleSchema({
   members: {
     type: [String],
     optional: true
+    // autoValue: function () {
+    //   if (this.isInsert) {
+    //     return [];
+    //   } else {
+    //     this.unset();
+    //   }
+    // }
   },
   finalized: {
     type: Boolean,

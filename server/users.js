@@ -43,5 +43,16 @@ Meteor.methods({
         'name': name
       }
     });
+  },
+  removeUser: function () {
+    var user = this.userId;
+
+    if (!user)
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Meteor.users.remove(user);
+  },
+  changePass: function (id, password) {
+    Accounts.setPassword(id, password);
   }
 });
