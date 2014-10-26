@@ -7,7 +7,7 @@
 				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
 				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPointsModal">Assign Points</a></li>
 				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addStrikesModal">Assign Strikes</a></li>
-				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a></li>
+				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showAllEmailsModal">Show Emails</a></li>
 			</ul>
 		{{/if}}
 	{{/contentFor}}
@@ -78,97 +78,4 @@
 			No members yet.
 		{{/if}}
 	</ul>
-
-	<div id="addPointsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Assign Points</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="inputUsers">Members (Separated by commas)</label>
-					<div class="controls">
-						<textarea type="text" id="membersToAdd" placeholder="If you repeat the name, the member will gain double the points specified, if entered thrice, triple points, etc."></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="findUsers">Add Members</label>
-					<div class="controls">
-						<div class="input-append">
-							<input type="text" id="addToMembers" style="width: 156px;" placeholder="Type Name Here" data-provide="typeahead" data-source="[{{allNames}}]" data-items="6">
-							<button class="btn" type="button" id="appendName">Add</button>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="points">Points</label>
-					<div class="controls">
-						<input id="pointsToAdd" type="text" placeholder="10">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="event">Occasion</label>
-					<div class="controls">
-						<input id="occasion" type="text" placeholder="Regular Meeting [9/26/2013]">
-					</div>
-				</div>
-				<div class="control-group">
-				<label class="control-label" for="event"><abbr title="Is the occasion a normal meeting?"><i class="icon-info-sign"></i></abbr> Normal meeting?</label>
-					<div class="controls">
-						<input type="checkbox" id="isMeeting">
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="addPoints">Add</button>
-		</div>
-	</div>
-
-	<div id="addStrikesModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Assign Strikes</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="inputUsers">Member</label>
-					<div class="controls">
-						<textarea type="text" id="memberToStrike"></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputStrikes">Strikes</label>
-					<div class="controls">
-						<input id="strikesToAdd" type="text" placeholder="1">
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="addStrikes">Add</button>
-		</div>
-	</div>
-	<div id="showEmailsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Member Emails</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				{{#if hasMembers}}
-					{{#each allMembers}}
-						{{this.emails.[0].address}},
-					{{/each}}
-				{{/if}}
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-		</div>
-	</div>
 </template>

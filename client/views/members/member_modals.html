@@ -1,0 +1,49 @@
+<template name="addPointsModal">
+  {{#autoForm collection="Logs" type="method" meteormethod="createLog"}}
+    <div class="modal-body">
+      {{> afFieldInput name='members' class='typeahead' placeholder='Type Name Here'}}
+      {{> afQuickField name='points' placeholder='10'}}
+      {{> afQuickField name='description' placeholder='Regular Meeting [9/26/2013]'}}
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  {{/autoForm}}
+</template> 
+
+<template name="addStrikesModal">
+  <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="inputUsers">Member</label>
+        <div class="controls">
+          <textarea type="text" id="memberToStrike"></textarea>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputStrikes">Strikes</label>
+        <div class="controls">
+          <input id="strikesToAdd" type="text" placeholder="1">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    <button class="btn btn-primary" id="addStrikes">Add</button>
+  </div>
+</template>
+
+<template name="showAllEmailsModal">
+  <div class="modal-body">
+    {{#if members.count}}
+      {{#each members}}
+        {{formatEmail this._id}},
+      {{/each}}
+    {{/if}}
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+  </div>
+</template>

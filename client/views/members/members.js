@@ -1,5 +1,5 @@
 Template.members.helpers({
-  allMembers: function () {
+  members: function () {
     return Meteor.users.find();
   },
   logs: function () {

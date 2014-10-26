@@ -1,23 +1,35 @@
 LogSchema = new SimpleSchema({
   _id: {
     type: String,
-    optional: true
+    optional: true,
+    autoform: {
+      omit: true
+    }
   },
   createdAt: {
-    type: Date
+    type: Date,
+    autoform: {
+      omit: true
+    }
   },
   userId: {
-    type: String
+    type: String,
+    autoform: {
+      omit: true
+    }
   },
   members: {
-    type: [String]
+    type: [String],
+    label: 'Members'
   },
   points: {
     type: Number,
-    optional: true
+    optional: true,
+    label: 'Points to give'
   },
   description: {
-    type: String
+    type: String,
+    label: 'Occassion'
   }
 });
 
@@ -37,6 +49,8 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    // don't use schema clean because this method can be called
+    // from event creation method
     _.extend(log, { userId: userId, createdAt: new Date() });
     check(log, LogSchema);
 
