@@ -16,8 +16,8 @@
 	{{> contentFor region="pageHeader" template="eventsHeader"}}
 
 	<div class="event">
-		{{#if eventsList.count}}
-			{{#each eventsList}}
+		{{#if events.count}}
+			{{#each events}}
 				{{> eventItem}}
 			{{/each}}
 			{{#if moreEvents}}

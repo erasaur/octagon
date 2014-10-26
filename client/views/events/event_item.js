@@ -4,7 +4,7 @@ Template.eventItem.helpers({
     var tooLate = new Date() > this.info.date;
     var finalized = this.finalized;
     var attending = this.members && _.contains(this.members, userId);
-    var noSlots = this.slots === 0;
+    var noSlots = this.info.slots === 0;
 
     if (!userId) { // not logged in
       if (tooLate)
@@ -31,7 +31,7 @@ Template.eventItem.helpers({
   },
   canAttend: function () {
     var attending = this.members && _.contains(this.members, Meteor.userId());
-    var slotsLeft = !!this.slots;
+    var slotsLeft = !!this.info.slots;
     var tooLate = new Date() > this.info.date;
 
     return !attending && slotsLeft && !tooLate;
@@ -55,9 +55,9 @@ Template.eventItem.events({
     displayModal(event.target.getAttribute('data-toggle'));
   },
   'click .js-cancel-attend': function () {
-
+    Meteor.call('unattendEvent', this._id);
   },
   'click .js-attend': function () {
-
+    Meteor.call('attendEvent', this._id);
   }
 });

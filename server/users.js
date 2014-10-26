@@ -75,7 +75,7 @@ Meteor.methods({
     if (eventObj.slots <= 0)
       throw new Meteor.Error('already-full', getError('already-full'));
 
-    Events.update(eventId, { $addToSet: { 'members': userId }, $inc: { 'slots': -1 } });
+    Events.update(eventId, { $addToSet: { 'members': userId }, $inc: { 'info.slots': -1 } });
   },
   unattendEvent: function (eventId) {
     var user = Meteor.user();
@@ -94,6 +94,6 @@ Meteor.methods({
     if (!_.contains(eventObj.members, userId))
       throw new Meteor.Error('not-attending', getError('not-attending'));
 
-    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'slots': -1 } });
+    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'info.slots': -1 } });
   }
 });
