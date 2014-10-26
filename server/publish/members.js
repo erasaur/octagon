@@ -4,5 +4,5 @@ Meteor.publish('members', function () {
   if (isAdminById(this.userId))
     fields.emails = 1;
 
-  return Meteor.users.find({}, { fields: fields });
+  return [ Meteor.users.find({}, { fields: fields }), Logs.find() ];
 });
