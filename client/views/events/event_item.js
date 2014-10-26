@@ -36,8 +36,10 @@ Template.eventItem.helpers({
 
     return !attending && slotsLeft && !tooLate;
   },
-  attending: function () {
-    return this.members && _.contains(this.members, Meteor.userId());
+  canCancel: function () {
+    var tooLate = new Date() > this.info.date;
+    var attending = this.members && _.contains(this.members, Meteor.userId());
+    return attending && !tooLate;
   },
   tooLate: function () {
     var now = new Date();
