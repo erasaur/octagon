@@ -1,29 +1,11 @@
 <template name="addPostModal">
-  {{#autoForm collection="Posts" id="newPostForm"}}
-    <div class="modal-body">
-      <div class="modal-body">
-        {{> afQuickField name='title' placeholder='Come to our first meeting!'}}
-        {{> afQuickField name='content' placeholder='We will be introducing officers, and handing out cookies!' rows='5'}}
-      </div>
-      <div class="modal-footer">
-        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-        <button type="submit" class="btn btn-primary">Post</button>
-      </div>
-    </div>
-  {{/autoForm}}
+  <div class="modal-body">
+    {{> quickForm collection="Posts" id="newPostForm" type="insert"}}
+  </div>
 </template>
 
 <template name="editPostModal">
-  {{#autoForm collection="Posts" doc=currentPost id="editPostForm"}}
-    <div class="modal-body">
-      <div class="modal-body">
-        {{> afQuickField name='title' placeholder='Come to our first meeting!'}}
-        {{> afQuickField name='content' placeholder='We will be introducing officers, and handing out cookies!' rows='5'}}
-      </div>
-      <div class="modal-footer">
-        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-        <button type="submit" class="btn btn-primary">Save</button>
-      </div>
-    </div>
-  {{/autoForm}}
+  <div class="modal-body">
+    {{> quickForm collection="Posts" doc=currentPost id="newPostForm" type="update"}}
+  </div>
 </template>

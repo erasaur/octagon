@@ -52,8 +52,16 @@ AutoForm.hooks({
     }
   },
   suggestEventForm: {
-    onSuccess: function () {
+    onSuccess: function (operation, result, template) {
       alert(getError('suggest-success'));
+    }
+  },
+  newPostForm: {
+    onSuccess: function (operation, result, template) {
+      if (operation === 'insert')
+        alert(getError('post-success'));
+      else if (operation === 'update')
+        alert(getError('update-post-success'));
     }
   }
 });
