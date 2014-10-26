@@ -26,6 +26,7 @@ Schema.EventInfo = new SimpleSchema({
   },
   slots: {
     type: Number,
+    min: 0,
     optional: true,
     label: 'Slots available'
   }
