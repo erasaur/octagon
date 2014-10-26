@@ -13,7 +13,8 @@ LogSchema = new SimpleSchema({
     type: [String]
   },
   points: {
-    type: Number
+    type: Number,
+    optional: true
   },
   description: {
     type: String

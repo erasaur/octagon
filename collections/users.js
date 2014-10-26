@@ -5,26 +5,32 @@ Schema.UserProfile = new SimpleSchema({
     type: String
   },
   events: {
-    type: [Object],
+    type: [String],
     blackbox: true
   },
   carpool: {
-    type: Number
+    type: Number,
+    min: 0
   },
   meetings: {
-    type: Number
+    type: Number,
+    min: 0
   },
   mic: {
-    type: Number
+    type: Number,
+    min: 0
   },
   points: {
-    type: Number
+    type: Number,
+    min: 0
   },
   strikes: {
-    type: Number
+    type: Number,
+    min: 0
   },
   suggests: {
-    type: Number
+    type: Number,
+    min: 0
   }
 });
 

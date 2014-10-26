@@ -22,6 +22,32 @@ Template.finalizeEventModal.helpers({
   members: eventMembers
 });
 
+Template.finalizeEventModal.events({
+  'click #js-finalize-event': function (event, template)  {
+    var currentEvent = Session.get('currentEvent');
+    var members = currentEvent && currentEvent.members;
+
+    members = _.map(members, function (member) {
+      var hours = parseFloat(template.find("#js-hours-" + member).value);
+      var carpool = template.$('#js-carpool-' + member).is(':checked');
+      var mic = template.$('#js-mic-' + member).is(':checked');
+
+      return { _id: member, hours: hours, carpool: carpool, mic: mic };
+    });
+
+    console.log(members);
+
+    Meteor.call('finalizeEvent', currentEvent, members, function (error) {
+      if (error)
+        alert(error.invalidKeys);
+      else {
+        alert(getError('finalize-success'));
+        $('#finalizeEventModal').modal('hide');
+      }
+    });
+  }
+});
+
 // end finalize event modal --------------------------
 
 

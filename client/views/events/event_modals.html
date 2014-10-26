@@ -53,9 +53,9 @@
 
 <template name="finalizeEventModal">
   <div class="modal-body">
-    <div class="alert">
+    <p>
       Make sure to check that the members shown below match with the members listed under the corresponding event in the event page!
-    </div>
+    </p>
     <form class="form-horizontal">
       {{#if members.length}}
         {{#each members}}
@@ -63,12 +63,12 @@
             <label class="control-label" for="name">{{formatName this}}</label>
             <div class="controls">
               <div class="input-append">
-                <input id="{{memberID}}" type="text" placeholder="Hours?">
+                <input id="js-hours-{{this}}" type="text" placeholder="Hours?">
                 <span class="add-on">
-                  Carpool? <input type="checkbox" id="{{memberID}}c">
+                  Carpool? <input type="checkbox" id="js-carpool-{{this}}">
                 </span>
                 <span class="add-on">
-                  Mic? <input type="checkbox" id="{{memberID}}m">
+                  Mic? <input type="checkbox" id="js-mic-{{this}}">
                 </span>
               </div>
             </div>
@@ -81,11 +81,13 @@
   </div>
   <div class="modal-footer">
     <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-    {{#if members.length}}
-      <button class="btn btn-primary" id="finalizeEvent">Save</button>
-    {{else}}
-      <button class="btn btn-primary" id="finalizeAnyway">Finalize Anyway</button>
-    {{/if}}
+    <button class="btn btn-primary" id="js-finalize-event">
+      {{#if members.length}} 
+        Save 
+      {{else}} 
+        Finalize Anyway 
+      {{/if}}
+    </button>
   </div>
 </template>
 

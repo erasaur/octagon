@@ -8,3 +8,8 @@ Accounts.onResetPasswordLink(function (token, done) {
   Session.set('resetPassword', token);
   done();
 });
+
+$(window).scroll(function() {
+  //run function when scroll
+  showMoreEvents();
+});
