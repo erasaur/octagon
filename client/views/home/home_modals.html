@@ -1,0 +1,69 @@
+<template name="addPostModal">
+  {{#autoForm collection="Events" id="newEventForm"}}
+    <div class="modal-body">
+      <div class="modal-body">
+        {{> afQuickField name='title' placeholder='Come to our first meeting!'}}
+        {{> afQuickField name='content' placeholder='We'll be introducing officers, and handing out cookies!'}}
+      </div>
+      <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button class="btn btn-primary" id="createPost">Create</button>
+    </div>
+  {{/autoForm}}
+</template>
+
+<template name="editPostModal">
+  {{#autoForm collection="Events" doc=currentPost id="newEventForm"}}
+    <div class="modal-body">
+      <div class="modal-body">
+        {{> afQuickField name='title' placeholder='Come to our first meeting!'}}
+        {{> afQuickField name='content' placeholder='We'll be introducing officers, and handing out cookies!'}}
+      </div>
+      <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button class="btn btn-primary" id="createPost">Create</button>
+    </div>
+  {{/autoForm}}
+</template>
+  <div id="editPostModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="modalLabel">Edit Post</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="id"><abbr title="Unique word, A-Z only">Post ID</abbr></label>
+          <div class="controls">
+            <input id="editID" type="text" placeholder="firstMeeting">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="title">Title</label>
+          <div class="controls">
+            <input id="editTitle" type="text" placeholder="Come to our first meeting!">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="content">Content</label>
+          <div class="controls">
+            <textarea id="editContent" placeholder="We'll be introducing officers, and handing out cookies!"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button class="btn btn-primary" id="editPost">Edit</button>
+    </div>
+  </div>

@@ -5,6 +5,13 @@ PostSchema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
+    autoValue: function () {
+      if (this.isInsert) {
+        return new Date;
+      } else {
+        this.unset();
+      }
+    }
   },
   title: {
     type: String,

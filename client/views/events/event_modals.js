@@ -35,11 +35,9 @@ Template.finalizeEventModal.events({
       return { _id: member, hours: hours, carpool: carpool, mic: mic };
     });
 
-    console.log(members);
-
     Meteor.call('finalizeEvent', currentEvent, members, function (error) {
       if (error)
-        alert(error.invalidKeys);
+        alert(error.reason);
       else {
         alert(getError('finalize-success'));
         $('#finalizeEventModal').modal('hide');

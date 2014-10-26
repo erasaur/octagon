@@ -2,128 +2,61 @@
 	{{#contentFor "pageHeader"}}
 		<h1>Home <small>Check here for news and updates!</small></h1>
 		{{#if officer}}
-			<a href="#addPostModal" role="button" class="btn btn-primary" data-toggle="modal">Add Post</a>
+			<a href="#" role="button" class="btn btn-primary" data-toggle="addPostModal">Add Post</a>
 		{{/if}}
-		{{#if hasPictures}}
+		{{#if pictures.count}}
 			<div id="homeCarousel" class="carousel slide">
 				<ol class="carousel-indicators">
 					{{#each pictures}}
-			   			<li data-target="#homeCarousel"></li>
-			    	{{/each}}
+		   			<li data-target="#homeCarousel"></li>
+		    	{{/each}}
 				</ol>
-			  	<!-- Carousel items -->
-			  	<div class="carousel-inner">
-			  		{{#each pictures}}
-				    	<div class="item">
-				    		<img src="{{source}}" alt="" class="carouselItem">
-				    		<div class="carousel-caption">
-				    			{{caption}}
-				    		</div>
-				    	</div>
-			    	{{/each}}
+		  	<!-- Carousel items -->
+		  	<div class="carousel-inner">
+		  		{{#each pictures}}
+			    	<div class="item">
+			    		<img src="{{source}}" alt="" class="carouselItem">
+			    		<div class="carousel-caption">
+			    			{{caption}}
+			    		</div>
+			    	</div>
+		    	{{/each}}
 			 	 </div>
-			  	<!-- Carousel nav -->
-			  	<a class="carousel-control left" href="#homeCarousel" data-slide="prev">&lsaquo;</a>
-			  	<a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
+		  	<!-- Carousel nav -->
+		  	<a class="carousel-control left" href="#homeCarousel" data-slide="prev">&lsaquo;</a>
+		  	<a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
 			</div>
 		{{/if}}
 	{{/contentFor}}
 
-	{{#if hasPosts}}
-		{{#each posts}}
-			<div class="post-header">
-				<h3>{{title}} <small>{{date}}</small>
-				{{#if officer}}
+	{{#each posts}}
+		<div class="post-header">
+			<h3>{{title}} <small>{{date}}</small></h3>
+			{{#if isAdmin}}
 				<div class="float-right">
-					<a href="#editPostModal" id="editPostButton" role="button" class="btn btn-primary" data-toggle="modal">Edit Post</a>
-					<a class="btn btn-primary deletePost">Delete</a>
+					<a href="#" role="button" class="btn btn-primary js-edit-post" data-toggle="editPostModal">Edit Post</a>
+					<a class="btn btn-primary js-delete-post">Delete</a>
 				</div>
-				{{/if}}
-				</h3>
-			</div>
-			<div class="post-content">
-				{{{content}}}
-			</div>
-		{{/each}}
-	{{else}}
+			{{/if}}
+		</div>
+		<div class="post-content">
+			{{{content}}}
+		</div>
+	{{/each}}
+
+	{{#unless posts.count}}
 		<div class="post-header">
 			<h3>Oops!</h3>
 		</div>
 		<div class="post-content">
 			There currently are no posts on the server.
 		</div>
-	{{/if}}
+	{{/unless}}
 
 	<div class="post-header">
 		<h3>Forms</h3>
 	</div>
 	<div class="post-content"> 
-		<a class = "btn" href = "https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target = "_blank">JOOI Membership &amp; Liability Forms</a>
-	</div>
-
-	<div id="addPostModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Add New Post</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Post ID</abbr></label>
-					<div class="controls">
-						<input id="createID" type="text" placeholder="firstMeeting">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="title">Title</label>
-					<div class="controls">
-						<input id="createTitle" type="text" placeholder="Come to our first meeting!">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="content">Content</label>
-					<div class="controls">
-						<textarea id="createContent" placeholder="We'll be introducing officers, and handing out cookies!"></textarea>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="createPost">Create</button>
-		</div>
-	</div>
-
-	<div id="editPostModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modalLabel">Edit Post</h3>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="control-group">
-					<label class="control-label" for="id"><abbr title="Unique word, A-Z only">Post ID</abbr></label>
-					<div class="controls">
-						<input id="editID" type="text" placeholder="firstMeeting">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="title">Title</label>
-					<div class="controls">
-						<input id="editTitle" type="text" placeholder="Come to our first meeting!">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="content">Content</label>
-					<div class="controls">
-						<textarea id="editContent" placeholder="We'll be introducing officers, and handing out cookies!"></textarea>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-			<button class="btn btn-primary" id="editPost">Edit</button>
-		</div>
+		<a class="btn" href="https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target="_blank">JOOI Membership &amp; Liability Forms</a>
 	</div>
 </template>
