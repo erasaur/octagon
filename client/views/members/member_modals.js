@@ -1,18 +1,40 @@
-// Template.showAllEmailsModal.helpers({
-//   members: function () {
-//     return Meteor.users.find();
-//   }
-// });
+Template.showAllEmailsModal.helpers({
+  members: function () {
+    return Meteor.users.find();
+  }
+});
 
 Template.addPointsModal.rendered = function () {
-  var members = Meteor.users.find().fetch();
-  Meteor.typeahead($('.typeahead'), members.map(function (v) {
-    return { value: v.profile.name }
-  }));
+  Meteor.typeahead($('#js-member'));
 };
 
-// Template.addPointsModal.helpers({
-//   members: function () {
-//     return Meteor.users.find();
-//   }
-// })
+// use server-side search so we can limit user publication in future
+Template.addPointsModal.helpers({
+  search: function (query, callback) {
+    Meteor.call('search', query, { fields: { 'profile.name': 1 } }, function (error, result) {
+      if (error) {
+        console.log(error.reason);
+        return;
+      }
+      callback(result.map(function (v) { 
+        return { value: v.profile.name }; 
+      }));
+    });
+  }
+});
+
+Template.addPointsModal.events({
+  'click #js-add-member': function (event, template) {
+    var member = template.$('#js-member');
+    var members = template.$('#js-members');
+
+    if (members.val() === '')
+      members.val(member.val());
+    else {
+      members.val(function (_, current) {
+        return current + ', ' + member.val();
+      });
+    }
+    member.val('');
+  }
+});

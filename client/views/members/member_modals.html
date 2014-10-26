@@ -1,9 +1,16 @@
 <template name="addPointsModal">
-  {{#autoForm collection="Logs" type="method" meteormethod="createLog"}}
+  <div class="modal-body">
+    <div class="controls">
+      <input type="text" id="js-member" name="search" class="form-control typeahead" placeholder="Type Name Here" data-source="search">
+      <button id="js-add-member" class="btn btn-primary">Add Member</button>
+    </div>
+  </div>
+  {{#autoForm collection="Logs" type="method" meteormethod="assignPoints"}}
     <div class="modal-body">
-      {{> afFieldInput name='members' class='typeahead' placeholder='Type Name Here'}}
+      {{> afQuickField name='members' id='js-members' type='textarea' rows='5'}}
       {{> afQuickField name='points' placeholder='10'}}
       {{> afQuickField name='description' placeholder='Regular Meeting [9/26/2013]'}}
+      {{> afQuickField name='isMeeting'}}
     </div>
     <div class="modal-footer">
       <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>

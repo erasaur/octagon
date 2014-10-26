@@ -30,6 +30,12 @@ LogSchema = new SimpleSchema({
   description: {
     type: String,
     label: 'Occassion'
+  },
+  isMeeting: {
+    type: Boolean,
+    optional: true,
+    defaultValue: false,
+    label: 'Normal Meeting?'
   }
 });
 
@@ -49,14 +55,14 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
-    // don't use schema clean because this method can be called
-    // from event creation method
+    // don't use schema clean because this method is usually
+    // called from other meteor methods
     _.extend(log, { userId: userId, createdAt: new Date() });
     check(log, LogSchema);
 
     return Logs.insert(log);
   },
-  clearLog: function (log) {
+  clearLog: function () {
     var user = Meteor.user();
     var userId = this.userId;
 
