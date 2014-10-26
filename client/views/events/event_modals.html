@@ -93,7 +93,9 @@
   <div class="modal-body">
     <form class="form-horizontal">
       {{#if members.length}}
-        {{formatName this}}, 
+        {{#each members}}
+          {{formatEmail this}} 
+        {{/each}}
       {{else}}
         No members have signed up yet!
       {{/if}}
