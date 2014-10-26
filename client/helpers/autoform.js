@@ -50,6 +50,11 @@ AutoForm.hooks({
         return callMethodWithFile.call(this, 'updateEvent', file, currentDoc);
       }
     }
+  },
+  suggestEventForm: {
+    onSuccess: function () {
+      alert(getError('suggest-success'));
+    }
   }
 });
 
