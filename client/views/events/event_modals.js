@@ -1,14 +1,13 @@
-Template.editEventModal.helpers({
-  currentEvent: function () {
-    return Session.get('currentEvent');
-  }
-});
-
 var eventMembers = function () {
   var currentEvent = Session.get('currentEvent');
   return currentEvent && currentEvent.members;
 };
 
+Template.editEventModal.helpers({
+  currentEvent: function () {
+    return Session.get('currentEvent');
+  }
+});
 
 // finalize event modal ------------------------------
 

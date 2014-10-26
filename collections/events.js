@@ -21,13 +21,12 @@ Schema.EventInfo = new SimpleSchema({
     type: Number,
     min: 0,
     defaultValue: 0,
-    optional: true,
     label: 'Cost'
   },
   slots: {
     type: Number,
     min: 0,
-    optional: true,
+    defaultValue: 10,
     label: 'Slots available'
   }
 });
@@ -39,36 +38,37 @@ Schema.Events = new SimpleSchema({
   },
   userId: {
     type: String,
-    optional: true
+    autoValue: function () {
+      if (this.isInsert)
+        return Meteor.userId()
+      else
+        this.unset()
+    }
   },
   createdAt: {
     type: Date,
-    optional: true
-    // autoValue: function () {
-    //   if (this.isInsert) {
-    //     return new Date;
-    //   } else {
-    //     this.unset();
-    //   }
-    // }
+    autoValue: function () {
+      if (this.isInsert)
+        return new Date;
+      else
+        this.unset();
+    }
   },
   info: {
     type: Schema.EventInfo
   },
   members: {
     type: [String],
-    optional: true
-    // autoValue: function () {
-    //   if (this.isInsert) {
-    //     return [];
-    //   } else {
-    //     this.unset();
-    //   }
-    // }
+    autoValue: function () {
+      if (this.isInsert)
+        return [];
+      else
+        this.unset();
+    }
   },
   finalized: {
     type: Boolean,
-    optional: true
+    defaultValue: false
   },
   pictureId: {
     type: String,
@@ -113,19 +113,25 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    Schema.Events.clean(event, {
+      extendAutoValueContext: {
+        isInsert: true,
+        isUpdate: false,
+        isUpsert: false,
+        isFromTrustedCode: false
+      }
+    })
     check(event, Schema.Events);
 
-    var eventObj = {
-      userId: userId,
-      createdAt: new Date(),
-      info: event.info,
-      members: [],
-      finalized: false,
-      pictureId: event.pictureId
-    };
+    // var eventObj = {
+    //   info: event.info,
+    //   members: [],
+    //   finalized: false,
+    //   pictureId: event.pictureId
+    // };
 
     // TODO: send notifications
-    return Events.insert(eventObj);  
+    return Events.insert(event);  
   },
   updateEvent: function (event) {
     var user = Meteor.user();

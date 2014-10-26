@@ -15,7 +15,10 @@ AutoForm.hooks({
       var file = new FS.File(file);
       file.metadata = metadata;
 
-      return callMethodWithFile.call(this, 'createEvent', file, insertDoc);
+      if (callMethodWithFile.call(this, 'createEvent', file, insertDoc)) {
+        alert(getError('event-success'));  
+        onSuccessCallback();
+      }
     }
   },
   editEventForm: {
@@ -32,6 +35,10 @@ AutoForm.hooks({
         Meteor.call('updateEvent', currentDoc, function (error) {
           if (error)
             console.log(error);
+          else {
+            alert(getError('update-event-success'));
+            onSuccessCallback();
+          }
         });
         self.done();
         self.resetForm();
@@ -47,7 +54,10 @@ AutoForm.hooks({
         var file = new FS.File(file);
         file.metadata = metadata;
         
-        return callMethodWithFile.call(this, 'updateEvent', file, currentDoc);
+        if (callMethodWithFile.call(this, 'updateEvent', file, currentDoc)) {
+          alert(getError('update-event-success'));
+          onSuccessCallback();
+        }
       }
     }
   },
@@ -67,11 +77,14 @@ AutoForm.hooks({
   }
 });
 
-AutoForm.addHooks(null, {
-  onSuccess: function () {
-    $('.modal').modal('hide');
-  }
+// for all forms except onSubmit forms
+AutoForm.addHooks(null, { 
+  onSuccess: onSuccessCallback
 });
+
+function onSuccessCallback () {
+  $('.modal').modal('hide');
+}
 
 function callMethodWithFile (method, fsFile, doc) {
   var self = this;
@@ -93,6 +106,7 @@ function callMethodWithFile (method, fsFile, doc) {
   });
   self.done();
   self.resetForm();
+  return true;
 }
 
 

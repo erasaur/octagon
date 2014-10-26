@@ -17,7 +17,9 @@
 </template>
 
 <template name="suggestEventModal">
-  {{> quickForm collection="Suggests" id="suggestEventForm" type="insert"}}
+  <div class="modal-body">
+    {{> quickForm collection="Suggests" id="suggestEventForm" type="insert"}}
+  </div>
 </template>
 
 <template name="editEventModal">
