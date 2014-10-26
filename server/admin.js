@@ -1,4 +1,22 @@
 Meteor.methods({
+  search: function (query, options) {
+    var user = Meteor.user(); 
+
+    if (!user || !isAdmin(user))
+      return '';
+
+    options = options || {};
+
+    if (options.limit)
+      options.limit = Math.min(50, Math.abs(options.limit));
+    else
+      options.limit = 50;
+
+    var regex = new RegExp("^" + query);
+    return Meteor.users.find({ 
+      'profile.name': { $regex: regex, $options: 'i' } 
+    }, options).fetch();
+  },
   createEvent: function (event) {
     var user = Meteor.user();
     var userId = this.userId;

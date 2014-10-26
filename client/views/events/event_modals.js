@@ -41,10 +41,15 @@ Template.addMemberModal.rendered = function () {
 };
 
 Template.addMemberModal.helpers({
-  members: function () {
-    var members = Meteor.users.find().fetch();
-    return _.map(members, function (member) {
-      return member.profile && member.profile.name;
+  search: function (query, callback) {
+    Meteor.call('search', query, { fields: { 'profile.name': 1 } }, function (error, result) {
+      if (error) {
+        console.log(error.reason);
+        return;
+      }
+      callback(result.map(function (v) { 
+        return { value: v.profile.name }; 
+      }));
     });
   }
 });

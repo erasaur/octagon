@@ -8,6 +8,4 @@ Meteor.publish('events', function (limit) {
   });
 
   return this.ready();
-
-  // return Events.find({}, { limit: limit, sort: { 'date': -1 } });
 });
