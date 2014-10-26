@@ -1,4 +1,8 @@
-var currentPost;
+Template.homeHeader.helpers({
+  pictures: function () {
+    return Pictures.find({ 'metadata.featured': true });
+  }
+});
 
 Template.home.rendered = function () {
   $('#homeCarousel').find('.item:first').addClass('active');
@@ -7,9 +11,6 @@ Template.home.rendered = function () {
 Template.home.helpers({
   posts: function () {
     return Posts.find({}, { sort: { 'date': -1 } });
-  },
-  pictures: function () {
-    return Pictures.find({ 'featured': true });
   }
 });
 
