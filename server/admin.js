@@ -101,7 +101,7 @@ Meteor.methods({
     if (eventObj.members && _.contains(eventObj.members, user._id))
       throw new Meteor.Error('user-attending', getError('user-attending'));
 
-    if (eventObj.slots <= 0)
+    if (eventObj.info.slots <= 0)
       throw new Meteor.Error('event-full', getError('event-full'));
 
     Events.update(eventId, { $addToSet: { 'members': user._id }, $inc: { 'info.slots': -1 } });
