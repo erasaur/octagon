@@ -1,33 +1,35 @@
+<template name="homeHeader">
+	<h1>Home <small>Check here for news and updates!</small></h1>
+	{{#if officer}}
+		<a href="#" role="button" class="btn btn-primary" data-toggle="addPostModal">Add Post</a>
+	{{/if}}
+	{{#if pictures.count}}
+		<div id="homeCarousel" class="carousel slide">
+			<ol class="carousel-indicators">
+				{{#each pictures}}
+	   			<li data-target="#homeCarousel"></li>
+	    	{{/each}}
+			</ol>
+	  	<!-- Carousel items -->
+	  	<div class="carousel-inner">
+	  		{{#each pictures}}
+		    	<div class="item">
+		    		<img src="{{source}}" alt="" class="carouselItem">
+		    		<div class="carousel-caption">
+		    			{{caption}}
+		    		</div>
+		    	</div>
+	    	{{/each}}
+		 	 </div>
+	  	<!-- Carousel nav -->
+	  	<a class="carousel-control left" href="#homeCarousel" data-slide="prev">&lsaquo;</a>
+	  	<a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+	{{/if}}
+</template>
+
 <template name="home">
-	{{#contentFor "pageHeader"}}
-		<h1>Home <small>Check here for news and updates!</small></h1>
-		{{#if officer}}
-			<a href="#" role="button" class="btn btn-primary" data-toggle="addPostModal">Add Post</a>
-		{{/if}}
-		{{#if pictures.count}}
-			<div id="homeCarousel" class="carousel slide">
-				<ol class="carousel-indicators">
-					{{#each pictures}}
-		   			<li data-target="#homeCarousel"></li>
-		    	{{/each}}
-				</ol>
-		  	<!-- Carousel items -->
-		  	<div class="carousel-inner">
-		  		{{#each pictures}}
-			    	<div class="item">
-			    		<img src="{{source}}" alt="" class="carouselItem">
-			    		<div class="carousel-caption">
-			    			{{caption}}
-			    		</div>
-			    	</div>
-		    	{{/each}}
-			 	 </div>
-		  	<!-- Carousel nav -->
-		  	<a class="carousel-control left" href="#homeCarousel" data-slide="prev">&lsaquo;</a>
-		  	<a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
-			</div>
-		{{/if}}
-	{{/contentFor}}
+	{{> contentFor region="pageHeader" template="homeHeader"}}
 
 	{{#each posts}}
 		<div class="post-header">
