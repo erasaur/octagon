@@ -17,20 +17,7 @@
 </template>
 
 <template name="suggestEventModal">
-  {{#autoForm schema="SuggestSchema" id="suggestEventForm" type="method" meteormethod="suggestEvent"}}
-    <div class="modal-body">
-      {{> afQuickField name='name'}}
-      {{> afQuickField name='date' type='datetime-local'}}
-      {{> afQuickField name='description' rows='5'}}
-      {{> afQuickField name='location'}}
-      {{> afQuickField name='cost'}}
-      {{> afQuickField name='contact'}}
-    </div>
-    <div class="modal-footer">
-      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-      <button type="submit" class="btn btn-primary">Suggest</button>
-    </div>
-  {{/autoForm}}
+  {{> quickForm collection="Suggests" id="suggestEventForm" type="insert"}}
 </template>
 
 <template name="editEventModal">

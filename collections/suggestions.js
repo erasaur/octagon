@@ -1,20 +1,33 @@
 SuggestSchema = new SimpleSchema({
   _id: {
     type: String,
-    optional: true
+    optional: true,
+    autoform: {
+      omit: true
+    }
   },
   userId: { // _id of user who suggested
     type: String,
-    optional: true
+    autoform: {
+      omit: true
+    },
+    autoValue: function () {
+      if (this.isInsert)
+        return Meteor.userId();
+      else
+        this.unset();
+    }
   },
   createdAt: {
     type: Date,
+    autoform: {
+      omit: true
+    },
     autoValue: function () {
-      if (this.isInsert) {
+      if (this.isInsert)
         return new Date;
-      } else {
+      else
         this.unset();
-      }
     }
   },
   name: {
@@ -27,7 +40,10 @@ SuggestSchema = new SimpleSchema({
   },
   description: {
     type: String,
-    label: 'Brief description of the event'
+    label: 'Brief description of the event',
+    autoform: {
+      rows: 5
+    }
   },
   location: {
     type: String,
@@ -37,7 +53,6 @@ SuggestSchema = new SimpleSchema({
     type: Number,
     min: 0,
     defaultValue: 0,
-    optional: true,
     label: 'Cost'
   },
   contact: {
@@ -46,7 +61,9 @@ SuggestSchema = new SimpleSchema({
   },
   status: {
     type: String,
-    optional: true,
+    autoform: {
+      omit: true
+    },
     defaultValue: 'pending'
   }
 });
@@ -74,25 +91,6 @@ Suggests.before.update(function (userId, doc, fields, modifier, options) {
 });
 
 Meteor.methods({
-  suggestEvent: function (suggestion) {
-    var user = Meteor.user();
-    var userId = this.userId;
-
-    if (!user || !canSuggestEvent(user))
-      throw new Meteor.Error('logged-out', getError('logged-out'));
-
-    _.extend(suggestion, {
-      userId: userId,
-      createdAt: new Date(),
-      status: 'pending'
-    });
-
-    if (!this.isSimulation)
-      check(suggestion, SuggestSchema);
-
-    // TODO: send notifications
-    return Suggests.insert(suggestion);
-  },
   approveSuggestion: function (suggestId) {
     var user = Meteor.user();
 

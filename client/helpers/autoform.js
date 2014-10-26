@@ -53,6 +53,7 @@ AutoForm.hooks({
   },
   suggestEventForm: {
     onSuccess: function (operation, result, template) {
+      // TODO: send notification
       alert(getError('suggest-success'));
     }
   },
@@ -63,6 +64,12 @@ AutoForm.hooks({
       else if (operation === 'update')
         alert(getError('update-post-success'));
     }
+  }
+});
+
+AutoForm.addHooks(null, {
+  onSuccess: function () {
+    $('.modal').modal('hide');
   }
 });
 
