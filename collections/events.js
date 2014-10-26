@@ -120,7 +120,7 @@ Meteor.methods({
         isUpsert: false,
         isFromTrustedCode: false
       }
-    })
+    });
     check(event, Schema.Events);
 
     // var eventObj = {

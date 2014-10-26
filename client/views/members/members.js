@@ -1,12 +1,9 @@
 Template.members.helpers({
-  hasMembers: function () {
+  allMembers: function () {
     return Meteor.users.find();
   },
-  hasAssigned: function () {
-    return PointsModel.find().count();
-  },
-  pointsLog: function () {
-    return PointsModel.find();
+  logs: function () {
+    return Logs.find();
   }
 });
 

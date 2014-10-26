@@ -2,21 +2,21 @@
 <template name="members">
 	{{#contentFor "pageHeader"}}
 		<h1>Members <small>List of Lynbrook's coolest people</small></h1>
-		{{#if officer}}
+		{{#if isAdmin}}
 			<ul class="inline">
 				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
-				<li><a href="#addPointsModal" role="button" class="btn btn-primary" data-toggle="modal">Assign Points</a></li>
-				<li><a href="#addStrikesModal" role="button" class="btn btn-primary" data-toggle="modal">Assign Strikes</a></li>
-				<li><a href="#showEmailsModal" role="button" class="btn btn-primary" data-toggle="modal">Show Emails</a></li>
+				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPointsModal">Assign Points</a></li>
+				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addStrikesModal">Assign Strikes</a></li>
+				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a></li>
 			</ul>
 		{{/if}}
 	{{/contentFor}}
 		
 	<div class="post-header">
 		<h3>Points Log
-		{{#if officer}}
+		{{#if isAdmin}}
 			<div class="float-right">
-				<button class="btn btn-primary" id="clearLog">Clear Log</button>
+				<button class="btn btn-primary" id="js-clear-log">Clear Log</button>
 			</div>
 		{{/if}}
 		</h3>
@@ -24,10 +24,14 @@
 	<div class="post-content">
 		<div class="alert alert-info">
 			<ul class="list">
-			{{#if hasAssigned}}
-				{{#each pointsLog}}
-					<li><strong>{{date}}</strong> - {{name}} assigned {{points}} points for "{{occasion}}" to:
-						<p>{{members}}</p>
+			{{#if logs.count}}
+				{{#each logs}}
+					<li><strong>{{createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
+						<p>
+						{{#each this.members}}
+							{{formatName this}}. 
+						{{/each}}
+						</p>
 					</li>
 				{{/each}}
 			{{else}}
@@ -48,26 +52,24 @@
 	</div>
 
 	<ul class="list">
-		{{#if hasMembers}}
+		{{#if members.count}}
 			<table class="table member-list">
-				{{#each allMembers}}
+				{{#each members}}
   				<tbody>
     				<tr class="member-head">
-    					{{#if officer}}<th>User</th>{{/if}}
     					<th>Name</th>
     					<th>Points</th>
     					<th>Strikes</th>
-    					<th>Email</th>
-    					{{#if officer}}
+    					{{#if isAdmin}}
+    						<th>Email</th>
     						<th><button class="btn btn-primary btn-mini delUser float-right">Delete User</button></th>
     					{{/if}}
     				</tr>
   					<tr>
-  						{{#if officer}}<td>{{this.username}}</td>{{/if}}
       				<td>{{this.profile.name}}</td>
       				<td>{{this.profile.points}}</td>
       				<td>{{this.profile.strikes}}</td>
-      				<td>{{this.emails.[0].address}}</td>
+      				{{#if isAdmin}}<td>{{this.emails.[0].address}}</td>{{/if}}
 	   					</tr>
 					</tbody>
 				{{/each}}

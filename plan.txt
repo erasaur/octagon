@@ -4,36 +4,39 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+
+show markdown in handlebars
+abstract club-specific things into settings, like website/school name, style, etc
 limit number of pictures sent to admin page (pagination)
 consistent naming with modals and forms.. eg add is used for modals and new is used for forms
 test all forms, use hooks to show success/error not event handlers
 improve change password (use autoform)
 use pagination package and easy search
 use autoform for login/change pass/register
-autovalue instead of optional in schema
+
 allow selecting images from gallery for creating event
 move picture creation to common method
-abstract club-specific things like settings, website name, style, etc
-use collectionfs instead of managing pictures manually
-trash inline styling...
-trash br's ... use clearfix not ninja divs
-don't use separate ids
-find a way to reduce the amount of modals
-easy search for members?
-set up permissions
-sanitation of inputs, markdown
-events page -- move all the if statements into a helper, and just render the text
 
 progress:
 replace error messages with constants (also labels for schema)
 handle pictures in events/pictures collections together
 "" -> ''
+autovalue instead of optional in schema
+trash inline styling...
+trash br's ... use clearfix not ninja divs
 
 done:
 fix dates (consider toDateString(), but will have to change getDate(), editing events, adding events, displaying, etc) (moment)
 fix the whitespace issue
 ensure that all number inputs are actually numbers (schema)
 collection schemas
+use collectionfs instead of managing pictures manually
+events page -- move all the if statements into a helper, and just render the text
+sanitation of inputs, markdown
+set up permissions
+don't use separate ids
+find a way to reduce the amount of modals
+easy search for members?
 
 future:
 implement window effect

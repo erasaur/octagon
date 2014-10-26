@@ -12,11 +12,10 @@ PostSchema = new SimpleSchema({
       omit: true
     },
     autoValue: function () {
-      if (this.isInsert) {
+      if (this.isInsert)
         return new Date;
-      } else {
+      else
         this.unset();
-      }
     }
   },
   title: {

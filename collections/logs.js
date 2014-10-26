@@ -38,6 +38,7 @@ Meteor.methods({
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     _.extend(log, { userId: userId, createdAt: new Date() });
+    check(log, LogSchema);
 
     return Logs.insert(log);
   },
