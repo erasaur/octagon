@@ -104,7 +104,40 @@ Events.before.update(function (userId, doc, fields, modifier, options) {
   }
 });
 
+Meteor.methods({
+  createEvent: function (event) {
+    var user = Meteor.user();
+    var userId = this.userId;
 
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    check(event, Schema.Events);
+
+    var eventObj = {
+      userId: userId,
+      createdAt: new Date(),
+      info: event.info,
+      members: [],
+      finalized: false,
+      pictureId: event.pictureId
+    };
+
+    // TODO: send notifications
+    return Events.insert(eventObj);  
+  },
+  updateEvent: function (event) {
+    var user = Meteor.user();
+    var eventId = event._id;
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    check(event, Schema.Events);
+
+    Events.update(eventId, { $set: { 'info': event.info } });
+  }
+});
 
 
 

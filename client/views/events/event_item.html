@@ -1,6 +1,6 @@
 <template name="eventItem">
   <div class="post-header">
-    <h3>{{name}} <small>{{date}}</small></h3>
+    <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
     <div class="float-right">      
       {{#if isAdmin}}
         <button class="btn btn-primary deleteEvent">Delete</button>
@@ -17,7 +17,7 @@
         {{/unless}}
       {{/if}}
 
-      <small>{{status}}</small>
+      <small>{{eventStatus}}</small>
       
       {{#if attending}}
         <button class="btn btn-primary js-cancel-attend">Cancel</button>
@@ -28,33 +28,33 @@
     </div>
   </div>
   <div class="event-image">
-    <img class="flexible-image" src="{{image}}">
+    <img class="flexible-image" src="{{url}}">
   </div>
   <div class="event-info clearfix">
     <ul class="list">
-      <li><strong>Information:</strong> <p class="well">{{{description}}}</p></li>
+      <li><strong>Information:</strong> <p class="well">{{{info.description}}}</p></li>
       {{#if cost}}
         <li><strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.</li>
       {{/if}}
-      <li><strong>Date:</strong> {{formatDate date}}</li>
-      <li><strong>Time:</strong> {{time}}</li>
-      <li><strong>Where:</strong> {{location}}</li>
-      <li><strong>Slots left:</strong> <strong>{{slots}}</strong></li>
-      <li>{{#if tooLate}}
+      <li><strong>Date:</strong> {{formatDate info.date}}</li>
+      <li><strong>Where:</strong> {{info.location}}</li>
+      <li><strong>Slots left:</strong> <strong>{{info.slots}}</strong></li>
+      <li>
+        {{#if tooLate}}
           <strong>Who went: </strong>
         {{else}}
           <strong>Who's going: </strong>
         {{/if}}
-        {{#if members}}
+        {{#if members.length}}
           <br>
           {{#each members}}
-            <span class="label label-important">{{name}}</span>
+            <span class="label label-important">{{formatName this}}</span>
           {{/each}}
         {{else}}
           {{#if tooLate}}
             Nobody :( shame on y'all
           {{else}}
-          Nobody yet! It's your chance to sign up!
+            Nobody yet! It's your chance to sign up!
           {{/if}}
         {{/if}}
       </li>

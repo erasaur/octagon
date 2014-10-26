@@ -1,31 +1,49 @@
 Template.eventItem.helpers({
   eventStatus: function () {
-    // if logged in
-      // if attending
-        // if too late && finalized, return 'this event has been completed'
-        // if too late && not finalized, return 'sit tight while we distribute your points :)'
-        // else if not too late, return you are attending
-      // else
-        // if finalized, show this event has been completed
-        // else if too late, show this event is in process/has been completed
-        // else if no slots, show 'sorry, no more slots available!'
-    // else
-      // if too late
-        // if finalized, show completed
-        // else show in progress
-      // else show not started
+    var userId = Meteor.userId();
+    var tooLate = new Date() > this.info.date;
+    var finalized = this.finalized;
+    var attending = this.members && _.contains(this.members, userId);
+    var noSlots = this.slots === 0;
+
+    if (!userId) { // not logged in
+      if (tooLate)
+        return finalized ? 'Completed': 'In Progress';
+      else
+        return 'Not Started';
+    }
+    
+    // logged in
+    if (attending) {
+      if (tooLate)
+        return finalized ? 'This event has been completed': 'Sit tight while we distribute your points :)'
+      else
+        return 'You are attending.';
+    } 
+    else { // not attending
+      if (finalized)
+        return 'This event has been completed.';
+      else if (tooLate)
+        return 'This event is in process/has been completed';
+      else if (noSlots)
+        return 'Sorry, no more slots available!';
+    }
   },
-  // attendingEvent: function () {
-  //   return Events.find({$and: [{"id": this.id}, {"members.name": Meteor.user().profile.name}]}).count() > 0 ? true : false;
-  // },
-  // slotsLeft: function () {
-  //   return Events.findOne({"id": this.id}).slots > 0 ? true : false;
-  // },
+  canAttend: function () {
+    var attending = this.members && _.contains(this.members, Meteor.userId());
+    var slotsLeft = !!this.slots;
+    var tooLate = new Date() > this.info.date;
+
+    return !attending && slotsLeft && !tooLate;
+  },
+  attending: function () {
+    return this.members && _.contains(this.members, Meteor.userId());
+  },
   tooLate: function () {
     var now = new Date();
     return now > this.info.date;
   },
-  image: function () {
+  url: function () {
     var picture = Pictures.findOne(this.pictureId);
     return picture && picture.url;
   }
