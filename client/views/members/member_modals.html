@@ -5,10 +5,10 @@
       <button id="js-add-member" class="btn btn-primary">Add Member</button>
     </div>
   </div>
-  {{#autoForm collection="Logs" type="method" meteormethod="assignPoints"}}
+  {{#autoForm collection="Logs" id="addPointsForm" type="method" meteormethod="assignPoints"}}
     <div class="modal-body">
       {{> afQuickField name='members' id='js-members' type='textarea' rows='5'}}
-      {{> afQuickField name='points' placeholder='10'}}
+      {{> afQuickField name='points' placeholder='0'}}
       {{> afQuickField name='description' placeholder='Regular Meeting [9/26/2013]'}}
       {{> afQuickField name='isMeeting'}}
     </div>

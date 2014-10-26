@@ -17,6 +17,26 @@ Meteor.methods({
       'profile.name': { $regex: regex, $options: 'i' } 
     }, options).fetch();
   },
+  assignPoints: function (log) {
+    var user = Meteor.user();
+    var points = log.points || 0;
+    var meeting = log.isMeeting ? 1 : 0;
+    var members = Meteor.users.find({ 'profile.name': { $in: log.members } }).fetch();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    members = _.map(members, function (member) {
+      return member._id;
+    });
+    Meteor.users.update({ '_id': { $in: members } }, { 
+      $inc: { 'profile.points': points, 'profile.meetings': meeting }
+    });
+
+    // log has to contain _ids, not names
+    log.members = members;
+    Meteor.call('createLog', log);
+  },
   finalizeEvent: function (event, members) {
     var user = Meteor.user();
     var userId = Meteor.userId();

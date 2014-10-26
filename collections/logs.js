@@ -8,12 +8,14 @@ LogSchema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
+    optional: true,
     autoform: {
       omit: true
     }
   },
   userId: {
     type: String,
+    optional: true,
     autoform: {
       omit: true
     }

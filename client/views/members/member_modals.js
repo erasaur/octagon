@@ -31,7 +31,7 @@ Template.addPointsModal.events({
     if (members.val() === '')
       members.val(member.val());
     else {
-      members.val(function (_, current) {
+      members.val(function (index, current) {
         return current + ', ' + member.val();
       });
     }

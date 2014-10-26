@@ -74,6 +74,21 @@ AutoForm.hooks({
       else if (operation === 'update')
         alert(getError('update-post-success'));
     }
+  },
+  addPointsForm: {
+    onSuccess: function (insertDoc, updateDoc, currentDoc) {
+      alert(getError('points-success'));
+    },
+    docToForm: function (doc) {
+      if (_.isArray(doc.members))
+        doc.members = doc.members.join(', ');
+      return doc;
+    },
+    formToDoc: function (doc) {
+      if (typeof doc.members === 'string')
+        doc.members = doc.members.split(',');
+      return doc;
+    }
   }
 });
 
