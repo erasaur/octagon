@@ -47,7 +47,7 @@ Template.eventItem.helpers({
   },
   url: function () {
     var picture = Pictures.findOne(this.pictureId);
-    return picture && picture.url;
+    return picture && picture.url();
   }
 });
 

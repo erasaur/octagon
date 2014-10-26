@@ -11,6 +11,8 @@ Meteor.publish('events', function (limit) {
   publishWithRelations(this, Events.find({}, { limit: limit }), function (id, doc) {
     if (doc.members)
       this.cursor(Meteor.users.find({ '_id': { $in: doc.members } }, { fields: fields }));
+
+    this.cursor(Pictures.find(doc.pictureId));
   });
 
   return this.ready();

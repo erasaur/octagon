@@ -4,6 +4,7 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+limit number of pictures sent to admin page (pagination)
 consistent naming with modals and forms.. eg add is used for modals and new is used for forms
 test all forms, use hooks to show success/error not event handlers
 improve change password (use autoform)
