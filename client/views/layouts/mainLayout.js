@@ -9,5 +9,8 @@ Template.mainLayout.events({
   'submit form': function (event, template) {
     event.preventDefault();
     $('.modal').modal('hide');
+  },
+  'click .js-toggle-modal': function (event, template) {
+    displayModal(event.target.getAttribute('data-toggle'));
   }
 });

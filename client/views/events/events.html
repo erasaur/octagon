@@ -3,10 +3,10 @@
 		<h1>Events <small>Come check out our events! <i class="icon-smile"></i></small></h1>
 		<ul class="inline">
 		{{#if isAdmin}}
-			<li><a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="addEventModal">Add Event</a></li>
+			<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addEventModal">Add Event</a></li>
 		{{/if}}
 		{{#if currentUser}}
-			<li><a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="suggestEventModal">Suggest Event</a></li>
+			<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="suggestEventModal">Suggest Event</a></li>
 		{{/if}}
 		</ul>
 	</div>

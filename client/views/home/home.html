@@ -1,7 +1,7 @@
 <template name="homeHeader">
 	<h1>Home <small>Check here for news and updates!</small></h1>
-	{{#if officer}}
-		<a href="#" role="button" class="btn btn-primary" data-toggle="addPostModal">Add Post</a>
+	{{#if isAdmin}}
+		<a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPostModal">Add Post</a>
 	{{/if}}
 	{{#if pictures.count}}
 		<div id="homeCarousel" class="carousel slide">

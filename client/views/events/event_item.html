@@ -4,13 +4,13 @@
     <div class="float-right">      
       {{#if isAdmin}}
         <button class="btn btn-primary deleteEvent">Delete</button>
-        <a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="editEventModal">Edit</a>
-        <a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="addMemberModal">Add Member</a>
-        <a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="showEmailsModal">Show Emails</a>
+        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
+        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
+        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
 
         {{#unless finalized}}
           {{#if tooLate}}
-          <a href="#" role="button" class="btn btn-primary js-event-modal" data-toggle="finalizeEventModal">Finalize</a>
+          <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
           {{/if}}
         {{else}}
           <small>(Finalized)</small>
