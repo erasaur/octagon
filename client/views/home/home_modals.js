@@ -1,3 +1,9 @@
+Template.editPostModal.helpers({
+  currentPost: function () {
+    return Session.get('currentPost');
+  }
+})
+
 Template.editPostModal.events({
   'click #editPost': function (event, template) {
     var postID = formatID(template.find('#editID').value),

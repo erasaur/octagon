@@ -22,11 +22,11 @@ Template.home.events({
       errors = [];
 
     if(postID && postTitle && postContent && postDate) {
-      if(Posts.find({"id": postID}).count() > 0) {
-        errors.push("The post ID already exists.")
+      if(Posts.find({'id': postID}).count() > 0) {
+        errors.push('The post ID already exists.')
       }
     } else {
-      errors.push("Please fill in all of the fields!");
+      errors.push('Please fill in all of the fields!');
     }
 
     if(errors.length > 0) {
@@ -36,16 +36,15 @@ Template.home.events({
       errors = [];
     } else {
       Octagon.Posts.create(postID, postTitle, postDate, postContent);
-      alert("Success! Your post '" + postTitle + "' has been created.");
+      alert('Success! Your post ' + postTitle + ' has been created.');
       $('#addPostModal').modal('hide');
     }
   },
   'click .js-edit-post': function (event, template) {
     Session.set('currentPost', this);
-    displayModal(event.target.getAttribute('data-toggle'));
   },
   'click .js-delete-post': function () {
-    if(confirm("Are you sure you want to delete '" + this.title + "'?")) {
+    if(confirm('Are you sure you want to delete '' + this.title + ''?')) {
       Octagon.Posts.delete(this._id);
       $('#editPostModal').modal('hide');
     }

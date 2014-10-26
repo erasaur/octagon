@@ -52,9 +52,8 @@ Template.eventItem.helpers({
 });
 
 Template.eventItem.events({
-  'click .js-event-modal': function (event, template) {
+  'click .js-toggle-modal': function (event, template) {
     Session.set('currentEvent', this);
-    displayModal(event.target.getAttribute('data-toggle'));
   },
   'click .js-cancel-attend': function () {
     Meteor.call('unattendEvent', this._id);
