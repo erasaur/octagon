@@ -67,6 +67,34 @@ Schema.User = new SimpleSchema({
   }
 });
 
+// non-collection schema used for signupForm only
+SignupSchema = new SimpleSchema({
+  name: {
+    type: String,
+    label: 'Full Name',
+    min: 3
+  },
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email,
+    label: 'Email'
+  },
+  password: {
+    type: String,
+    label: 'Enter password',
+    min: 6
+  },
+  repeatPassword: {
+    type: String,
+    label: 'Repeat password',
+    min: 6,
+    custom: function () {
+      if (this.value !== this.field('password').value)
+        return 'passwordMismatch';
+    }
+  }
+});
+
 // non-collection schema used for changePassForm only
 ChangePassSchema = new SimpleSchema({
   password: {

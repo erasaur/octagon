@@ -1,0 +1,14 @@
+<template name="signupModal">
+  {{#autoForm schema="SignupSchema" id="signupForm" type="method" meteormethod="signup"}}
+    <div class="modal-body">
+      {{> afQuickField name="name" type="text" placeholder="Bob Ross"}}
+      {{> afQuickField name="email" type="email" placeholder="joy@painting.com"}}
+      {{> afQuickField name="password" type="password" placeholder="A mighty password here"}}
+      {{> afQuickField name="repeatPassword" type="password" placeholder="This doesn't match? Just a happy accident"}}
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+  {{/autoForm}}
+</template>

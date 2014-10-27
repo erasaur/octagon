@@ -44,13 +44,7 @@ Template.addStrikesModal.helpers({
 });
 
 Template.addStrikesModal.events({
-  'click #js-add-member': addMember,
-  // 'click #js-add-strikes': function (event, template) {
-  //   var members = template.$('#js-members').value;
-
-  //   members = members
-  //   Meteor.call('assignStrikes', )
-  // }
+  'click #js-add-member': addMember
 });
 
 // end add strikes modal -----------------------------

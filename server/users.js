@@ -17,30 +17,15 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Meteor.methods({
-  signup: function (name, email, password, rpassword) {
-    var name = stripHTML(name);
-    var email = stripHTML(email);
-
-    if (!name.trim())
-      throw new Meteor.Error('invalid-name', getError('invalid-name'));
-
-    if (!email.trim())
-      throw new Meteor.Error('invalid-email', getError('invalid-email'));
-
-    if (Meteor.users.find({ 'profile.name': name }).count() > 0)
+  signup: function (user) {
+    if (Meteor.users.findOne({ 'profile.name': user.name }))
       throw new Meteor.Error('duplicate-name', getError('duplicate-name'));
-
-    if (password.length < 6)
-      throw new Meteor.Error('weak-password', getError('weak-password'));
-
-    if (password !== rpassword)
-      throw new Meteor.Error('password-mismatch', getError('password-mismatch'));
-
+    
     Accounts.createUser({
-      'email': email, 
-      'password': password,
+      'email': user.email, 
+      'password': user.password,
       'profile': {
-        'name': name
+        'name': user.name
       }
     });
   },

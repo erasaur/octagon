@@ -15,10 +15,15 @@ AutoForm.hooks({
       var file = new FS.File(file);
       file.metadata = metadata;
 
-      if (callMethodWithFile.call(this, 'createEvent', file, insertDoc)) {
-        alert(getError('event-success'));  
-        onSuccessCallback();
-      }
+      callMethodWithFile.call(self, 'createEvent', file, insertDoc, function (error) {
+        if (error)
+          alert(error.reason);
+        else {
+          alert(getError('event-success'));  
+          onSuccessCallback.call(self);
+        }
+        self.done();
+      });
     }
   },
   editEventForm: {
@@ -34,14 +39,13 @@ AutoForm.hooks({
       if (typeof file === 'undefined') {
         Meteor.call('updateEvent', currentDoc, function (error) {
           if (error)
-            console.log(error);
+            alert(error.reason);
           else {
             alert(getError('update-event-success'));
-            onSuccessCallback();
+            onSuccessCallback.call(self);
           }
+          self.done();
         });
-        self.done();
-        self.resetForm();
       } else {
         var metadata = {
           caption: insertDoc.info && insertDoc.info.name || '',
@@ -54,10 +58,15 @@ AutoForm.hooks({
         var file = new FS.File(file);
         file.metadata = metadata;
         
-        if (callMethodWithFile.call(this, 'updateEvent', file, currentDoc)) {
-          alert(getError('update-event-success'));
-          onSuccessCallback();
-        }
+        callMethodWithFile.call(self, 'updateEvent', file, currentDoc, function (error) {
+          if (error)
+            alert(error.reason);
+          else {
+            alert(getError('update-event-success'));  
+            onSuccessCallback.call(self);
+          }
+          self.done();
+        });
       }
     }
   },
@@ -93,39 +102,42 @@ AutoForm.hooks({
     onSuccess: function (insertDoc, updateDoc, currentDoc) {
       alert(getError('password-success'));
     }
+  },
+  signupForm: {
+    onError: function (method, error, template) {
+      alert(error.reason);
+    },
+    onSuccess: function (insertDoc, updateDoc, currentDoc) {
+      alert(getError('account-success'));
+    }
   }
 });
 
 // for all forms except onSubmit forms
 AutoForm.addHooks(null, { 
-  onSuccess: onSuccessCallback
+  onSuccess: function () {
+    onSuccessCallback.call(this);
+  }
 });
 
 function onSuccessCallback () {
   $('.modal').modal('hide');
+  this.resetForm(); // don't reset form on failure
 }
 
-function callMethodWithFile (method, fsFile, doc) {
+function callMethodWithFile (method, fsFile, doc, callback) {
   var self = this;
 
   Pictures.insert(fsFile, function (error, file) {
-    if (error) {
-      console.log(error.reason);
-      return false;
-    } 
+    if (error)
+      callback(error);
     else {
       doc.pictureId = file._id;
       Meteor.call(method, doc, function (error) {
-        if (error) {
-          console.log(error.reason);
-          return false;
-        }
+        callback(error);
       });
     }
   });
-  self.done();
-  self.resetForm();
-  return true;
 }
 
 function docToForm (doc) {
