@@ -53,29 +53,17 @@ Template.showEmailsModal.helpers({
 
 // add member modal ----------------------------------
 
-Template.addMemberModal.rendered = function () {
-  Meteor.typeahead($('#js-member'));
-};
+Template.addMemberModal.rendered = initTypeahead;
 
 Template.addMemberModal.helpers({
-  search: function (query, callback) {
-    Meteor.call('search', query, { fields: { 'profile.name': 1 } }, function (error, result) {
-      if (error) {
-        console.log(error.reason);
-        return;
-      }
-      callback(result.map(function (v) { 
-        return { value: v.profile.name }; 
-      }));
-    });
-  }
+  search: search
 });
 
 Template.addMemberModal.events({
   'submit form': function (event, template) {
     event.preventDefault();
     var eventId = Session.get('currentEvent')._id;
-    var member = template.find('#js-member').value;
+    var member = template.find('#js-typeahead').value;
 
     Meteor.call('addEventMember', eventId, member, function (error) {
       if (error)

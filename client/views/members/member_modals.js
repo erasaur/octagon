@@ -4,28 +4,16 @@ Template.showAllEmailsModal.helpers({
   }
 });
 
-Template.addPointsModal.rendered = function () {
-  Meteor.typeahead($('#js-member'));
-};
+Template.addPointsModal.rendered = initTypeahead;
 
 // use server-side search so we can limit user publication in future
 Template.addPointsModal.helpers({
-  search: function (query, callback) {
-    Meteor.call('search', query, { fields: { 'profile.name': 1 } }, function (error, result) {
-      if (error) {
-        console.log(error.reason);
-        return;
-      }
-      callback(result.map(function (v) { 
-        return { value: v.profile.name }; 
-      }));
-    });
-  }
+  search: search
 });
 
 Template.addPointsModal.events({
   'click #js-add-member': function (event, template) {
-    var member = template.$('#js-member');
+    var member = template.$('#js-typeahead');
     var members = template.$('#js-members');
 
     if (members.val() === '')
@@ -37,4 +25,10 @@ Template.addPointsModal.events({
     }
     member.val('');
   }
+});
+
+Template.addStrikesModal.rendered = initTypeahead;
+
+Template.addStrikesModal.helpers({
+  search: search
 });
