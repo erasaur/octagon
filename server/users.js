@@ -51,6 +51,10 @@ Meteor.methods({
     if (!user || !canRemoveById(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
+    // don't let the last admin commit suicide
+    if (Meteor.users.find({ 'isAdmin': true }).count() === 1)
+      throw new Meteor.Error('cannot-delete', getError('cannot-delete'));
+
     Meteor.users.remove(user);
   },
   changePass: function (password) {
