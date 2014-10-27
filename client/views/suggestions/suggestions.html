@@ -1,47 +1,25 @@
 <template name="suggestions">
 	{{#contentFor "pageHeader"}}
 		<h1>Pending Events <small>Events suggested by members</small></h1>
-		<a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a>
+		<a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="fa fa-chevron-left"></i></a>
 	{{/contentFor}}
 
-	{{#if pending.count}}
-		{{#each pending}}
-			<div class="post-header">
-				<h3>{{name}} <small>Suggested on {{formatDate createdAt}}</small>
-					<div class="float-right">
-						{{#if approved}}
-							<small class="text-success">Approved!</small>
-							<button class="btn btn-primary js-reset">Un-Approve</button>
-						{{else}}
-							{{#if rejected}}
-								<small class="text-error">Rejected...</small>
-								<button class="btn btn-primary js-reset">Un-Reject</button>
-							{{else}}
-								<button class="btn btn-primary js-approve">Approve</button>
-								<button class="btn btn-primary js-reject">Reject</button>
-							{{/if}}
-						{{/if}}
-						<button class="btn btn-primary js-delete">Delete</button>
-					</div>
-				</h3>
+	<div class="page-body">
+		<div class="list">
+		{{#if pending.count}}
+			{{#each pending}}
+				{{> suggestItem}}
+			{{/each}}
+		{{else}}
+			<div class="list-item">
+				<div class="list-item-header">
+					<h3>Oops!</h3>
+				</div>
+				<div class="list-item-body">
+					There currently are no suggested events on the server.
+				</div>
 			</div>
-			<div class="post-content">
-				<ul class="list">
-					<li class="markdown"><strong>Description:</strong> {{{description}}}</li>
-					<li><strong>Date:</strong> {{formatDate date}}</li>
-					<li><strong>Location:</strong> {{location}}</li>
-					<li><strong>Cost:</strong> ${{cost}}</li>
-					<li><strong>Contact:</strong> {{contact}}</li>
-					<li><strong>Suggested by:</strong> {{formatName userId}}</li>
- 				</ul>
-			</div>
-		{{/each}}
-	{{else}}
-		<div class="post-header">
-			<h3>Oops!</h3>
+		{{/if}}
 		</div>
-		<div class="post-content">
-			There currently are no suggested events on the server.
-		</div>
-	{{/if}}
+	</div>
 </template>

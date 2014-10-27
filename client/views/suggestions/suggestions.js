@@ -1,7 +1,10 @@
 Template.suggestions.helpers({
   pending: function () {  
     return Suggests.find();
-  },
+  }
+});
+
+Template.suggestItem.helpers({
   approved: function () {
     return this.status === 'approved';
   },
@@ -10,7 +13,7 @@ Template.suggestions.helpers({
   }
 });
 
-Template.suggestions.events({
+Template.suggestItem.events({
   'click .js-approve': function () {
     Meteor.call('approveSuggestion', this, function (error) {
       if (error)

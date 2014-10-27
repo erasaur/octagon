@@ -1,0 +1,49 @@
+<template name="suggestItem">
+  <div class="list-item">
+    <div class="list-item-header clearfix">
+      <div class="list-item-info">
+        <h3>{{name}} <small>Suggested on {{formatDate createdAt}}</small></h3>
+      </div>
+      <div class="list-item-action">
+        <button class="btn btn-default dropdown">
+          <a data-toggle="dropdown" href="#">
+            <span>({{status}})</span> <i class="fa fa-bars"></i>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            {{#if approved}}
+              <li role="presentation">
+                <a class="js-reset" role="menuitem" tabindex="-1" href="#">Un-Approve</a>
+              </li>
+            {{else}}
+              {{#if rejected}}
+                <li role="presentation">
+                  <a class="js-reset" role="menuitem" tabindex="-1" href="#">Un-Reject</a>
+                </li>
+              {{else}}
+                <li role="presentation">
+                  <a class="js-approve" role="menuitem" tabindex="-1" href="#">Approve</a>
+                </li>
+                <li role="presentation">
+                  <a class="js-reject" role="menuitem" tabindex="-1" href="#">Reject</a>
+                </li>
+              {{/if}}
+            {{/if}}
+            <li role="presentation">
+              <a class="js-delete" role="menuitem" tabindex="-1" href="#">Delete</a>
+            </li>
+          </ul>
+        </button>
+      </div>
+    </div>
+    <div class="list-item-body">
+      <ul class="list">
+        <li class="markdown"><strong>Description:</strong> {{{description}}}</li>
+        <li><strong>Date:</strong> {{formatDate date}}</li>
+        <li><strong>Location:</strong> {{location}}</li>
+        <li><strong>Cost:</strong> ${{cost}}</li>
+        <li><strong>Contact:</strong> {{contact}}</li>
+        <li><strong>Suggested by:</strong> {{formatName userId}}</li>
+      </ul>
+    </div>
+  </div>
+</template>
