@@ -9,10 +9,10 @@
     {{/if}}
     
     {{#if isAdmin}}
-      <span class="dropdown">
-        <a data-toggle="dropdown" href="#">
-          <button class="btn btn-primary"><i class="fa fa-bars"></i></button>
-        </a>
+      <div class="dropdown">
+        <button class="btn btn-default" data-toggle="dropdown" href="#">
+          <i class="fa fa-bars"></i>
+        </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li role="presentation">
             <a class="js-delete-event" role="menuitem" tabindex="-1" href="#">Delete</a>
@@ -36,7 +36,7 @@
             </li>
           {{/if}}
         </ul>
-      </span>
+      </div>
     {{/if}}
     {{#if canCancel}}
       <button class="btn btn-primary js-cancel-attend">Cancel</button>
