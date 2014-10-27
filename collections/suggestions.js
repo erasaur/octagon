@@ -114,10 +114,10 @@ Meteor.methods({
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     Suggests.update(suggestId, { $set: { 'status': 'rejected' } });
-    Meteor.users.update(userId, { $inc: { 
-      'profile.points': -POINTS_PER_SUGGEST, 
-      'profile.suggests': -1
-    } });
+    // Meteor.users.update(userId, { $inc: { 
+    //   'profile.points': -POINTS_PER_SUGGEST, 
+    //   'profile.suggests': -1
+    // } });
   },
   resetSuggestion: function (suggestion) {
     var user = Meteor.user();

@@ -2,12 +2,12 @@
 	{{#contentFor "pageHeader"}}	
 		<h1>Manage Pictures <small>at an exhibition</small></h1>
 		<ul class="inline">
-			<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
-			<li><a href="#addPictureModal" role="button" class="btn btn-primary" data-toggle="modal">Add Picture</a></li>
+			<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="fa fa-chevron-left"></i></a></li>
+			<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPictureModal">Add Picture</a></li>
 		</ul>
 	{{/contentFor}}
 
-	<div class="content">
+	<div class="page-body">	
 		{{#each pictures}}
 			<div class="thumbnails">
 				<div class="thumbnail well clearfix">
@@ -36,78 +36,13 @@
 		{{/each}}
 
 		{{#unless pictures.count}}
-			<div class="post-content">
-				There currently are no pictures on the server.
+			<div class="list">
+				<div class="list-item">
+					<div class="list-item-body">
+					There currently are no pictures on the server.
+					</div>
+				</div>
 			</div>
 		{{/unless}}
-	</div>
-	<!-- display all pictures, and currently selected as featured -->
-
-	<div id="addPictureModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-    	<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="modalLabel">Add Picture</h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="control-group">
-							<label class="control-label" for="picture">Picture</label>
-							<div class="controls">
-								<input type="file" id="js-create-picture">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="featured">Show on front page?</label>
-							<div class="controls">
-								<input type="checkbox" id="js-create-featured">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="caption">Caption</label>
-							<div class="controls">
-								<textarea id="js-create-caption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-					<button class="btn btn-primary" id="js-create">Add</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="editPictureModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-    	<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="modalLabel">Edit Picture</h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="control-group">
-							<label class="control-label" for="featured">Show on front page?</label>
-							<div class="controls">
-								<input type="checkbox" id="js-edit-featured">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="caption">Caption</label>
-							<div class="controls">
-								<textarea id="js-edit-caption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-					<button class="btn btn-primary" id="js-edit">Save</button>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>

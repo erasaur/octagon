@@ -114,6 +114,44 @@ AutoForm.hooks({
     onSuccess: function (insertDoc, updateDoc, currentDoc) {
       alert(getError('account-success'));
     }
+  },
+  addPictureForm: {
+    onSubmit: function (insertDoc, updateDoc, currentDoc) {
+      var self = this;
+      self.event.preventDefault();
+
+      var user = Meteor.user();
+      var file = self.template.find('#js-create-picture').files[0];
+      var caption = insertDoc.caption;
+      var featured = insertDoc.featured;
+
+      if (!user || !isAdmin(user))
+        return alert(getError('no-permission'));
+
+      if (!stripHTML(caption))
+        return alert(getError('no-caption'));
+
+      if (typeof file === 'undefined')
+        return alert(getError('no-picture'));
+
+      var metadata = {
+        caption: caption,
+        featured: featured
+      };
+
+      var file = new FS.File(file);
+      file.metadata = metadata;
+
+      Pictures.insert(file, function (error, file) {
+        if (error) 
+          alert(error.reason);
+        else {
+          alert(getError('picture-success'));
+          onSuccessCallback.call(self);
+        }
+        self.done();
+      });
+    }
   }
 });
 

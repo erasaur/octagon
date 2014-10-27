@@ -7,38 +7,6 @@ Template.pictures.helpers({
 });
 
 Template.pictures.events({
-  'click #js-create': function (event, template) {
-    var user = Meteor.user();
-    var file = template.find('#js-create-picture').files[0];
-    var caption = template.find('#js-create-caption').value;
-    var featured = template.find('#js-create-featured').checked;
-    
-    if (!user || !isAdmin(user))
-      return alert(getError('no-permission'));
-
-    if (!stripHTML(caption))
-      return alert(getError('no-caption'));
-
-    if (typeof file === 'undefined')
-      return alert(getError('no-picture'));
-
-    var metadata = {
-      caption: caption,
-      featured: featured
-    };
-
-    var file = new FS.File(file);
-    file.metadata = metadata;
-
-    Pictures.insert(file, function (error, file) {
-      if (error) 
-        alert(error.reason);
-      else {
-        alert(getError('picture-success'));
-        template.$('#addPictureModal').modal('hide');
-      }
-    });
-  },
   'click .js-btn-edit-picture': function (event, template) {
     currentPicture = this._id;
 

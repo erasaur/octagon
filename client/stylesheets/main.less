@@ -10,6 +10,9 @@ body {
 }
 a {
 	color: @primary-color;
+}
+a, 
+button {
 	outline: none !important;
 	text-decoration: none !important;
 }
@@ -80,13 +83,9 @@ tr.info > th {
 	float: left;
 	margin-right: @main-padding;
 	width: @event-image-width;
-	// height: @event-image-height;
-
-	img {
-		width: 100%;
-		// max-width: calc(~'@{event-image-width}');
-		// max-height: @event-image-height;
-	}
+}
+.event-image img {
+	width: 100%;
 }
 .event-info {
 	display: block;
@@ -101,8 +100,16 @@ th.dropdown {
 	text-align: right;
 }
 
-
-
+.login-form {
+	padding: @main-padding / 2;
+	width: 200px;
+}
+.login-form input {
+	margin-bottom: 5px;
+}
+.login-form .login-submit {
+	width: 100%;
+}
 
 
 

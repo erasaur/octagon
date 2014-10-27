@@ -10,3 +10,16 @@ Pictures.allow({
     return true;
   }
 });
+
+// for addPictureForm only
+PictureSchema = new SimpleSchema({
+  featured: {
+    type: Boolean,
+    defaultValue: false,
+    label: 'Featured?'
+  },
+  caption: {
+    type: String,
+    label: 'Caption'
+  }
+});

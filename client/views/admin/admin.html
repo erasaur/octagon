@@ -3,51 +3,62 @@
 		<h1>Admin <small>Administrative Menus</small></h1>
 	{{/contentFor}}
 
-	<div class="post-header">
-		<h3>Manage Members 
-			<div class="float-right">
-				<a class="btn btn-primary" href="{{pathFor 'members'}}" id="managePictures">Manage Members</a>
+	<div class="page-body">
+		<div class="list">
+			<div class="list-item">
+				<div class="list-item-header clearfix">
+					<div class="list-item-info">
+						<h3>Manage Members</h3>
+					</div>
+					<div class="list-item-action">
+						<a class="btn btn-primary" href="{{pathFor 'members'}}">Manage Members</a>
+					</div>
+				</div>
+				<div class="list-item-body">
+					<p>
+					 This administrative panel is used for granting arbitrary amounts of points to members.
+					</p>
+					<p>
+					Use this for assigning points for meeting attendance, social attendance, etc.
+					</p>
+				</div>
 			</div>
-		</h3>
-	</div>
-	<div class="post-content">
-		<p>
-		 This administrative panel is used for adding an arbitrary amount of points to members.
-		</p>
-		<p>
-		Use this for adding points for meeting attendance, social attendance, etc.
-		</p>
-	</div>
-
-	<div class="post-header">
-		<h3>Manage Pictures 
-			<div class="float-right">
-				<a class="btn btn-primary" href="{{pathFor 'pictures'}}" id="managePictures">Manage Pictures</a>
+			<div class="list-item">
+				<div class="list-item-header clearfix">
+					<div class="list-item-info">
+						<h3>Manage Pictures</h3>
+					</div>
+					<div class="list-item-action">
+						<a class="btn btn-primary" href="{{pathFor 'pictures'}}">Manage Pictures</a>
+					</div>
+				</div>
+				<div class="list-item-body">
+					<p>
+						This administrative panel is used for managing all pictures uploaded to the system, as well as set certain pictures to be "featured" images on the front page carousel.
+					</p>
+					<p>
+						Pictures uploaded via event creation can also be managed in the same panel. <strong>Note: </strong>Be careful not to delete pictures that are being shown elsewhere.
+					</p>
+				</div>
 			</div>
-		</h3>
-	</div>
-	<div class="post-content">
-		<p>
-			Clicking the button above will access the administrative panel in which you can view all pictures uploaded to the system, as well as set certain pictures to be "featured" images on the front page carousel.
-		</p>
-		<p>
-			Pictures uploaded via event creation can also be managed in the same panel.
-		</p>
-	</div>
-	
-	<div class="post-header">
-		<h3>Manage Suggestions 
-			<div class="float-right">
-				<a class="btn btn-primary" href="{{pathFor 'suggestions'}}" id="eventSuggestions">Event Suggestions</a>
+			<div class="list-item">
+				<div class="list-item-header clearfix">
+					<div class="list-item-info">
+						<h3>Manage Suggestions</h3>
+					</div>
+					<div class="list-item-action">
+						<a class="btn btn-primary" href="{{pathFor 'suggestions'}}">Manage Event Suggestions</a>
+					</div>
+				</div>
+				<div class="list-item-body">
+					<p>
+						This administrative panel is used for reviewing pending event suggestions. You have the option to approve pending suggestions, reject pending suggestions, and delete suggestions from the server.
+					</p>
+					<p>
+						Approving suggestions will automatically grant the suggesting user points, but resetting or rejecting suggestions will not subtract from their points.
+					</p>
+				</div>
 			</div>
-		</h3>
-	</div>
-	<div class="post-content">
-		<p>
-			Clicking the button above will access the administrative panel in which you can view pending event suggestions, approve pending suggestions, reject pending suggestions, and delete suggestions from the server.
-		</p>
-		<p>
-			Approving suggestions will automatically grant the suggesting user points, but rejecting suggestions will NOT subtract from their points. Besides this caveat, all actions made on this page are reversable.
-		</p>
+		</div>
 	</div>
 </template>

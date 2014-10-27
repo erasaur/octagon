@@ -1,0 +1,39 @@
+<template name="addPictureModal">
+  {{#autoForm schema="PictureSchema" id="addPictureForm"}}
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="control-label" for="js-create-picture">Picture</label>
+        <input type="file" id="js-create-picture">
+      </div>
+      {{> afQuickField name="featured"}}
+      {{> afQuickField name="caption" placeholder="A Polish cart on enormous wheels, drawn by oxen."}}
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button class="btn btn-primary" id="js-create">Add</button>
+    </div>
+  {{/autoForm}}
+</template>
+
+<template name="editPictureModal">
+  <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="featured">Show on front page?</label>
+        <div class="controls">
+          <input type="checkbox" id="js-edit-featured">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="caption">Caption</label>
+        <div class="controls">
+          <textarea id="js-edit-caption" placeholder="'A Polish cart on enormous wheels, drawn by oxen.'"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    <button class="btn btn-primary" id="js-edit">Save</button>
+  </div>
+</template>
