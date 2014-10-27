@@ -1,4 +1,4 @@
 Meteor.publish('suggests', function () {
-  if (isAdminById(this.userId))
+  if (this.userId && isAdminById(this.userId))
     return Suggests.find();
 });

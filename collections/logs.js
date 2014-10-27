@@ -82,15 +82,5 @@ Meteor.methods({
     check(log, LogSchema);
 
     return Logs.insert(log);
-  },
-  clearLog: function () {
-    var user = Meteor.user();
-    var userId = this.userId;
-
-    if (!user || !isAdmin(user))
-      throw new Meteor.Error('no-permission', getError('no-permission'));
-
-    if (!this.isSimulation)
-      Logs.remove();
   }
 });

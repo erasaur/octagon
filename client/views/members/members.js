@@ -8,8 +8,8 @@ Template.members.helpers({
 });
 
 Template.members.events({
-  'click #clearLog': function () {
-    if (confirm('Are you sure you want to clear the log?')) {
+  'click #js-clear-log': function () {
+    if (confirm(getError('confirm-clear-log'))) {
       Meteor.call('clearLog', function (error) {
         if (error)
           alert(error.reason)

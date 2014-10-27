@@ -141,5 +141,14 @@ Meteor.methods({
       throw new Meteor.Error('event-full', getError('event-full'));
 
     Events.update(eventId, { $addToSet: { 'members': user._id }, $inc: { 'info.slots': -1 } });
+  },
+  clearLog: function () {
+    var user = Meteor.user();
+    var userId = this.userId;
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Logs.remove({});
   }
 });

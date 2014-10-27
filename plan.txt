@@ -4,6 +4,7 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+remove useless helper functions (permissions has a few)
 remove stuff like console logs and collectionfs debugging
 quickform templates
 use schema errors
