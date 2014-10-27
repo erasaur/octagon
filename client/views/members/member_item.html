@@ -6,7 +6,12 @@
       <th>Strikes</th>
       {{#if isAdmin}}
         <th>Email</th>
-        <th><button class="btn btn-primary btn-mini js-delete-user float-right">Delete User</button></th>
+        
+        {{#unless this.isAdmin}}
+          <th><button class="btn btn-primary js-promote-user float-right">Make Admin</button></th>
+        {{/unless}}
+
+        <th><button class="btn btn-primary js-delete-user float-right">Delete User</button></th>
       {{/if}}
     </tr>
     <tr>

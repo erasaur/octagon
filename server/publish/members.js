@@ -1,5 +1,5 @@
 Meteor.publish('members', function () {
-  var fields = { 'profile': 1 };
+  var fields = { 'profile': 1, 'isAdmin': 1 };
   
   if (this.userId && isAdminById(this.userId))
     fields.emails = 1;

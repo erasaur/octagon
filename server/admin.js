@@ -48,6 +48,20 @@ Meteor.methods({
       $inc: { 'profile.strikes': 1 }
     });
   },
+  promoteUser: function (user) {
+    var currentUser = Meteor.user();
+    var userId = user._id;
+
+    if (!currentUser || !isAdmin(currentUser))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    if (user.isAdmin)
+      throw new Meteor.Error('already-admin', getError('already-admin'));
+
+    Meteor.users.update(userId, {
+      $set: { 'isAdmin': true }
+    });
+  },
   finalizeEvent: function (event, members) {
     var user = Meteor.user();
     var userId = Meteor.userId();
