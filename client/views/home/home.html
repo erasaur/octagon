@@ -3,65 +3,38 @@
 	{{#if isAdmin}}
 		<a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPostModal">Add Post</a>
 	{{/if}}
-
-	<div id="home-carousel" class="carousel slide clearfix" data-ride="carousel">
-		<ol class="carousel-indicators">
-			{{#each pictures}}
-   			<li data-target="#home-carousel" data-slide-to="{{index}}" class="active"></li>
-    	{{/each}}
-		</ol>
-  	<!-- Carousel items -->
-  	<div class="carousel-inner">
-  		{{#each pictures}}
-	    	<div class="item {{isActive}}">
-	    		<img src="{{url}}" alt="{{metadata.caption}}">
-	    		<div class="carousel-caption">
-	    			{{metadata.caption}}
-	    		</div>
-	    	</div>
-    	{{/each}}
-	 	 </div>
-  	<!-- Carousel nav -->
-  	<a class="carousel-control left" href="#home-carousel" role="button" data-slide="prev">
-  		<span class="glyphicon glyphicon-chevron-left"></span>
-  	</a>
-  	<a class="carousel-control right" href="#home-carousel" role="button" data-slide="next">
-  		 <span class="glyphicon glyphicon-chevron-right"></span>
-  	</a>
-	</div>
 </template>
 
 <template name="home">
 	{{> contentFor region="pageHeader" template="homeHeader"}}
 
-	{{#each posts}}
-		<div class="post-header">
-			<h3>{{title}} <small>{{date}}</small></h3>
-			{{#if isAdmin}}
-				<div class="float-right">
-					<a href="#" role="button" class="btn btn-primary js-toggle-modal js-edit-post" data-toggle="editPostModal">Edit Post</a>
-					<a class="btn btn-primary js-delete-post">Delete</a>
-				</div>
-			{{/if}}
-		</div>
-		<div class="post-content markdown">
-			{{{content}}}
-		</div>
-	{{/each}}
+  {{> homeCarousel}}
 
-	{{#unless posts.count}}
-		<div class="post-header">
-			<h3>Oops!</h3>
-		</div>
-		<div class="post-content">
-			There currently are no posts on the server.
-		</div>
-	{{/unless}}
+  <div class="page-content">
+    <div class="list">
+    	{{#each posts}}
+        {{> postItem}}
+    	{{/each}}
 
-	<div class="post-header">
-		<h3>Forms</h3>
-	</div>
-	<div class="post-content"> 
-		<a class="btn" href="https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target="_blank">JOOI Membership &amp; Liability Forms</a>
-	</div>
+    	{{#unless posts.count}}
+        <div class="list-item">
+      		<div class="list-item-header">
+      			<h3>Oops!</h3>
+      		</div>
+      		<div class="list-item-body">
+      			There currently are no posts on the server.
+      		</div>
+        </div>
+    	{{/unless}}
+
+      <div class="list-item">
+      	<div class="list-item-header">
+      		<h3>Forms</h3>
+      	</div>
+      	<div class="list-item-body"> 
+      		<a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target="_blank">JOOI Membership &amp; Liability Forms</a>
+      	</div>
+      </div>
+    </div>
+  </div>
 </template>
