@@ -67,8 +67,7 @@ Meteor.methods({
     });
   },
   changePass: function (password) {
-    console.log(password);
-    // Accounts.setPassword(id, password);
+    Accounts.setPassword(Meteor.userId(), password);
   },
   attendEvent: function (eventId) {
     var user = Meteor.user();
