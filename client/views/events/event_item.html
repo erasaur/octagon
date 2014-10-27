@@ -1,32 +1,38 @@
 <template name="eventItemHeader">
-  <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
-  {{#if isAdmin}}
-    <button class="btn btn-primary deleteEvent">Delete</button>
-    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
-    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
-    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
+  <div class="list-item-info">
+    <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
+    {{#if isAdmin}}
+      <button class="btn btn-primary deleteEvent">Delete</button>
+      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
+      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
+      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
 
-    {{#if canFinalize}}
-      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
+      {{#if canFinalize}}
+        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
+      {{/if}}
+      {{#if finalized}}
+        <small>(Finalized)</small>
+      {{/if}}
     {{/if}}
-    {{#if finalized}}
-      <small>(Finalized)</small>
-    {{/if}}
-  {{/if}}
+  </div>
 
-  <small>{{eventStatus}}</small>
-  
-  {{#if canCancel}}
-    <button class="btn btn-primary js-cancel-attend">Cancel</button>
-  {{/if}}
-  {{#if canAttend}}
-    <button class="btn btn-primary js-attend">I'm Going!</button>
-  {{/if}}
+  <div class="list-item-action">
+    {{#if eventStatus}}
+      <small>{{eventStatus}}</small>
+    {{/if}}
+    
+    {{#if canCancel}}
+      <button class="btn btn-primary js-cancel-attend">Cancel</button>
+    {{/if}}
+    {{#if canAttend}}
+      <button class="btn btn-primary js-attend">I'm Going!</button>
+    {{/if}}
+  </div>
 </template>
 
 <template name="eventItem">
   <div class="list-item">
-    <div class="list-item-header">
+    <div class="list-item-header clearfix">
       {{> eventItemHeader this}}
     </div>
     <div class="list-item-body">
@@ -35,10 +41,16 @@
       </div>
       <div class="event-info clearfix">
         <ul class="list">
-          <li><strong>Information:</strong> <div class="well markdown">{{{info.description}}}</div></li>
+          <li class="list-item">
+            <strong>Information:</strong> <div class="well markdown">{{{info.description}}}</div>
+          </li>
+
           {{#if cost}}
-            <li><strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.</li>
+            <li>
+              <strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.
+            </li>
           {{/if}}
+
           <li><strong>Date:</strong> {{formatDate info.date}}</li>
           <li><strong>Where:</strong> {{info.location}}</li>
           <li><strong>Slots left:</strong> <strong>{{info.slots}}</strong></li>

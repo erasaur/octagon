@@ -21,6 +21,15 @@ h1, h2, h3 {
 .list-item-header {
 	border-bottom: 1px solid @gray-color;
 }
+.list-item-info {
+	float: left;
+	// width: 80%;
+}
+.list-item-action {
+	float: right;
+	position: relative;
+	top: 15px;
+}
 .list-item-body {
 	padding: @main-padding 0;
 }
@@ -43,3 +52,34 @@ h1, h2, h3 {
 	border-radius: 0 0 @main-radius @main-radius;
 	.box-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
 }
+
+.event-image {
+	float: left;
+	margin-right: @main-padding;
+	width: @event-image-width;
+	// height: @event-image-height;
+
+	img {
+		width: 100%;
+		// max-width: calc(~'@{event-image-width}');
+		// max-height: @event-image-height;
+	}
+}
+.event-info {
+	display: block;
+	margin-left: calc(~'@{event-image-width} + @{main-padding}');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
