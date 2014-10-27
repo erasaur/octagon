@@ -1,9 +1,11 @@
+<template name="profileHeader">
+	<h1>{{formatName _id}} <small>Checkin' out your own profile</small></h1>
+	<a href="#" class="btn btn-primary js-toggle-modal" data-toggle="changePassModal">Change Password</a>
+	<button class="btn btn-primary" id="js-delete-account">Delete Account</button>
+</template>
+
 <template name="profile">
-	{{#contentFor "pageHeader"}}
-		<h1>{{formatName _id}} <small>Checkin' out your own profile</small></h1>
-		<a href="#" class="btn btn-primary js-toggle-modal" data-toggle="changePassModal">Change Password</a>
-		<button class="btn btn-primary" id="js-delete-account">Delete Account</button>
-	{{/contentFor}}
+	{{> contentFor region="pageHeader" template="profileHeader"}}
 
 	<ul class="list">
 		<div class="post-header">

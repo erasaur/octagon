@@ -7,7 +7,7 @@ Template.profile.helpers({
   }
 });
 
-Template.profile.events({
+Template.profileHeader.events({
   'click #js-delete-account': function () {
     if(confirm(getError('confirm-delete'))) {
       Meteor.call('removeUser');
