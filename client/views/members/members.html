@@ -26,7 +26,7 @@
 			<ul class="list">
 			{{#if logs.count}}
 				{{#each logs}}
-					<li><strong>{{createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
+					<li><strong>{{formatDate createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
 						<p>
 						{{#each this.members}}
 							{{formatName this}}. 
