@@ -23,3 +23,14 @@ PictureSchema = new SimpleSchema({
     label: 'Caption'
   }
 });
+
+Meteor.methods({
+  deletePicture: function (pictureId) {
+    var user = Meteor.user();
+    
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    Pictures.remove(pictureId);
+  }
+})

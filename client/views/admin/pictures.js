@@ -20,13 +20,8 @@ Template.pictures.events({
     currentPicture._id = this._id;
     _pictureDep.changed();
   },
-  'click .deletePicture': function () {
-    var user = Meteor.user();
-    
-    if (!user || !isAdmin(user))
-      return alert(getError('no-permission'));
-
+  'click .js-delete-picture': function () {
     if (confirm(getError('confirm-delete')))
-      Pictures.remove(this._id);
+      Meteor.call('deletePicture', this._id);
   }
 });
