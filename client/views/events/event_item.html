@@ -46,15 +46,21 @@
           </li>
 
           {{#if cost}}
-            <li>
+            <li class="list-item">
               <strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.
             </li>
           {{/if}}
 
-          <li><strong>Date:</strong> {{formatDate info.date}}</li>
-          <li><strong>Where:</strong> {{info.location}}</li>
-          <li><strong>Slots left:</strong> <strong>{{info.slots}}</strong></li>
-          <li>
+          <li class="list-item">
+            <strong>Date:</strong> {{formatDate info.date}}
+          </li>
+          <li class="list-item">
+            <strong>Where:</strong> {{info.location}}
+          </li>
+          <li class="list-item">
+            <strong>Slots left:</strong> <strong>{{info.slots}}</strong>
+          </li>
+          <li class="list-item">
             {{#if tooLate}}
               <strong>Who went: </strong>
             {{else}}
@@ -62,15 +68,17 @@
             {{/if}}
             
             {{#each members}}
-              <span class="label label-important">{{formatName this}}</span>
+              <span class="label label-primary">{{formatName this}}</span>
             {{/each}}
             
             {{#unless members.length}}
-              {{#if tooLate}}
-                Nobody :( shame on y'all
-              {{else}}
-                Nobody yet! It's your chance to sign up!
-              {{/if}}
+              <span>
+                {{#if tooLate}}
+                  Nobody :( shame on y'all
+                {{else}}
+                  Nobody yet! It's your chance to sign up!
+                {{/if}}
+              </span>
             {{/unless}}
           </li>
         </ul>

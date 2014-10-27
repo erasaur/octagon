@@ -1,6 +1,6 @@
 <template name="memberItem">
-  <tbody>
-    <tr class="member-head">
+  <thead>
+    <tr class="info">
       <th>Name</th>
       <th>Points</th>
       <th>Strikes</th>
@@ -8,17 +8,21 @@
         <th>Email</th>
         
         {{#unless this.isAdmin}}
-          <th><button class="btn btn-primary js-promote-user float-right">Make Admin</button></th>
+          <th><button class="btn btn-primary js-promote-user">Make Admin</button></th>
         {{/unless}}
 
-        <th><button class="btn btn-primary js-delete-user float-right">Delete User</button></th>
+        <th><button class="btn btn-primary js-delete-user">Delete User</button></th>
       {{/if}}
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>{{this.profile.name}}</td>
       <td>{{this.profile.points}}</td>
       <td>{{this.profile.strikes}}</td>
-      {{#if isAdmin}}<td>{{this.emails.[0].address}}</td>{{/if}}
+      {{#if isAdmin}}
+        <td>{{this.emails.[0].address}}</td>
+      {{/if}}
     </tr>
   </tbody>
 </template>

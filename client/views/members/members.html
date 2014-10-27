@@ -11,29 +11,36 @@
 			</ul>
 		{{/if}}
 	{{/contentFor}}
-		
-	{{> pointsLog}}
 
-	<div class="post-header">
-		<h3>Points from Past Years</h3>
-	</div>
-	<div class="post-content">
-		<a class="btn" href="https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target="_blank">2013-2014</a>
-		<a class="btn" href="https://docs.google.com/spreadsheet/ccc?key=0Aof8QQOBP6MCdDRKT0Y3RXVjcnVjdzlPdjdyRUI1ZVE&usp=sharing" target="_blank">2012-2013</a>
-	</div>
-	<div class="post-header">
-		<h3>Members</h3>
-	</div>
+	<div class="page-body">		
+		{{> pointsLog}}
 
-	<ul class="list">
-		{{#if members.count}}
-			<table class="table member-list">
-				{{#each members}}
-  				{{> memberItem}}
-				{{/each}}
-			</table>	
-		{{else}}
-			No members yet.
-		{{/if}}
-	</ul>
+		<div class="list">
+			<div class="list-item">
+    		<div class="list-item-header">
+					<h3>Points from Past Years</h3>
+				</div>
+				<div class="list-item-body">
+					<a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1gQQ7XNi59QL_2F0sEjhjjqIWSEKFsbluEBOw1p7rWrU/edit?usp=sharing" target="_blank">2013-2014</a>
+					<a class="btn btn-primary" href="https://docs.google.com/spreadsheet/ccc?key=0Aof8QQOBP6MCdDRKT0Y3RXVjcnVjdzlPdjdyRUI1ZVE&usp=sharing" target="_blank">2012-2013</a>
+				</div>
+				<div class="list-item">
+					<div class="list-item-header">
+						<h3>Members</h3>
+					</div>
+					<div class="list-item-body">
+						{{#if members.count}}
+							<table class="table table-hover">
+								{{#each members}}
+				  				{{> memberItem}}
+								{{/each}}
+							</table>	
+						{{else}}
+							No members yet.
+						{{/if}}
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
 </template>
