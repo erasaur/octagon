@@ -1,5 +1,11 @@
+Template.nav.helpers({
+  currentPage: function (page) {
+    return getCurrentRoute() === page ? 'active' : '';
+  }
+});
+
 Template.nav.events({
-  'click #logout': function () {
+  'click #js-logout': function () {
     Meteor.logout(function () {
       Router.go('home');
     });
