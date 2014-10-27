@@ -88,7 +88,12 @@ Meteor.methods({
               'profile.carpool': member.carpool ? 1 : 0
             },
             $addToSet: {
-              'profile.events': eventId
+              'profile.events': { 
+                '_id': eventId, 
+                'hours': member.hours,
+                'mic': member.mic, 
+                'carpool': member.carpool 
+              }
             }
           });
         }

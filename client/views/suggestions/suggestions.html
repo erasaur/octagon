@@ -7,7 +7,7 @@
 	{{#if pending.count}}
 		{{#each pending}}
 			<div class="post-header">
-				<h3>{{name}} <small>Suggested on {{formatDate date}}</small>
+				<h3>{{name}} <small>Suggested on {{formatDate createdAt}}</small>
 					<div class="float-right">
 						{{#if approved}}
 							<small class="text-success">Approved!</small>
@@ -28,6 +28,7 @@
 			<div class="post-content">
 				<ul class="list">
 					<li class="markdown"><strong>Description:</strong> {{{description}}}</li>
+					<li><strong>Date:</strong> {{formatDate date}}</li>
 					<li><strong>Location:</strong> {{location}}</li>
 					<li><strong>Cost:</strong> ${{cost}}</li>
 					<li><strong>Contact:</strong> {{contact}}</li>

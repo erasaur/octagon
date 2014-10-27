@@ -5,7 +5,7 @@ Schema.UserProfile = new SimpleSchema({
     type: String
   },
   events: {
-    type: [String],
+    type: [Object],
     blackbox: true
   },
   carpool: {

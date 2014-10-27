@@ -1,11 +1,9 @@
 Template.profile.helpers({
-  hasSuggested: function () {
-    //typically would want to limit collection in publish (server.js), but its safe to send all suggestions to the client
-    return SuggestsModel.find({'uname': Meteor.user().username}).count() > 0 ? true : false; 
+  suggested: function () {
+    return Suggests.find({ 'userId': Meteor.userId() }); 
   },
-  suggestedEvents: function () {
-    //typically would want to limit collection in publish (server.js), but its safe to send all suggestions to the client
-    return SuggestsModel.find({'uname': Meteor.user().username}); 
+  event: function () {
+    return this && Events.findOne(this._id);  
   }
 });
 

@@ -1,8 +1,8 @@
 <template name="profile">
 	{{#contentFor "pageHeader"}}
-		<h1>{{username}} <small>Checkin' out your own profile</small></h1>
-		<a href="#changePassModal" class="btn btn-primary" data-toggle="modal">Change Password</a>
-		<button class="btn btn-primary" id="deleteAccount">Delete Account</button>
+		<h1>{{formatName _id}} <small>Checkin' out your own profile</small></h1>
+		<a href="#" class="btn btn-primary js-toggle-modal" data-toggle="changePassModal">Change Password</a>
+		<button class="btn btn-primary" id="js-delete-account">Delete Account</button>
 	{{/contentFor}}
 
 	<ul class="list">
@@ -10,9 +10,8 @@
 			<h3>Account Information</h3>
 		</div>
 		<div class="post-content">
-			<li><strong>Username:</strong> {{username}}</li>
 			<li><strong>Name:</strong> {{profile.name}}</li>
-			<li><strong>Email:</strong> {{email}}</li>
+			<li><strong>Email:</strong> {{formatEmail _id}}</li>
 		</div>
 		
 		<div class="post-header">
@@ -23,9 +22,9 @@
 			<li>
 				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
 					<ul class="list">
-					{{#if profile.events}}
+					{{#if profile.events.length}}
 						{{#each profile.events}}
-							<li><strong>{{date}}</strong> - Attended <strong>"{{name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.</li>
+							<li><strong>{{formatDate event.info.date}}</strong> - Attended <strong>"{{event.info.name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.</li>
 						{{/each}}
 					{{else}}
 						<li>You have not attended any events yet.</li>
@@ -42,9 +41,9 @@
 			<li>
 				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
 					<ul class="list">
-					{{#if hasSuggested}}
-						{{#each suggestedEvents}}
-							<li>{{date}} - {{name}} (Status: <strong>{{status}}</strong>)</li>
+					{{#if suggested.count}}
+						{{#each suggested}}
+							<li>{{formatDate createdAt}} - {{name}} (Status: <strong>{{status}}</strong>)</li>
 						{{/each}}
 					{{else}}
 						<li>You have not suggested any events yet. Go suggest one in the events page! (Now!)</li>
