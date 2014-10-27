@@ -8,21 +8,23 @@ body {
 	height: 100%;
 	background-color: @background-color;
 }
+a {
+	color: @primary-color;
+	outline: none !important;
+	text-decoration: none !important;
+}
 ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+
+	&.inline li { display: inline; }
 }
 h1, h2, h3 {
 	font-weight: 400;
 }
 .table > thead > tr > th {
 	border-bottom: none;
-}
-a {
-	color: @primary-color;
-	outline: none !important;
-	text-decoration: none !important;
 }
 .label-primary {
 	background-color: @primary-color;
@@ -35,6 +37,7 @@ tr.info > th {
 	color: @primary-color;
 	background-color: @muted-color;
 	border-color: @border-color;
+	margin: 0;
 }
 
 // .list, .list-item

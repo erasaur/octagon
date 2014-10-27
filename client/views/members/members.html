@@ -4,7 +4,7 @@
 		<h1>Members <small>List of Lynbrook's coolest people</small></h1>
 		{{#if isAdmin}}
 			<ul class="inline">
-				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a></li>
+				<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="fa fa-chevron-left"></i></a></li>
 				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPointsModal">Assign Points</a></li>
 				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addStrikesModal">Assign Strikes</a></li>
 				<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showAllEmailsModal">Show Emails</a></li>
@@ -13,9 +13,9 @@
 	{{/contentFor}}
 
 	<div class="page-body">		
-		{{> pointsLog}}
-
 		<div class="list">
+			{{> pointsLog}}
+			
 			<div class="list-item">
     		<div class="list-item-header">
 					<h3>Points from Past Years</h3>

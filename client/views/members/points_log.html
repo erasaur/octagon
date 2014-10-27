@@ -1,30 +1,33 @@
 <template name="pointsLog">
-  <div class="post-header">
-    <h3>Points Log
-    {{#if isAdmin}}
-      <div class="float-right">
-        <button class="btn btn-primary" id="js-clear-log">Clear Log</button>
+  <div class="list-item">
+    <div class="list-item-header clearfix">
+      <div class="list-item-info">
+        <h3>Points Log</h3>
       </div>
-    {{/if}}
-    </h3>
-  </div>
-  <div class="post-content">
-    <div class="alert alert-info">
-      <ul class="list">
-      {{#if logs.count}}
-        {{#each logs}}
-          <li><strong>{{formatDate createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
-            <p>
-            {{#each this.members}}
-              {{formatName this}}. 
-            {{/each}}
-            </p>
-          </li>
-        {{/each}}
-      {{else}}
-        <li>No points have been assigned yet.</li>
+      {{#if isAdmin}}
+        <div class="list-item-action">
+          <button class="btn btn-primary" id="js-clear-log">Clear Log</button>
+        </div>
       {{/if}}
-      </ul>
+    </div>
+    <div class="list-item-body">
+      <div class="alert alert-info">
+        <ul class="list">
+        {{#if logs.count}}
+          {{#each logs}}
+            <li><strong>{{formatDate createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
+              <p>
+              {{#each this.members}}
+                {{formatName this}}. 
+              {{/each}}
+              </p>
+            </li>
+          {{/each}}
+        {{else}}
+          <li>No points have been assigned yet.</li>
+        {{/if}}
+        </ul>
+      </div>
     </div>
   </div>
 </template>
