@@ -91,32 +91,47 @@ Suggests.before.update(function (userId, doc, fields, modifier, options) {
 });
 
 Meteor.methods({
-  approveSuggestion: function (suggestId) {
+  approveSuggestion: function (suggestion) {
     var user = Meteor.user();
+    var suggestId = suggestion._id;
+    var userId = suggestion.userId;
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     Suggests.update(suggestId, { $set: { 'status': 'approved' } });
+    Meteor.users.update(userId, { $inc: { 
+      'profile.points': POINTS_PER_SUGGEST, 
+      'profile.suggests': 1
+    } });
   },
-  rejectSuggestion: function (suggestId) {
+  rejectSuggestion: function (suggestion) {
     var user = Meteor.user();
+    var suggestId = suggestion._id;
+    var userId = suggestion.userId;
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     Suggests.update(suggestId, { $set: { 'status': 'rejected' } });
+    Meteor.users.update(userId, { $inc: { 
+      'profile.points': -POINTS_PER_SUGGEST, 
+      'profile.suggests': -1
+    } });
   },
-  resetSuggestion: function (suggestId) {
+  resetSuggestion: function (suggestion) {
     var user = Meteor.user();
+    var suggestId = suggestion._id;
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     Suggests.update(suggestId, { $set: { 'status': 'pending' } });
+    // user doesn't get affected
   },
   deleteSuggestion: function (suggestId) {
     var user = Meteor.user();
+    var suggestId = suggestion._id;
 
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));

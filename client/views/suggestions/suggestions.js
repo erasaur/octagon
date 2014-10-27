@@ -1,39 +1,40 @@
 Template.suggestions.helpers({
-  hasPending: function () {
-    return SuggestsModel.find().count() > 0 ? true : false;
-  },
   pending: function () {  
-    return SuggestsModel.find();
+    return Suggests.find();
   },
   approved: function () {
-    return SuggestsModel.findOne({name: this.name}).status == "approved" ? true : false;
+    return this.status === 'approved';
   },
   rejected: function () {
-    return SuggestsModel.findOne({name: this.name}).status == "rejected" ? true : false;
+    return this.status === 'rejected';
   }
 });
 
 Template.suggestions.events({
-  'click .approveEvent': function () {
-    //todo put this stuff on meteor.methods
-    Meteor.users.update({"_id": this.userid}, {$inc: {"profile.suggests": 1}});
-    Meteor.users.update({"_id": this.userid}, {$inc: {"profile.points": 5}});
-    Octagon.Suggests.approve(this.name);
+  'click .js-approve': function () {
+    Meteor.call('approveSuggestion', this, function (error) {
+      if (error)
+        alert(error.reason)
+    });
   },
-  'click .unApproveEvent': function () {
-    Meteor.users.update({"_id": this.userid}, {$inc: {"profile.suggests": -1}});
-    Meteor.users.update({"_id": this.userid}, {$inc: {"profile.points": -5}});
-    Octagon.Suggests.unApprove(this.name);
+  'click .js-reset': function () {
+    Meteor.call('resetSuggestion', this, function (error) {
+      if (error)
+        alert(error.reason)
+    });
   },
-  'click .rejectEvent': function () {
-    Octagon.Suggests.reject(this.name);
+  'click .js-reject': function () {
+    Meteor.call('rejectSuggestion', this, function (error) {
+      if (error)
+        alert(error.reason)
+    });
   },
-  'click .unRejectEvent': function () {
-    Octagon.Suggests.unReject(this.name);
-  },
-  'click .deleteEvent': function () {
-    if(confirm("Are you sure you want to delete '" + this.name + "'?")) {
-      Octagon.Suggests.delete(this.name);
+  'click .js-delete': function () {
+    if(confirm('Are you sure you want to delete this ever so helpful suggestion?')) {
+      Meteor.call('deleteSuggestion', this, function (error) {
+        if (error)
+          alert(error.reason)
+      });
     }
   }
 });

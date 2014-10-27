@@ -4,36 +4,34 @@
 		<a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="icon-arrow-left"></i></a>
 	{{/contentFor}}
 
-	{{#if hasPending}}
+	{{#if pending.count}}
 		{{#each pending}}
 			<div class="post-header">
-				<h3>{{name}} <small>Suggested on {{date}}</small>
+				<h3>{{name}} <small>Suggested on {{formatDate date}}</small>
 					<div class="float-right">
 						{{#if approved}}
 							<small class="text-success">Approved!</small>
-							<button class="btn btn-primary unApproveEvent">Un-Approve</button>
-							<button class="btn btn-primary deleteEvent">Delete</button>
+							<button class="btn btn-primary js-reset">Un-Approve</button>
 						{{else}}
 							{{#if rejected}}
 								<small class="text-error">Rejected...</small>
-								<button class="btn btn-primary unRejectEvent">Un-Reject</button>
-								<button class="btn btn-primary deleteEvent">Delete</button>
+								<button class="btn btn-primary js-reset">Un-Reject</button>
 							{{else}}
-								<button class="btn btn-primary approveEvent">Approve</button>
-								<button class="btn btn-primary rejectEvent">Reject</button>
-								<button class="btn btn-primary deleteEvent">Delete</button>
+								<button class="btn btn-primary js-approve">Approve</button>
+								<button class="btn btn-primary js-reject">Reject</button>
 							{{/if}}
 						{{/if}}
+						<button class="btn btn-primary js-delete">Delete</button>
 					</div>
 				</h3>
 			</div>
 			<div class="post-content">
 				<ul class="list">
-					<li><strong>Description:</strong> {{description}}</li>
+					<li class="markdown"><strong>Description:</strong> {{{description}}}</li>
 					<li><strong>Location:</strong> {{location}}</li>
-					<li><strong>Cost:</strong> ${{cost}}.00</li>
+					<li><strong>Cost:</strong> ${{cost}}</li>
 					<li><strong>Contact:</strong> {{contact}}</li>
-					<li><strong>Suggested by:</strong> {{user}} ({{uname}})</li>
+					<li><strong>Suggested by:</strong> {{formatName userId}}</li>
  				</ul>
 			</div>
 		{{/each}}
