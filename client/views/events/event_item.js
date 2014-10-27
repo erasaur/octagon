@@ -56,9 +56,15 @@ Template.eventItem.events({
     Session.set('currentEvent', this);
   },
   'click .js-cancel-attend': function () {
-    Meteor.call('unattendEvent', this._id);
+    Meteor.call('unattendEvent', this._id, function (error) {
+      if (error)
+        alert(error.reason);
+    });
   },
   'click .js-attend': function () {
-    Meteor.call('attendEvent', this._id);
+    Meteor.call('attendEvent', this._id, function (error) {
+      if (error)
+        alert(error.reason);
+    });
   }
 });
