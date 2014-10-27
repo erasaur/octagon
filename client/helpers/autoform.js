@@ -105,6 +105,10 @@ AutoForm.hooks({
   },
   signupForm: {
     onError: function (method, error, template) {
+      console.log(this, template);
+      Meteor.users.simpleSchema().namedContext('signupForm').addInvalidKeys([
+        { name: 'name', type: 'duplicateName' }
+      ]);
       alert(error.reason);
     },
     onSuccess: function (insertDoc, updateDoc, currentDoc) {

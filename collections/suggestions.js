@@ -129,7 +129,7 @@ Meteor.methods({
     Suggests.update(suggestId, { $set: { 'status': 'pending' } });
     // user doesn't get affected
   },
-  deleteSuggestion: function (suggestId) {
+  deleteSuggestion: function (suggestion) {
     var user = Meteor.user();
     var suggestId = suggestion._id;
 
