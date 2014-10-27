@@ -38,8 +38,6 @@ Meteor.methods({
   assignStrikes: function (strike) { // [memberName], numStrikes
     var user = Meteor.user();
 
-    console.log(strike);
-
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
