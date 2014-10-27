@@ -6,12 +6,21 @@
       <th>Strikes</th>
       {{#if isAdmin}}
         <th>Email</th>
-        
-        {{#unless this.isAdmin}}
-          <th><button class="btn btn-primary js-promote-user">Make Admin</button></th>
-        {{/unless}}
-
-        <th><button class="btn btn-primary js-delete-user">Delete User</button></th>
+        <th class="dropdown">
+          <a data-toggle="dropdown" href="#">
+            <i class="fa fa-bars"></i>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            {{#unless this.isAdmin}}
+              <li role="presentation" class="js-promote-user">
+                <a role="menuitem" tabindex="-1" href="#">Make Admin</a>
+              </li>
+            {{/unless}}
+            <li role="presentation" class="js-delete-user">
+              <a role="menuitem" tabindex="-1" href="#">Delete User</a>
+            </li>
+          </ul>
+        </th>
       {{/if}}
     </tr>
   </thead>
@@ -22,6 +31,7 @@
       <td>{{this.profile.strikes}}</td>
       {{#if isAdmin}}
         <td>{{this.emails.[0].address}}</td>
+        <td></td>
       {{/if}}
     </tr>
   </tbody>

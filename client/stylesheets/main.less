@@ -21,6 +21,8 @@ h1, h2, h3 {
 }
 a {
 	color: @primary-color;
+	outline: none !important;
+	text-decoration: none !important;
 }
 .label-primary {
 	background-color: @primary-color;
@@ -28,6 +30,7 @@ a {
 tr.info > th {
 	background-color: @muted-color;
 }
+
 .alert {
 	color: @primary-color;
 	background-color: @muted-color;
@@ -87,8 +90,13 @@ tr.info > th {
 	margin-left: calc(~'@{event-image-width} + @{main-padding}');
 }
 
-
-
+.dropdown-menu {
+	right: 0;
+	left: auto;
+}
+th.dropdown {
+	text-align: right;
+}
 
 
 

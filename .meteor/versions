@@ -30,6 +30,7 @@ cfs:tempstore@0.0.2
 cfs:upload-http@0.0.2
 cfs:worker@0.0.0
 check@1.0.2
+chrismbeckett:fontawesome4@4.2.2
 chuangbo:marked@0.3.5
 coffeescript@1.0.4
 cottz:publish-with-relations@1.6.3
