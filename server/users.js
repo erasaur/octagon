@@ -44,10 +44,11 @@ Meteor.methods({
       }
     });
   },
-  removeUser: function () {
-    var user = this.userId;
+  removeUser: function (userId) {
+    var user = userId || this.userId;
 
-    if (!user)
+    // either admin or removing own account
+    if (!user || !canRemoveById(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
     Meteor.users.remove(user);
