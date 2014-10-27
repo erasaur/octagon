@@ -4,6 +4,10 @@ member usernames -> use ids
 occasion -> description
 officer -> admin
 
+remove stuff like console logs and collectionfs debugging
+quickform templates
+use schema errors
+remove annoying alerts? close modal after adding new event member?
 improve register/login/change password (use autoform)
 use pagination package
 visit other ppl's profiles?

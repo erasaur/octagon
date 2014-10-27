@@ -1,3 +1,3 @@
 SimpleSchema.messages({
-  'passwordMismatch': 'Passwords do not match'
+  'passwordMismatch': getError('password-mismatch')
 });

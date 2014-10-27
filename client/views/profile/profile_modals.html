@@ -1,0 +1,12 @@
+<template name="changePassModal">
+  {{#autoForm schema="ChangePassSchema" id="changePassForm" type="method" meteormethod="changePass"}}
+    <div class="modal-body">
+      {{> afQuickField name="password" type="password" placeholder="Wow powerful password"}}
+      {{> afQuickField name="repeatPassword" type="password" placeholder="Wow this doesn't match"}}
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button type="submit" class="btn btn-primary">Change is Reform!</button>
+    </div>
+  {{/autoForm}}
+</template>

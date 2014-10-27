@@ -88,6 +88,11 @@ AutoForm.hooks({
     },
     docToForm: docToForm,
     formToDoc: formToDoc
+  },
+  changePassForm: {
+    onSuccess: function (insertDoc, updateDoc, currentDoc) {
+      alert(getError('password-success'));
+    }
   }
 });
 

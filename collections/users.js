@@ -67,6 +67,24 @@ Schema.User = new SimpleSchema({
   }
 });
 
+// non-collection schema used for changePassForm only
+ChangePassSchema = new SimpleSchema({
+  password: {
+    type: String,
+    label: 'New password',
+    min: 6
+  },
+  repeatPassword: {
+    type: String,
+    label: 'Repeat password',
+    min: 6,
+    custom: function () {
+      if (this.value !== this.field('password').value)
+        return 'passwordMismatch';
+    }
+  }
+});
+
 Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.allow({

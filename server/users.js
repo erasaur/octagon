@@ -34,7 +34,7 @@ Meteor.methods({
       throw new Meteor.Error('weak-password', getError('weak-password'));
 
     if (password !== rpassword)
-      throw new Meteor.Error('unmatch-passwords', getError('unmatch-passwords'));
+      throw new Meteor.Error('password-mismatch', getError('password-mismatch'));
 
     Accounts.createUser({
       'email': email, 
@@ -52,8 +52,9 @@ Meteor.methods({
 
     Meteor.users.remove(user);
   },
-  changePass: function (id, password) {
-    Accounts.setPassword(id, password);
+  changePass: function (password) {
+    console.log(password);
+    // Accounts.setPassword(id, password);
   },
   attendEvent: function (eventId) {
     var user = Meteor.user();
