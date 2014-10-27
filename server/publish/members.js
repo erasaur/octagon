@@ -4,5 +4,5 @@ Meteor.publish('members', function () {
   if (this.userId)
     fields.emails = 1;
 
-  return [ Meteor.users.find({}, { fields: fields }), Logs.find() ];
+  return [ Meteor.users.find({ 'isDeleted': false }, { fields: fields }), Logs.find() ];
 });

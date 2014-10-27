@@ -56,7 +56,7 @@ Schema.User = new SimpleSchema({
   },
   isAdmin: {
     type: Boolean,
-    optional: true
+    defaultValue: false
   },
   profile: { // public and not editable
     type: Schema.UserProfile
@@ -64,6 +64,10 @@ Schema.User = new SimpleSchema({
   services: {
     type: Object,
     blackbox: true
+  },
+  isDeleted: {
+    type: Boolean,
+    defaultValue: false
   }
 });
 

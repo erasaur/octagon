@@ -1,19 +1,6 @@
 <template name="eventItemHeader">
   <div class="list-item-info">
     <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
-    {{#if isAdmin}}
-      <button class="btn btn-primary deleteEvent">Delete</button>
-      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
-      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
-      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
-
-      {{#if canFinalize}}
-        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
-      {{/if}}
-      {{#if finalized}}
-        <small>(Finalized)</small>
-      {{/if}}
-    {{/if}}
   </div>
 
   <div class="list-item-action">
@@ -21,6 +8,36 @@
       <small>{{eventStatus}}</small>
     {{/if}}
     
+    {{#if isAdmin}}
+      <span class="dropdown">
+        <a data-toggle="dropdown" href="#">
+          <button class="btn btn-primary"><i class="fa fa-bars"></i></button>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li role="presentation">
+            <a class="js-delete-event" role="menuitem" tabindex="-1" href="#">Delete</a>
+          </li>
+          <li role="presentation">
+            <a class="js-toggle-modal" data-toggle="editEventModal" role="menuitem" tabindex="-1" href="#">Edit</a>
+          </li>
+          <li role="presentation">
+            <a class="js-toggle-modal" data-toggle="addMemberModal" role="menuitem" tabindex="-1" href="#">Add Member</a>
+          </li>
+          <li role="presentation">
+            <a class="js-toggle-modal" data-toggle="showEmailsModal" role="menuitem" tabindex="-1" href="#">Show Emails</a>
+          </li>
+          {{#if canFinalize}}
+            <li role="presentation">
+              {{#if finalized}}
+                <a role="menuitem" tabindex="-1" href="#">(Finalized)</a>
+              {{else}}
+                <a class="js-toggle-modal" data-toggle="finalizeEventModal" role="menuitem" tabindex="-1" href="#">Finalize</a>
+              {{/if}}
+            </li>
+          {{/if}}
+        </ul>
+      </span>
+    {{/if}}
     {{#if canCancel}}
       <button class="btn btn-primary js-cancel-attend">Cancel</button>
     {{/if}}

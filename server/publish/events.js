@@ -9,8 +9,12 @@ Meteor.publish('events', function (limit) {
     fields.emails = 1;
 
   publishWithRelations(this, Events.find({}, { limit: limit }), function (id, doc) {
-    if (doc.members)
-      this.cursor(Meteor.users.find({ '_id': { $in: doc.members } }, { fields: fields }));
+    if (doc.members) {
+      this.cursor(Meteor.users.find({ 
+        '_id': { $in: doc.members }, 
+        'isDeleted': false 
+      }, { fields: fields }));
+    }
 
     this.cursor(Pictures.find(doc.pictureId));
   });

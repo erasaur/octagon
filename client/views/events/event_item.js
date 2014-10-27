@@ -21,6 +21,14 @@ Template.eventItemHeader.helpers({
 });
 
 Template.eventItemHeader.events({
+  'click .js-delete-event': function () {
+    if (confirm(getError('confirm-delete'))) {
+      Meteor.call('deleteEvent', this._id, function (error) {
+        if (error)
+          alert(error.reason)
+      });
+    }
+  },
   'click .js-toggle-modal': function (event, template) {
     Session.set('currentEvent', this);
   },
