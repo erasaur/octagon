@@ -128,9 +128,6 @@ AutoForm.hooks({
       if (!user || !isAdmin(user))
         return alert(getError('no-permission'));
 
-      if (!stripHTML(caption))
-        return alert(getError('no-caption'));
-
       if (typeof file === 'undefined')
         return alert(getError('no-picture'));
 
@@ -151,6 +148,24 @@ AutoForm.hooks({
         }
         self.done();
       });
+    }
+  },
+  editPictureForm: {
+    onSubmit: function (insertDoc, updateDoc, currentDoc) {
+      this.event.preventDefault();
+
+      var pictureId = currentDoc._id;
+
+      var metadata = {
+        caption: insertDoc.caption,
+        featured: insertDoc.featured
+      };
+
+      Pictures.update(currentDoc._id, { $set: { 'metadata': metadata } });
+      alert(getError('picture-success'));
+      
+      onSuccessCallback.call(this);
+      this.done();
     }
   }
 });

@@ -1,4 +1,5 @@
 var currentPicture;
+var _pictureDep = new Tracker.Dependency();
 
 Template.pictures.helpers({
   pictures: function () {
@@ -6,31 +7,18 @@ Template.pictures.helpers({
   }
 });
 
+Template.editPictureModal.helpers({
+  currentPicture: function () {
+    _pictureDep.depend();
+    return currentPicture;
+  }
+})
+
 Template.pictures.events({
-  'click .js-btn-edit-picture': function (event, template) {
-    currentPicture = this._id;
-
-    if (this.metadata) {
-      template.$('#js-edit-caption').val(this.metadata.caption);
-      console.log
-      template.$('#js-edit-featured').prop('checked', this.metadata.featured);
-    }
-  },
-  'click #js-edit': function (event, template) {
-    var caption = template.find('#js-edit-caption').value;
-    var featured = template.find('#js-edit-featured').checked;
-
-    if (!stripHTML(caption))
-      return alert(getError('no-caption'));
-
-    var metadata = {
-      caption: caption,
-      featured: featured
-    };
-
-    Pictures.update(currentPicture, { $set: { 'metadata': metadata } });
-    alert(getError('picture-success'));
-    template.$('#editPictureModal').modal('hide');
+  'click .js-toggle-modal': function (event, template) {
+    currentPicture = this.metadata;
+    currentPicture._id = this._id;
+    _pictureDep.changed();
   },
   'click .deletePicture': function () {
     var user = Meteor.user();

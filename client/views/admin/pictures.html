@@ -1,11 +1,13 @@
+<template name="picturesHeader">
+	<h1>Manage Pictures <small>at an exhibition</small></h1>
+	<ul class="inline">
+		<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="fa fa-chevron-left"></i></a></li>
+		<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPictureModal">Add Picture</a></li>
+	</ul>
+</template>
+
 <template name="pictures">
-	{{#contentFor "pageHeader"}}	
-		<h1>Manage Pictures <small>at an exhibition</small></h1>
-		<ul class="inline">
-			<li><a class="btn btn-primary" href="{{pathFor 'admin'}}"><i class="fa fa-chevron-left"></i></a></li>
-			<li><a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addPictureModal">Add Picture</a></li>
-		</ul>
-	{{/contentFor}}
+	{{> contentFor region="pageHeader" template="picturesHeader"}}
 
 	<div class="page-body">	
 		{{#each pictures}}
@@ -26,7 +28,7 @@
 								{{/if}}
 							</li>
 							<li>
-								<a href="#editPictureModal" role="button" class="btn btn-primary js-btn-edit-picture" data-toggle="modal">Edit</a>
+								<a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editPictureModal">Edit</a>
 								<button class="btn btn-primary deletePicture">Delete</button>
 							</li>
 						</ul>
