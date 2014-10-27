@@ -10,16 +10,17 @@
 	{{> contentFor region="pageHeader" template="picturesHeader"}}
 
 	<div class="page-body">	
-		{{#each pictures}}
-			<div class="thumbnails">
-				<div class="thumbnail well clearfix">
-					<div class="thumbnail-image">
-						<img class="flexible-image" src="{{url}}"/>
-					</div>
-					<div class="thumbnail-content">
+		<div class="row">
+			{{#each pictures}}
+				<div class="picture-container col-xs-6 col-sm-4">
+					<div class="picture-body well">
+						<a href="#" class="thumbnail">
+							<img src="{{url}}"/>
+						</a>
+
 						<ul class="list">
-							<li><strong>Caption: </strong>{{metadata.caption}}</li>
-							<li>
+							<li class="list-item"><strong>Caption: </strong>{{metadata.caption}}</li>
+							<li class="list-item">
 								<strong>Featured: </strong>
 								{{#if metadata.featured}} 
 									Yup.
@@ -27,15 +28,17 @@
 									Nope.
 								{{/if}}
 							</li>
-							<li>
-								<a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editPictureModal">Edit</a>
-								<button class="btn btn-primary js-delete-picture">Delete</button>
+							<li class="list-item">
+								<div class="list-item-body">
+									<a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editPictureModal">Edit</a>
+									<button class="btn btn-primary js-delete-picture">Delete</button>
+								</div>
 							</li>
 						</ul>
 					</div>
 				</div>
-			</div>
-		{{/each}}
+			{{/each}}
+		</div>
 
 		{{#unless pictures.count}}
 			<div class="list">
