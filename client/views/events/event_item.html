@@ -10,7 +10,7 @@
 
         {{#unless finalized}}
           {{#if tooLate}}
-          <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
+            <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
           {{/if}}
         {{else}}
           <small>(Finalized)</small>
@@ -45,18 +45,18 @@
         {{else}}
           <strong>Who's going: </strong>
         {{/if}}
-        {{#if members.length}}
-          <br>
-          {{#each members}}
-            <span class="label label-important">{{formatName this}}</span>
-          {{/each}}
-        {{else}}
+        
+        {{#each members}}
+          <span class="label label-important">{{formatName this}}</span>
+        {{/each}}
+        
+        {{#unless members.length}}
           {{#if tooLate}}
             Nobody :( shame on y'all
           {{else}}
             Nobody yet! It's your chance to sign up!
           {{/if}}
-        {{/if}}
+        {{/unless}}
       </li>
     </ul>
   </div>

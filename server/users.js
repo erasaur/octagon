@@ -55,7 +55,16 @@ Meteor.methods({
     if (Meteor.users.find({ 'isAdmin': true }).count() === 1)
       throw new Meteor.Error('cannot-delete', getError('cannot-delete'));
 
-    Meteor.users.remove(user);
+    // don't delete users, just remove all the info
+    var random = Random.id();
+    Meteor.users.update(user, {
+      $set: { 
+        'profile.name': 'deleted', 
+        'isAdmin': false,
+        'emails': [{ 'address': 'deleted@nowhere.com', verified: false }],
+        'password': random
+      }
+    });
   },
   changePass: function (password) {
     console.log(password);

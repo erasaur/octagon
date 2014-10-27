@@ -13,7 +13,7 @@ Template.eventItem.helpers({
         return 'Not Started';
     }
     
-    // logged in
+    // logged in and attending
     if (attending) {
       if (tooLate)
         return finalized ? 'This event has been completed': 'Sit tight while we distribute your points :)'
@@ -39,7 +39,7 @@ Template.eventItem.helpers({
   canCancel: function () {
     var tooLate = new Date() > this.info.date;
     var attending = this.members && _.contains(this.members, Meteor.userId());
-    return attending && !tooLate;
+    return attending && !tooLate && !this.finalized;
   },
   tooLate: function () {
     var now = new Date();
