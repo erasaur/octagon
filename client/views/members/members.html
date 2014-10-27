@@ -12,34 +12,8 @@
 		{{/if}}
 	{{/contentFor}}
 		
-	<div class="post-header">
-		<h3>Points Log
-		{{#if isAdmin}}
-			<div class="float-right">
-				<button class="btn btn-primary" id="js-clear-log">Clear Log</button>
-			</div>
-		{{/if}}
-		</h3>
-	</div>
-	<div class="post-content">
-		<div class="alert alert-info">
-			<ul class="list">
-			{{#if logs.count}}
-				{{#each logs}}
-					<li><strong>{{formatDate createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
-						<p>
-						{{#each this.members}}
-							{{formatName this}}. 
-						{{/each}}
-						</p>
-					</li>
-				{{/each}}
-			{{else}}
-				<li>No points have been assigned yet.</li>
-			{{/if}}
-			</ul>
-		</div>
-	</div>
+	{{> pointsLog}}
+
 	<div class="post-header">
 		<h3>Points from Past Years</h3>
 	</div>
@@ -55,23 +29,7 @@
 		{{#if members.count}}
 			<table class="table member-list">
 				{{#each members}}
-  				<tbody>
-    				<tr class="member-head">
-    					<th>Name</th>
-    					<th>Points</th>
-    					<th>Strikes</th>
-    					{{#if isAdmin}}
-    						<th>Email</th>
-    						<th><button class="btn btn-primary btn-mini delUser float-right">Delete User</button></th>
-    					{{/if}}
-    				</tr>
-  					<tr>
-      				<td>{{this.profile.name}}</td>
-      				<td>{{this.profile.points}}</td>
-      				<td>{{this.profile.strikes}}</td>
-      				{{#if isAdmin}}<td>{{this.emails.[0].address}}</td>{{/if}}
-	   					</tr>
-					</tbody>
+  				{{> memberItem}}
 				{{/each}}
 			</table>	
 		{{else}}

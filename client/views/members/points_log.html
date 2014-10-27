@@ -1,0 +1,30 @@
+<template name="pointsLog">
+  <div class="post-header">
+    <h3>Points Log
+    {{#if isAdmin}}
+      <div class="float-right">
+        <button class="btn btn-primary" id="js-clear-log">Clear Log</button>
+      </div>
+    {{/if}}
+    </h3>
+  </div>
+  <div class="post-content">
+    <div class="alert alert-info">
+      <ul class="list">
+      {{#if logs.count}}
+        {{#each logs}}
+          <li><strong>{{formatDate createdAt}}</strong> - {{formatName userId}} assigned {{points}} points for "{{description}}" to:
+            <p>
+            {{#each this.members}}
+              {{formatName this}}. 
+            {{/each}}
+            </p>
+          </li>
+        {{/each}}
+      {{else}}
+        <li>No points have been assigned yet.</li>
+      {{/if}}
+      </ul>
+    </div>
+  </div>
+</template>

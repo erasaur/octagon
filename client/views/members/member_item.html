@@ -1,0 +1,19 @@
+<template name="memberItem">
+  <tbody>
+    <tr class="member-head">
+      <th>Name</th>
+      <th>Points</th>
+      <th>Strikes</th>
+      {{#if isAdmin}}
+        <th>Email</th>
+        <th><button class="btn btn-primary btn-mini js-delete-user float-right">Delete User</button></th>
+      {{/if}}
+    </tr>
+    <tr>
+      <td>{{this.profile.name}}</td>
+      <td>{{this.profile.points}}</td>
+      <td>{{this.profile.strikes}}</td>
+      {{#if isAdmin}}<td>{{this.emails.[0].address}}</td>{{/if}}
+    </tr>
+  </tbody>
+</template>
