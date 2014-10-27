@@ -26,9 +26,7 @@ Meteor.methods({
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', getError('no-permission'));
 
-    members = _.map(members, function (member) {
-      return member._id;
-    });
+    members = _.pluck(members, '_id');
     Meteor.users.update({ '_id': { $in: members } }, { 
       $inc: { 'profile.points': points, 'profile.meetings': meeting }
     });
@@ -36,6 +34,21 @@ Meteor.methods({
     // log has to contain _ids, not names
     log.members = members;
     Meteor.call('createLog', log);
+  },
+  assignStrikes: function (strike) { // [memberName], numStrikes
+    var user = Meteor.user();
+
+    console.log(strike);
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', getError('no-permission'));
+
+    StrikesSchema.clean(strike);
+    check(strike, StrikesSchema);
+
+    Meteor.users.update({ 'profile.name': { $in: strike.members } }, {
+      $inc: { 'profile.strikes': 1 }
+    });
   },
   finalizeEvent: function (event, members) {
     var user = Meteor.user();

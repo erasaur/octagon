@@ -1,9 +1,7 @@
 <template name="addPointsModal">
   <div class="modal-body">
-    <div class="controls">
-      <input type="text" id="js-typeahead" name="search" class="form-control typeahead" placeholder="Type Name Here" data-source="search">
-      <button id="js-add-member" class="btn btn-primary">Add Member</button>
-    </div>
+    <input type="text" id="js-typeahead" name="search" class="form-control typeahead" placeholder="Type Name Here" data-source="search">
+    <button id="js-add-member" class="btn btn-primary">Add Member</button>
   </div>
   {{#autoForm collection="Logs" id="addPointsForm" type="method" meteormethod="assignPoints"}}
     <div class="modal-body">
@@ -14,26 +12,26 @@
     </div>
     <div class="modal-footer">
       <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="submit" class="btn btn-primary">Assign</button>
     </div>
   {{/autoForm}}
 </template> 
 
 <template name="addStrikesModal">
   <div class="modal-body">
-    <div class="controls">
-      <input type="text" id="js-typeahead" name="search" class="form-control typeahead" placeholder="Type Name Here" data-source="search">
-      <button id="js-add-member" class="btn btn-primary">Add Member</button>
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="js-strikes">Strikes</label>
-      <input type="number" id="js-strikes" class="form-control" placeholder="1">
-    </div>
+    <input type="text" id="js-typeahead" name="search" class="form-control typeahead" placeholder="Type Name Here" data-source="search">
+    <button id="js-add-member" class="btn btn-primary">Add Member</button>
   </div>
-  <div class="modal-footer">
-    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-    <button class="btn btn-primary" id="js-add-strikes">Add</button>
-  </div>
+  {{#autoForm schema="StrikesSchema" id="addStrikesForm" type="method" meteormethod="assignStrikes"}}
+    <div class="modal-body">
+      {{> afQuickField name='members' id='js-members' type='textarea' rows='5'}}
+      {{> afQuickField name='strikes' placeholder='1'}}
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <button type="submit" class="btn btn-primary">Assign</button>
+    </div>
+  {{/autoForm}}
 </template>
 
 <template name="showAllEmailsModal">

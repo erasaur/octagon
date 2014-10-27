@@ -22,7 +22,10 @@ LogSchema = new SimpleSchema({
   },
   members: {
     type: [String],
-    label: 'Members'
+    label: 'Members',
+    autoform: {
+      rows: 5
+    }
   },
   points: {
     type: Number,
@@ -38,6 +41,22 @@ LogSchema = new SimpleSchema({
     optional: true,
     defaultValue: false,
     label: 'Normal Meeting?'
+  }
+});
+
+// non-collection schema used for addStrikesForm only
+StrikesSchema = new SimpleSchema({
+  members: {
+    type: [String],
+    label: 'Members',
+    autoform: {
+      rows: 5
+    }
+  },
+  strikes: {
+    type: Number,
+    label: 'Strikes',
+    defaultValue: 1
   }
 });
 

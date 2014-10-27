@@ -79,16 +79,15 @@ AutoForm.hooks({
     onSuccess: function (insertDoc, updateDoc, currentDoc) {
       alert(getError('points-success'));
     },
-    docToForm: function (doc) {
-      if (_.isArray(doc.members))
-        doc.members = doc.members.join(', ');
-      return doc;
+    docToForm: docToForm,
+    formToDoc: formToDoc
+  },
+  addStrikesForm: {
+    onSuccess: function (insertDoc, updateDoc, currentDoc) {
+      alert(getError('strikes-success'));
     },
-    formToDoc: function (doc) {
-      if (typeof doc.members === 'string')
-        doc.members = doc.members.split(',');
-      return doc;
-    }
+    docToForm: docToForm,
+    formToDoc: formToDoc
   }
 });
 
@@ -122,6 +121,18 @@ function callMethodWithFile (method, fsFile, doc) {
   self.done();
   self.resetForm();
   return true;
+}
+
+function docToForm (doc) {
+  if (_.isArray(doc.members))
+    doc.members = doc.members.join(', ');
+  return doc;
+}
+
+function formToDoc (doc) {
+  if (typeof doc.members === 'string')
+    doc.members = doc.members.split(',');
+  return doc;
 }
 
 
