@@ -1,3 +1,40 @@
+Template.eventItemHeader.helpers({
+  canFinalize: function () {
+    var now = new Date();
+    return now > this.info.date && !this.finalized;
+  },
+  canAttend: function () {
+    var attending = this.members && _.contains(this.members, Meteor.userId());
+    var slotsLeft = !!this.info.slots;
+    var tooLate = new Date() > this.info.date;
+
+    return !attending && slotsLeft && !tooLate;
+  },
+  canCancel: function () {
+    var tooLate = new Date() > this.info.date;
+    var attending = this.members && _.contains(this.members, Meteor.userId());
+    return attending && !tooLate && !this.finalized;
+  }
+});
+
+Template.eventItemHeader.events({
+  'click .js-toggle-modal': function (event, template) {
+    Session.set('currentEvent', this);
+  },
+  'click .js-cancel-attend': function () {
+    Meteor.call('unattendEvent', this._id, function (error) {
+      if (error)
+        alert(error.reason);
+    });
+  },
+  'click .js-attend': function () {
+    Meteor.call('attendEvent', this._id, function (error) {
+      if (error)
+        alert(error.reason);
+    });
+  }
+});
+
 Template.eventItem.helpers({
   eventStatus: function () {
     var userId = Meteor.userId();
@@ -29,18 +66,6 @@ Template.eventItem.helpers({
         return 'Sorry, no more slots available!';
     }
   },
-  canAttend: function () {
-    var attending = this.members && _.contains(this.members, Meteor.userId());
-    var slotsLeft = !!this.info.slots;
-    var tooLate = new Date() > this.info.date;
-
-    return !attending && slotsLeft && !tooLate;
-  },
-  canCancel: function () {
-    var tooLate = new Date() > this.info.date;
-    var attending = this.members && _.contains(this.members, Meteor.userId());
-    return attending && !tooLate && !this.finalized;
-  },
   tooLate: function () {
     var now = new Date();
     return now > this.info.date;
@@ -48,23 +73,5 @@ Template.eventItem.helpers({
   url: function () {
     var picture = Pictures.findOne(this.pictureId);
     return picture && picture.url();
-  }
-});
-
-Template.eventItem.events({
-  'click .js-toggle-modal': function (event, template) {
-    Session.set('currentEvent', this);
-  },
-  'click .js-cancel-attend': function () {
-    Meteor.call('unattendEvent', this._id, function (error) {
-      if (error)
-        alert(error.reason);
-    });
-  },
-  'click .js-attend': function () {
-    Meteor.call('attendEvent', this._id, function (error) {
-      if (error)
-        alert(error.reason);
-    });
   }
 });

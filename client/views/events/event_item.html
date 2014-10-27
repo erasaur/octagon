@@ -1,63 +1,68 @@
+<template name="eventItemHeader">
+  <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
+  {{#if isAdmin}}
+    <button class="btn btn-primary deleteEvent">Delete</button>
+    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
+    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
+    <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
+
+    {{#if canFinalize}}
+      <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
+    {{/if}}
+    {{#if finalized}}
+      <small>(Finalized)</small>
+    {{/if}}
+  {{/if}}
+
+  <small>{{eventStatus}}</small>
+  
+  {{#if canCancel}}
+    <button class="btn btn-primary js-cancel-attend">Cancel</button>
+  {{/if}}
+  {{#if canAttend}}
+    <button class="btn btn-primary js-attend">I'm Going!</button>
+  {{/if}}
+</template>
+
 <template name="eventItem">
-  <div class="post-header">
-    <h3>{{info.name}} <small>{{formatDate info.date}}</small></h3>
-    <div class="float-right">      
-      {{#if isAdmin}}
-        <button class="btn btn-primary deleteEvent">Delete</button>
-        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="editEventModal">Edit</a>
-        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="addMemberModal">Add Member</a>
-        <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="showEmailsModal">Show Emails</a>
-
-        {{#unless finalized}}
-          {{#if tooLate}}
-            <a href="#" role="button" class="btn btn-primary js-toggle-modal" data-toggle="finalizeEventModal">Finalize</a>
-          {{/if}}
-        {{else}}
-          <small>(Finalized)</small>
-        {{/unless}}
-      {{/if}}
-
-      <small>{{eventStatus}}</small>
-      
-      {{#if canCancel}}
-        <button class="btn btn-primary js-cancel-attend">Cancel</button>
-      {{/if}}
-      {{#if canAttend}}
-        <button class="btn btn-primary js-attend">I'm Going!</button>
-      {{/if}}
+  <div class="list-item">
+    <div class="list-item-header">
+      {{> eventItemHeader this}}
     </div>
-  </div>
-  <div class="event-image">
-    <img class="flexible-image" src="{{url}}">
-  </div>
-  <div class="event-info clearfix">
-    <ul class="list">
-      <li><strong>Information:</strong> <div class="well markdown">{{{info.description}}}</div></li>
-      {{#if cost}}
-        <li><strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.</li>
-      {{/if}}
-      <li><strong>Date:</strong> {{formatDate info.date}}</li>
-      <li><strong>Where:</strong> {{info.location}}</li>
-      <li><strong>Slots left:</strong> <strong>{{info.slots}}</strong></li>
-      <li>
-        {{#if tooLate}}
-          <strong>Who went: </strong>
-        {{else}}
-          <strong>Who's going: </strong>
-        {{/if}}
-        
-        {{#each members}}
-          <span class="label label-important">{{formatName this}}</span>
-        {{/each}}
-        
-        {{#unless members.length}}
-          {{#if tooLate}}
-            Nobody :( shame on y'all
-          {{else}}
-            Nobody yet! It's your chance to sign up!
+    <div class="list-item-body">
+      <div class="event-image">
+        <img class="flexible-image" src="{{url}}">
+      </div>
+      <div class="event-info clearfix">
+        <ul class="list">
+          <li><strong>Information:</strong> <div class="well markdown">{{{info.description}}}</div></li>
+          {{#if cost}}
+            <li><strong>Money:</strong> ${{cost}}. Bring to one of the officers at school or at the door.</li>
           {{/if}}
-        {{/unless}}
-      </li>
-    </ul>
+          <li><strong>Date:</strong> {{formatDate info.date}}</li>
+          <li><strong>Where:</strong> {{info.location}}</li>
+          <li><strong>Slots left:</strong> <strong>{{info.slots}}</strong></li>
+          <li>
+            {{#if tooLate}}
+              <strong>Who went: </strong>
+            {{else}}
+              <strong>Who's going: </strong>
+            {{/if}}
+            
+            {{#each members}}
+              <span class="label label-important">{{formatName this}}</span>
+            {{/each}}
+            
+            {{#unless members.length}}
+              {{#if tooLate}}
+                Nobody :( shame on y'all
+              {{else}}
+                Nobody yet! It's your chance to sign up!
+              {{/if}}
+            {{/unless}}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
