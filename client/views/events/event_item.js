@@ -1,19 +1,22 @@
 Template.eventItemHeader.helpers({
   canFinalize: function () {
+    var user = Meteor.user();
     var now = new Date();
-    return now > this.info.date && !this.finalized;
+    return user && isAdmin(user) && now > this.info.date && !this.finalized;
   },
   canAttend: function () {
+    var user = Meteor.user();
     var attending = this.members && _.contains(this.members, Meteor.userId());
     var slotsLeft = !!this.info.slots;
     var tooLate = new Date() > this.info.date;
 
-    return !attending && slotsLeft && !tooLate;
+    return user && !attending && slotsLeft && !tooLate;
   },
   canCancel: function () {
+    var user = Meteor.user();
     var tooLate = new Date() > this.info.date;
     var attending = this.members && _.contains(this.members, Meteor.userId());
-    return attending && !tooLate && !this.finalized;
+    return user && attending && !tooLate && !this.finalized;
   }
 });
 
