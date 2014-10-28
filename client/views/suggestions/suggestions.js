@@ -1,6 +1,6 @@
 Template.suggestions.helpers({
   pending: function () {  
-    return Suggests.find();
+    return Suggests.find({}, { sort: { 'createdAt': -1 } });
   }
 });
 
