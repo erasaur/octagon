@@ -9,6 +9,10 @@
     {{/if}}
     
     {{#if isAdmin}}
+      {{#if finalized}}
+        <small>(Finalized)</small>
+      {{/if}}
+
       <div class="dropdown inline">
         <button class="btn btn-default" data-toggle="dropdown" href="#">
           <i class="fa fa-bars"></i>
@@ -28,11 +32,7 @@
           </li>
           {{#if canFinalize}}
             <li role="presentation">
-              {{#if finalized}}
-                <a role="menuitem" tabindex="-1" href="#">(Finalized)</a>
-              {{else}}
-                <a class="js-toggle-modal" data-toggle="finalizeEventModal" role="menuitem" tabindex="-1" href="#">Finalize</a>
-              {{/if}}
+              <a class="js-toggle-modal" data-toggle="finalizeEventModal" role="menuitem" tabindex="-1" href="#">Finalize</a>
             </li>
           {{/if}}
         </ul>
