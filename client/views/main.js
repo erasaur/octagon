@@ -10,7 +10,9 @@ Accounts.onResetPasswordLink(function (token, done) {
   done();
 });
 
-$(window).scroll(function() {
-  //run function when scroll
-  showMoreEvents();
+Tracker.afterFlush(function () {
+  $(window).scroll(function() {
+    //run function when scroll
+    showMoreEvents();
+  });
 });
