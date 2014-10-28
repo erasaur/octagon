@@ -75,21 +75,21 @@ Meteor.methods({
 
     if (members.length) {
       _.each(members, function (member) {
-        var points = member.hours * POINTS_PER_HOUR;
+        var points = member.hours * getSetting('pointsPerHour');
 
         if (member.mic) 
-          points += POINTS_FOR_MIC;
+          points += getSetting('pointsForMIC');
         if (member.carpool)
-          points += POINTS_FOR_CARPOOL;
+          points += getSetting('pointsForCarpool');
 
         // members get strikes if they sign up and don't attend
         if (points === 0) { 
-          var penalize = (getStrikesById(member._id) % (STRIKES_PER_PENALTY + 1) === 0);
+          var penalize = (getStrikesById(member._id) % (getSetting('strikesPerPenalty') + 1) === 0);
 
           Meteor.users.update(member._id, { 
             $inc: { 
               'profile.strikes': 1, 
-              'profile.points': penalize ? -POINTS_PER_PENALTY : 0
+              'profile.points': penalize ? -getSetting('pointsPerPenalty') : 0
             },
             $addToSet: { 'profile.events': eventId } 
           });
