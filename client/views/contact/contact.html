@@ -1,3 +1,10 @@
+<template name="contactHeader">
+	<h1>Contact Us <small>We're here for you.</small></h1>
+	<ul class="inline">
+		<li><button class="btn btn-primary" id="js-like"><i class="icon-thumbs-up"></i> You're awesome! ({{likes}})</button></li>
+	</ul>
+</template>
+
 <template name="contact">
 	{{> contentFor region="pageHeader" template="contactHeader"}}
 		
@@ -6,11 +13,13 @@
 			<div class="list-item">
 				<p>
 					<i class="fa fa-envelope fa-5x pull-left fa-border"></i>
-					Have any questions or concerns? Feel free to reach us at lhs8octagon@gmail.com! 
-					Better yet, post a comment on our 
-					<a href="https://www.facebook.com/groups/140021596038905/">
-						<i class="fa fa-facebook-square"> facebook page</i>
-					</a>
+					Have any questions or concerns? Feel free to reach us at {{getSetting "contactEmail"}}! 
+					{{#if getSetting 'facebookPage'}}
+						Better yet, post a comment on our 
+						<a href="{{getSetting 'facebookPage'}}">
+							<i class="fa fa-facebook-square"> facebook page</i>
+						</a>
+					{{/if}}
 				</p>
 			</div>
 			<div class="list-item">
@@ -20,11 +29,4 @@
 			</div>
 		</div>
 	</div>
-</template>
-
-<template name="contactHeader">
-	<h1>Contact Us <small>We're here for you.</small></h1>
-	<ul class="inline">
-		<li><button class="btn btn-primary" id="js-like"><i class="icon-thumbs-up"></i> You're awesome! ({{likes}})</button></li>
-	</ul>
 </template>

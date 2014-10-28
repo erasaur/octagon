@@ -1,8 +1,10 @@
 <template name="footer">
   <ul class="inline list footer">
-		<li class="list-item">
-      <span><a href="http://en.wikipedia.org/wiki/Optimist_International" target="_blank">About</a> | </span>
-    </li>
+    {{#if getSetting 'aboutLink'}}
+  		<li class="list-item">
+        <span><a href="{{getSetting 'aboutLink'}}" target="_blank">About</a> | </span>
+      </li>
+    {{/if}}
     <li class="list-item">
 		  <span>&copy; 2013 | </span>
     </li>
