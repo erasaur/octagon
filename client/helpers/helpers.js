@@ -10,6 +10,6 @@ Template.registerHelper('formatEmail', function (userId) {
 Template.registerHelper('isAdmin', function () {
   return Meteor.user() && isAdmin(Meteor.user());
 });
-Template.registerHelper('getSetting', function (setting, defaultSetting) {
-  return getSetting(setting, !!defaultSetting || '');
+Template.registerHelper('getSetting', function (setting) {
+  return getSetting(setting);
 });
