@@ -1,4 +1,4 @@
-Meteor.publish('events', function (limit) {
+Meteor.publishComposite('events', function (limit) {
   if (limit > Events.find().count()) {
     limit = 0;
   }
@@ -8,18 +8,24 @@ Meteor.publish('events', function (limit) {
   if (this.userId && isAdminById(this.userId))
     fields.emails = 1;
 
-  publishWithRelations(this, Events.find({}, {
-    limit: limit, sort: { 'info.date': -1 }
-  }), function (id, doc) {
-    if (doc.members) {
-      this.cursor(Meteor.users.find({ 
-        '_id': { $in: doc.members }, 
-        'isDeleted': false 
-      }, { fields: fields }));
-    }
-
-    this.cursor(Pictures.find(doc.pictureId));
-  });
-
-  return this.ready();
+  return {
+    find: function () {
+      return Events.find({}, { limit: limit, sort: { 'info.date': -1 } });
+    },
+    children: [
+      {
+        find: function (event) {
+          return Meteor.users.find({ 
+            '_id': { $in: event.members }, 
+            'isDeleted': false 
+          }, { fields: fields });
+        }  
+      },
+      {
+        find: function (event) {
+          return Pictures.find(event.pictureId);
+        }
+      }
+    ]
+  }
 });

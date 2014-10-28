@@ -33,7 +33,6 @@ check@1.0.2
 chrismbeckett:fontawesome4@4.2.2
 chuangbo:marked@0.3.5
 coffeescript@1.0.4
-cottz:publish-with-relations@1.6.3
 ctl-helper@1.0.4
 ctl@1.0.2
 ddp@1.0.10
@@ -82,6 +81,7 @@ reactive-dict@1.0.4
 reactive-var@1.0.3
 reload@1.1.1
 retry@1.0.1
+reywood:publish-composite@1.3.2
 routepolicy@1.0.2
 sergeyt:typeahead@0.10.5_6
 service-configuration@1.0.2
