@@ -3,19 +3,20 @@
 .table > thead > tr > th {
   border-bottom: none;
 }
-.label-primary {
-  background-color: @primary-color;
-}
+.well,
+.alert,
 tr.info > th {
   background-color: @muted-color;
 }
+.well,
+.alert,
+.footer,
+.label-primary,
 .btn.btn-default {
   color: @primary-color;
 }
 .well,
 .alert {
-  color: @primary-color;
-  background-color: @muted-color;
   border-color: @border-color;
   margin: 0;
 }
@@ -62,6 +63,10 @@ tr.info > th {
   background-color: @footer-color;
   border-radius: 0 0 @main-radius @main-radius;
   .box-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
+}
+
+.footer {
+  text-align: center;
 }
 
 .event-image {

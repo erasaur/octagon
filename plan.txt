@@ -6,10 +6,8 @@ officer -> admin
 
 remove useless helper functions (permissions has a few)
 remove stuff like console logs and collectionfs debugging
-quickform templates
-use schema errors
 remove annoying alerts? close modal after adding new event member?
-improve register/login/change password (use autoform)
+
 use pagination package
 visit other ppl's profiles?
 abstract club-specific things into settings, like website/school name, style, etc
@@ -29,6 +27,9 @@ trash inline styling...
 trash br's ... use clearfix not ninja divs
 
 done:
+improve register/login/change password (use autoform)
+quickform templates
+use schema errors
 show markdown in handlebars
 fix dates (consider toDateString(), but will have to change getDate(), editing events, adding events, displaying, etc) (moment)
 fix the whitespace issue

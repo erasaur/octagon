@@ -1,0 +1,58 @@
+<template name="css">
+  <style type="stylesheet/less">
+    body {
+      background-color: {{getSetting "backgroundColor"}} 
+    }
+    a {
+      color: {{getSetting "primaryColor"}}
+    }
+    .well,
+    .alert,
+    tr.info > th {
+      background-color: {{getSetting "mutedColor"}};
+    }
+    .well,
+    .alert,
+    .footer,
+    .label-primary,
+    .btn.btn-default {
+      color: {{getSetting "primaryColor"}}
+    }
+    .well,
+    .alert {
+      border-color: {{getSetting "borderColor"}};
+    }
+    .list-item-header {
+      border-bottom: {{getSetting "grayColor"}};
+    }
+    .page-header {
+      padding: ({{getSetting "navHeight"}} + {{getSetting "largePadding"}}) {{getSetting "mainPadding"}} {{getSetting "largePadding"}};
+      background-color: {{getSetting "headerColor"}};
+    }
+    .page-body {
+      padding: {{getSetting "mainPadding"}};
+      background-color: {{getSetting "bodyColor"}};
+    }
+    .page-footer {
+      padding: {{getSetting "largePadding"}} {{getSetting "mainPadding"}};
+      border-radius: 0 0 {{getSetting "mainRadius"}} {{getSetting "mainRadius"}};
+      background-color: {{getSetting "footerColor"}};
+    }
+    .event-image {
+      width: {{getSetting "eventImageWidth"}}px;
+      margin-right: {{getSetting "mainPadding"}}px;
+    }
+    .event-info {
+      margin-left: calc(~'{{getSetting "eventImageWidth"}} + {{getSetting "mainPadding"}}');
+    }
+    .dropdown-menu {
+      border-radius: {{getSetting "mainRadius"}};
+    }
+    .login-form {
+      padding: {{getSetting "mainPadding"}} / 2;
+    }
+    .picture-container {
+      padding: {{getSetting "mainPadding"}} / 2;
+    }
+  </style>
+</template>
