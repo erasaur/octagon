@@ -5,8 +5,10 @@ Template.recovery.helpers({
 });
 
 Template.recovery.events({
-  'submit #recoverPass': function (event, template) {
+  'submit #js-recover-pass': function (event, template) {
     event.preventDefault();
+
+    console.log('asdf');
 
     var email = template.find('#js-email').value;
     email = stripHTML(email);
@@ -16,29 +18,27 @@ Template.recovery.events({
     else {
       Accounts.forgotPassword({ 'email': email }, function (error) {
         if (error)
-          alert(error.reason);
+          alert(getError('invalid-email'));
         else
           alert(getError('check-email'));
       });
     }
   },
-  'submit #newPass': function (event, template) {
+  'submit #js-change-pass': function (event, template) {
     event.preventDefault();
 
     var password = template.find('#js-password').value;
 
     if (password.length < 6) 
-      throw new Meteor.Error('weak-password', getError('weak-password'));
+      alert(getError('weak-password'));
     
-    else {
-      Accounts.resetPassword(Session.get('resetPassword'), password, function (error) {
-        if (error)
-          alert(error.reason);
-        else {
-          Session.set('resetPassword', null);
-          alert(getError('reset-done'));
-        }
-      });
-    }
+    Accounts.resetPassword(Session.get('resetPassword'), password, function (error) {
+      if (error)
+        alert(error.reason);
+      else {
+        Session.set('resetPassword', null);
+        alert(getError('reset-done'));
+      }
+    });
   }
 });
