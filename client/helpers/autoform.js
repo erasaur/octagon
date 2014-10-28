@@ -167,6 +167,11 @@ AutoForm.hooks({
       onSuccessCallback.call(this);
       this.done();
     }
+  },
+  editSettingsForm: {
+    onSuccess: function (insertDoc, updateDoc, currentDoc) {
+      alert(getError('settings-success'));
+    }
   }
 });
 

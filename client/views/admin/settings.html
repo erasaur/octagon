@@ -8,5 +8,7 @@
 <template name="settings">
   {{> contentFor region="pageHeader" template="settingsHeader"}}
 
-  {{> quickForm schema="SettingsSchema" type="update" doc=currentSettings}}
+  <div class="page-body">
+    {{> quickForm collection="Settings" id="editSettingsForm" type="update" doc=currentSettings}}
+  </div>
 </template>
