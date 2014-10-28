@@ -6,6 +6,9 @@ AutoForm.hooks({
 
       self.event.preventDefault();
       var file = self.template.find('#js-create-picture').files[0];
+
+      if (typeof file === 'undefined')
+        return onErrorCallback.call(self, getError('no-picture'));
       
       var metadata = {
         caption: insertDoc.info && insertDoc.info.name || '',
@@ -17,12 +20,9 @@ AutoForm.hooks({
 
       callMethodWithFile.call(self, 'createEvent', file, insertDoc, function (error) {
         if (error)
-          alert(error.reason);
-        else {
-          alert(getError('event-success'));  
-          onSuccessCallback.call(self);
-        }
-        self.done();
+          return onErrorCallback.call(self, error.reason);
+        else
+          onSuccessCallback.call(self, getError('event-success'));
       });
     }
   },
@@ -39,12 +39,9 @@ AutoForm.hooks({
       if (typeof file === 'undefined') {
         Meteor.call('updateEvent', currentDoc, function (error) {
           if (error)
-            alert(error.reason);
-          else {
-            alert(getError('update-event-success'));
-            onSuccessCallback.call(self);
-          }
-          self.done();
+            return onErrorCallback.call(self, error.reason);
+          else
+            onSuccessCallback.call(self, getError('update-event-success'));
         });
       } else {
         var metadata = {
@@ -60,12 +57,10 @@ AutoForm.hooks({
         
         callMethodWithFile.call(self, 'updateEvent', file, currentDoc, function (error) {
           if (error)
-            alert(error.reason);
+            return onErrorCallback.call(self, error.reason);
           else {
-            alert(getError('update-event-success'));  
-            onSuccessCallback.call(self);
+            onSuccessCallback.call(self, getError('update-event-success'));
           }
-          self.done();
         });
       }
     }
@@ -105,10 +100,6 @@ AutoForm.hooks({
   },
   signupForm: {
     onError: function (method, error, template) {
-      console.log(this, template);
-      Meteor.users.simpleSchema().namedContext('signupForm').addInvalidKeys([
-        { name: 'name', type: 'duplicateName' }
-      ]);
       alert(error.reason);
     },
     onSuccess: function (insertDoc, updateDoc, currentDoc) {
@@ -126,10 +117,10 @@ AutoForm.hooks({
       var featured = insertDoc.featured;
 
       if (!user || !isAdmin(user))
-        return alert(getError('no-permission'));
+        return onErrorCallback.call(self, getError('no-permission'));
 
       if (typeof file === 'undefined')
-        return alert(getError('no-picture'));
+        return onErrorCallback.call(self, getError('no-picture'));
 
       var metadata = {
         caption: caption,
@@ -141,12 +132,9 @@ AutoForm.hooks({
 
       Pictures.insert(file, function (error, file) {
         if (error) 
-          alert(error.reason);
-        else {
-          alert(getError('picture-success'));
-          onSuccessCallback.call(self);
-        }
-        self.done();
+          return onErrorCallback.call(self, error.reason);
+        else
+          onSuccessCallback.call(self, getError('picture-success'));
       });
     }
   },
@@ -162,10 +150,8 @@ AutoForm.hooks({
       };
 
       Pictures.update(currentDoc._id, { $set: { 'metadata': metadata } });
-      alert(getError('picture-success'));
-      
-      onSuccessCallback.call(this);
-      this.done();
+
+      onSuccessCallback.call(this, getError('picture-success'))
     }
   },
   editSettingsForm: {
@@ -182,9 +168,19 @@ AutoForm.addHooks(null, {
   }
 });
 
-function onSuccessCallback () {
+function onErrorCallback (error) {
+  alert(error);
+  this.done();
+  return false; // don't reset form on failure
+}
+
+function onSuccessCallback (message) {
+  if (message)
+    alert(message);
+
   $('.modal').modal('hide');
-  this.resetForm(); // don't reset form on failure
+  this.done();
+  this.resetForm(); 
 }
 
 function callMethodWithFile (method, fsFile, doc, callback) {

@@ -2,7 +2,6 @@ Template.registerHelper('formatDate', function (date) {
   return moment(date).format('MMMM Do YYYY, h:mm a');
 });
 Template.registerHelper('formatName', function (userId) {
-  console.log(Meteor.users.find().fetch());
   return getDisplayNameById(userId);
 });
 Template.registerHelper('formatEmail', function (userId) {
