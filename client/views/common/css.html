@@ -1,10 +1,10 @@
 <template name="css">
   <style>
     body {
-      background-color: {{getSetting "backgroundColor"}} 
+      background-color: {{getSetting "backgroundColor"}};
     }
     a {
-      color: {{getSetting "primaryColor"}}
+      color: {{getSetting "primaryColor"}};
     }
     .well,
     .alert,
@@ -16,14 +16,14 @@
     .footer,
     .label-primary,
     .btn.btn-default {
-      color: {{getSetting "primaryColor"}}
+      color: {{getSetting "primaryColor"}};
     }
     .well,
     .alert {
       border-color: {{getSetting "borderColor"}};
     }
     .list-item-header {
-      border-bottom: {{getSetting "grayColor"}};
+      border-bottom: 1px solid {{getSetting "grayColor"}};
     }
     .page-header {
       padding: ({{getSetting "navHeight"}} + {{getSetting "largePadding"}}) {{getSetting "mainPadding"}} {{getSetting "largePadding"}};
@@ -39,8 +39,8 @@
       background-color: {{getSetting "footerColor"}};
     }
     .event-image {
-      width: {{getSetting "eventImageWidth"}}px;
-      margin-right: {{getSetting "mainPadding"}}px;
+      width: {{getSetting "eventImageWidth"}};
+      margin-right: {{getSetting "mainPadding"}};
     }
     .dropdown-menu {
       border-radius: {{getSetting "mainRadius"}};
