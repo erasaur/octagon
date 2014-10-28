@@ -37,12 +37,12 @@
     </div>
     <div class="list-item-body">
       <ul class="list">
-        <li class="markdown"><strong>Description:</strong> {{{description}}}</li>
-        <li><strong>Date:</strong> {{formatDate date}}</li>
-        <li><strong>Location:</strong> {{location}}</li>
-        <li><strong>Cost:</strong> ${{cost}}</li>
-        <li><strong>Contact:</strong> {{contact}}</li>
-        <li><strong>Suggested by:</strong> {{formatName userId}}</li>
+        <li class="list-item"><strong>Description:</strong> <div class="well markdown">{{{description}}}</div></li>
+        <li class="list-item"><strong>Date:</strong> {{formatDate date}}</li>
+        <li class="list-item"><strong>Location:</strong> {{location}}</li>
+        <li class="list-item"><strong>Cost:</strong> ${{cost}}</li>
+        <li class="list-item"><strong>Contact:</strong> {{contact}}</li>
+        <li class="list-item"><strong>Suggested by:</strong> <span class="label label-primary">{{formatName userId}}</span></li>
       </ul>
     </div>
   </div>

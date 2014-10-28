@@ -3,22 +3,30 @@
 .table > thead > tr > th {
   border-bottom: none;
 }
-.well,
-.alert,
+
 tr.info > th {
   background-color: @muted-color;
 }
-.well,
-.alert,
+
 .footer,
-.label-primary,
 .btn.btn-default {
   color: @primary-color;
 }
+
 .well,
 .alert {
+  color: @primary-color;
+  background-color: @muted-color;
   border-color: @border-color;
   margin: 0;
+}
+
+.label-primary {
+  background-color: @primary-color;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 12px;
 }
 
 .loading {
