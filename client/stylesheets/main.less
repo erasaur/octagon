@@ -38,6 +38,7 @@ tr.info > th {
 .btn.btn-default {
 	color: @primary-color;
 }
+.well,
 .alert {
 	color: @primary-color;
 	background-color: @muted-color;
@@ -45,7 +46,16 @@ tr.info > th {
 	margin: 0;
 }
 
-// .list, .list-item
+.log {
+	min-height: 100px;
+	overflow-y: auto;
+	resize: vertical;
+}
+
+// .list, 
+.list-item {
+	margin-bottom: 10px;
+}
 .list-item-header {
 	border-bottom: 1px solid @gray-color;
 }
@@ -92,11 +102,17 @@ tr.info > th {
 .event-info {
 	display: block;
 	margin-left: calc(~'@{event-image-width} + @{main-padding}');
+
+	.well {
+		max-height: 250px;
+		overflow-y: auto;
+	}
 }
 
 .dropdown-menu {
 	right: 0;
 	left: auto;
+	border-radius: @main-radius;
 }
 th.dropdown {
 	text-align: right;
@@ -128,8 +144,29 @@ th.dropdown {
 
 // }
 
+// twitter typeahead
+.tt-dropdown-menu {
+	// display: block;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: @main-radius;
+	background-clip: padding-box;
+	padding: 5px 0;
+	margin: 2px 0 0;
+	background-color: #fff;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	min-width: 180px;
+}
+.tt-suggestion {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	color: #333;
+	white-space: nowrap;
+	cursor: pointer;
 
-
-
-
-
+	p { margin: 0; }
+	&:hover { 
+		color: #262626;
+		background-color: #f5f5f5; 
+	}
+}

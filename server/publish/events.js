@@ -3,7 +3,7 @@ Meteor.publish('events', function (limit) {
     limit = 0;
   }
 
-  var fields = { 'profile': 1 };
+  var fields = { 'profile': 1, 'isAdmin': 1 };
 
   if (this.userId && isAdminById(this.userId))
     fields.emails = 1;
