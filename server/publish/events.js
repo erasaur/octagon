@@ -8,7 +8,9 @@ Meteor.publish('events', function (limit) {
   if (this.userId && isAdminById(this.userId))
     fields.emails = 1;
 
-  publishWithRelations(this, Events.find({}, { limit: limit }), function (id, doc) {
+  publishWithRelations(this, Events.find({}, {
+    limit: limit, sort: { 'info.date': -1 }
+  }), function (id, doc) {
     if (doc.members) {
       this.cursor(Meteor.users.find({ 
         '_id': { $in: doc.members }, 

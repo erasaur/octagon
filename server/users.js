@@ -106,6 +106,6 @@ Meteor.methods({
     if (!_.contains(eventObj.members, userId))
       throw new Meteor.Error('not-attending', getError('not-attending'));
 
-    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'info.slots': -1 } });
+    Events.update(eventId, { $pull: { 'members': userId }, $inc: { 'info.slots': 1 } });
   }
 });
