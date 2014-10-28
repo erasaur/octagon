@@ -7,52 +7,79 @@
 <template name="profile">
 	{{> contentFor region="pageHeader" template="profileHeader"}}
 
-	<ul class="list">
-		<div class="post-header">
-			<h3>Account Information</h3>
-		</div>
-		<div class="post-content">
-			<li><strong>Name:</strong> {{profile.name}}</li>
-			<li><strong>Email:</strong> {{formatEmail _id}}</li>
-		</div>
-		
-		<div class="post-header">
-			<h3>Club Stats</h3>
-		</div>
-		<div class="post-content">
-			<li><strong>Events Log: </strong></li>
-			<li>
-				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
+	<div class="page-body">
+		<div class="list">
+			<div class="list-item">
+				<div class="list-item-header">
+					<h3>Account Information</h3>
+				</div>
+				<div class="list-item-body">
 					<ul class="list">
-					{{#if profile.events.length}}
-						{{#each profile.events}}
-							<li><strong>{{formatDate event.info.date}}</strong> - Attended <strong>"{{event.info.name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.</li>
-						{{/each}}
-					{{else}}
-						<li>You have not attended any events yet.</li>
-					{{/if}}
+						<li class="list-item"><strong>Name:</strong> {{profile.name}}</li>
+						<li class="list-item"><strong>Email:</strong> {{formatEmail _id}}</li>
 					</ul>
 				</div>
-			</li>
-			<li><strong>Points:</strong> {{profile.points}}</li>
-			<li><strong>Meetings attended:</strong> {{profile.meetings}}</li>
-			<li><strong>Member in Charge:</strong> {{profile.mic}} time(s)</li>
-			<li><strong>Carpooled:</strong> {{profile.carpool}} time(s)</li>
-			<li><strong>Strikes:</strong> {{profile.strikes}}</li>
-			<li><strong>Suggested:</strong> {{profile.suggests}} event(s)</li>
-			<li>
-				<div class="alert alert-info" style="max-height: 100px; overflow-y: auto;">
+			</div>
+			<div class="list-item">
+				<div class="list-item-header">
+					<h3>Club Stats</h3>
+				</div>
+				<div class="list-item-body">
 					<ul class="list">
-					{{#if suggested.count}}
-						{{#each suggested}}
-							<li>{{formatDate createdAt}} - {{name}} (Status: <strong>{{status}}</strong>)</li>
-						{{/each}}
-					{{else}}
-						<li>You have not suggested any events yet. Go suggest one in the events page! (Now!)</li>
-					{{/if}}
+						<li class="list-item"><strong>Events Log:</strong></li>
+						<li class="list-item">
+							<div class="alert alert-info log">
+								<ul class="list">
+								{{#if profile.events.length}}
+									{{#each profile.events}}
+										<li class="list-item">
+											<strong>{{formatDate event.info.date}}</strong> - Attended <strong>"{{event.info.name}}"</strong> for {{hours}} hours. <strong>MIC:</strong> {{mic}}. <strong>Carpool:</strong> {{carpool}}.
+										</li>
+									{{/each}}
+								{{else}}
+									<li>You have not attended any events yet.</li>
+								{{/if}}
+								</ul>
+							</div>
+						</li>
+						<li class="list-item">
+							<strong>Points:</strong> {{profile.points}}
+						</li>
+						<li class="list-item">
+							<strong>Meetings attended:</strong> {{profile.meetings}}
+						</li>
+						<li class="list-item">
+							<strong>Member in Charge:</strong> {{profile.mic}} time(s)
+						</li>
+						<li class="list-item">
+							<strong>Carpooled:</strong> {{profile.carpool}} time(s)
+						</li>
+						<li class="list-item">
+							<strong>Strikes:</strong> {{profile.strikes}}
+						</li>
+						<li class="list-item">
+							<strong>Suggested:</strong> {{profile.suggests}} event(s)
+						</li>
+						<li class="list-item">
+							<div class="alert alert-info log">
+								<ul class="list">
+								{{#if suggested.count}}
+									{{#each suggested}}
+										<li class="list-item">
+											{{formatDate createdAt}} - {{name}} (Status: <strong>{{status}}</strong>)
+										</li>
+									{{/each}}
+								{{else}}
+									<li class="list-item">
+										You have not suggested any events yet. Go suggest one in the events page! (Now!)
+									</li>
+								{{/if}}
+								</ul>
+							</div>
+						</li>
 					</ul>
 				</div>
-			</li>
+			</div>
 		</div>
-	</ul>
+	</div>
 </template>
