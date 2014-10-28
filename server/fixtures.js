@@ -12,7 +12,7 @@ if (Settings.find().count() === 0) {
     'pointsForMIC': 2,
     'strikesPerPenalty': 3,
     'pointsPerPenalty': 10,
-    'pointsPerSuggest': 5
+    'pointsPerSuggest': 5,
     'likes': 0 
   });
 }
