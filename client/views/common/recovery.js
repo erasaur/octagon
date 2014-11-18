@@ -8,8 +8,6 @@ Template.recovery.events({
   'submit #js-recover-pass': function (event, template) {
     event.preventDefault();
 
-    console.log('asdf');
-
     var email = template.find('#js-email').value;
     email = stripHTML(email);
 
