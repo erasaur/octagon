@@ -54,7 +54,9 @@
     </div>
     <div class="list-item-body">
       <div class="event-image">
-        <img class="flexible-image" src="{{url}}">
+        {{#with picture}}
+          <img class="flexible-image" src="{{url}}">
+        {{/with}}
       </div>
       <div class="event-info clearfix">
         <ul class="list">

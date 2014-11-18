@@ -81,8 +81,7 @@ Template.eventItem.helpers({
     var now = new Date();
     return now > this.info.date;
   },
-  url: function () {
-    var picture = Pictures.findOne(this.pictureId);
-    return picture && picture.url();
+  picture: function () {
+    return Pictures.findOne(this.pictureId);
   }
 });
