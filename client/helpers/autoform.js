@@ -50,7 +50,8 @@ AutoForm.hooks({
         };
 
         // uploading new file, delete the old one and upload new
-        Pictures.remove(updateDoc.pictureId);
+        console.log(insertDoc, updateDoc, currentDoc);
+        Pictures.remove(currentDoc.pictureId);
 
         var file = new FS.File(file);
         file.metadata = metadata;
@@ -191,6 +192,7 @@ function callMethodWithFile (method, fsFile, doc, callback) {
       callback(error);
     else {
       doc.pictureId = file._id;
+      console.log(doc);
       Meteor.call(method, doc, function (error) {
         callback(error);
       });

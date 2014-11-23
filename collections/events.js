@@ -142,7 +142,7 @@ Meteor.methods({
 
     check(event, Schema.Events);
 
-    Events.update(eventId, { $set: { 'info': event.info } });
+    Events.update(eventId, { $set: _.omit(event, '_id') });
   }
 });
 
