@@ -170,7 +170,7 @@ AutoForm.addHooks(null, {
 
 function onErrorCallback (error) {
   alert(error);
-  this.done();
+  this.done && done();
   return false; // don't reset form on failure
 }
 
@@ -179,7 +179,7 @@ function onSuccessCallback (message) {
     alert(message);
 
   $('.modal').modal('hide');
-  this.done();
+  this.done && done();
   this.resetForm(); 
 }
 
