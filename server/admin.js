@@ -29,7 +29,7 @@ Meteor.methods({
     members = _.pluck(members, '_id');
     Meteor.users.update({ '_id': { $in: members } }, { 
       $inc: { 'profile.points': points, 'profile.meetings': meeting }
-    });
+    }, { multi: true });
 
     // log has to contain _ids, not names
     log.members = members;
