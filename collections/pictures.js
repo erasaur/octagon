@@ -1,5 +1,5 @@
 Pictures = new FS.Collection('pictures', {
-  stores: [ new FS.Store.FileSystem('pictures') ]
+  stores: [ new FS.Store.GridFS('pictures') ]
 });
 
 Pictures.allow({

@@ -10,8 +10,6 @@ jquery
 mrt:moment
 aldeed:collection2
 alethes:pages
-cfs:standard-packages
-cfs:filesystem
 underscore
 djedi:sanitize-html
 chuangbo:marked
@@ -25,3 +23,6 @@ sergeyt:typeahead
 random
 chrismbeckett:fontawesome4
 reywood:publish-composite
+cfs:gridfs
+cfs:standard-packages
+
