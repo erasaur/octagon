@@ -25,4 +25,5 @@ chrismbeckett:fontawesome4
 reywood:publish-composite
 cfs:gridfs
 cfs:standard-packages
+meteorhacks:fast-render
 
