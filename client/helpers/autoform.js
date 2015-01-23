@@ -9,7 +9,7 @@ AutoForm.hooks({
 
       if (typeof file === 'undefined')
         return onErrorCallback.call(self, getError('no-picture'));
-      
+
       var metadata = {
         caption: insertDoc.info && insertDoc.info.name || '',
         featured: false
@@ -54,7 +54,7 @@ AutoForm.hooks({
 
         var file = new FS.File(file);
         file.metadata = metadata;
-        
+
         callMethodWithFile.call(self, 'updateEvent', file, currentDoc, function (error) {
           if (error)
             return onErrorCallback.call(self, error.reason);
@@ -100,7 +100,7 @@ AutoForm.hooks({
   },
   signupForm: {
     onError: function (method, error, template) {
-      alert(error.reason);
+      alert(error.reason || getError('default'));
     },
     onSuccess: function (insertDoc, updateDoc, currentDoc) {
       alert(getError('account-success'));
@@ -131,7 +131,7 @@ AutoForm.hooks({
       file.metadata = metadata;
 
       Pictures.insert(file, function (error, file) {
-        if (error) 
+        if (error)
           return onErrorCallback.call(self, error.reason);
         else
           onSuccessCallback.call(self, getError('picture-success'));
@@ -162,7 +162,7 @@ AutoForm.hooks({
 });
 
 // for all forms except onSubmit forms
-AutoForm.addHooks(null, { 
+AutoForm.addHooks(null, {
   onSuccess: function () {
     onSuccessCallback.call(this);
   }
@@ -180,7 +180,7 @@ function onSuccessCallback (message) {
 
   $('.modal').modal('hide');
   typeof this.done === 'function' && this.done();
-  this.resetForm(); 
+  this.resetForm();
 }
 
 function callMethodWithFile (method, fsFile, doc, callback) {
